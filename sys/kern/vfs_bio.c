@@ -1182,6 +1182,14 @@ bufshutdown(int show_busybufs)
 #endif
 
 	/* 
+	 * Swapoff all BEFORE unmounting filesystems
+	 * because these can host swap files.
+	 */
+	printf("Swapoff all...\n");
+	wdog_kern_pat(WD_LASTVAL);
+	swapoff_all();
+
+	/* 
 	 * Sync filesystems for shutdown
 	 */
 	wdog_kern_pat(WD_LASTVAL);
@@ -1283,7 +1291,6 @@ bufshutdown(int show_busybufs)
 		if (panicstr == NULL)
 			vfs_unmountall();
 	}
-	swapoff_all();
 	DELAY(100000);		/* wait for console output to finish */
 }
 
