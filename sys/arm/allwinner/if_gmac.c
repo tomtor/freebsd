@@ -66,9 +66,7 @@ a20_if_dwc_init(device_t dev)
 
 	/* Activate GMAC clock and set the pin mux to rgmii. */
 	switch (allwinner_soc_type()) {
-#if defined(SOC_ALLWINNER_A10) || defined(SOC_ALLWINNER_A20)
-	case ALLWINNERSOC_A10:
-	case ALLWINNERSOC_A10S:
+#ifdef SOC_ALLWINNER_A20
 	case ALLWINNERSOC_A20:
 		clk = a10_clk_gmac_activate(ofw_bus_get_node(dev));
 		break;
