@@ -1,5 +1,5 @@
 #
-# A20 -- Custom configuration for the Allwinner A20 ARM SoC
+# A31 -- Custom configuration for the Allwinner A31 ARM SoC
 #
 # For more information on this file, please read the config(5) manual page,
 # and/or the handbook section on Kernel Configuration Files:
@@ -19,6 +19,14 @@
 # $FreeBSD$
 
 include		"ALLWINNER"
-ident		A20
+ident		A31
 
-nooptions 	SOC_ALLWINNER_A31
+nooptions 	SOC_ALLWINNER_A20
+
+# Framebuffer support
+nodevice	vt
+nodevice	kbdmux
+nodevice	ums
+nodevice	ukbd
+nodevice	videomode
+nodevice	hdmi

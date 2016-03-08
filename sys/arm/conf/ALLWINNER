@@ -1,5 +1,5 @@
 #
-# A20 -- Custom configuration for the Allwinner A20 and A31 ARM SoC
+# ALLWINNER -- Custom configuration for the Allwinner A20 and A31 ARM SoC
 #
 # For more information on this file, please read the config(5) manual page,
 # and/or the handbook section on Kernel Configuration Files:
@@ -118,6 +118,14 @@ device		miibus
 
 # Sound support
 device		sound
+
+# Framebuffer support
+device		vt
+device		kbdmux
+device		ums
+device		ukbd
+device		videomode
+device		hdmi
 
 # Pinmux
 device		fdt_pinctrl
