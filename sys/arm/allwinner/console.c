@@ -69,7 +69,7 @@ static int
 ub_getc(void)
 {
 	while ((uart_getreg((uint32_t *)(A10_UART_BASE + 
-	    (UART_LSR << REG_SHIFT))) & UART_LSR_DR) == 0);
+	    (UART_LSR << REG_SHIFT))) & UART_LSR_DR) == 0)
 		__asm __volatile("nop");
 
 	return (uart_getreg((uint32_t *)A10_UART_BASE) & 0xff);
