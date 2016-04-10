@@ -140,3 +140,18 @@ uart_cnterm(struct consdev * cp)
 
 CONSOLE_DRIVER(uart);
 
+#ifdef EARLY_PRINTF
+static void
+eputc(int c)
+{
+	static int did_init;
+	if (!did_init) {
+		uart_cninit(0);
+		did_init= 1;
+	}
+	ub_putc(c);
+}
+
+early_putc_t * early_putc = eputc;
+#endif
+

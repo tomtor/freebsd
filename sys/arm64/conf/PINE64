@@ -24,6 +24,8 @@ ident		GENERIC
 makeoptions	DEBUG=-g		# Build kernel with gdb(1) debug symbols
 makeoptions	WITH_CTF=1		# Run ctfconvert(1) for DTrace support
 
+options		EARLY_PRINTF
+
 options 	SCHED_ULE		# ULE scheduler
 options 	PREEMPTION		# Enable kernel thread preemption
 options 	INET			# InterNETworking
@@ -162,6 +164,9 @@ device		bpf		# Berkeley packet filter
 options 	THUNDERX_PASS_1_1_ERRATA
 
 options 	FDT
+options		FDT_DTB_STATIC
+makeoptions	FDT_DTS_FILE=pine64.dts
+
 device		acpi
 
 # The crypto framework is required by IPSEC
