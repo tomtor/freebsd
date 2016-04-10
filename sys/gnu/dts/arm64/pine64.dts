@@ -1,6 +1,10 @@
 /*
  * Copyright (C) 2015 Jens Kuske <jenskuske@gmail.com>
  *
+ * Changes for sun50i:
+ *
+ * Copyright (C) 2016 Tom Vijlbrief <tvijlbrief@gmail.com>
+ *
  * This file is dual-licensed: you can use it either under the terms
  * of the GPL or the X11 license, at your option. Note that this dual
  * licensing only applies to this file, and not this project as a
@@ -41,7 +45,7 @@
  */
 
 /dts-v1/;
-#include "sun8i-h3.dtsi"
+#include "sun50i-a64.dtsi"
 #include "sunxi-common-regulators.dtsi"
 
 #include <dt-bindings/gpio/gpio.h>
