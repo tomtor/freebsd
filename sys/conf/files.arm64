@@ -2,6 +2,8 @@
 arm/arm/devmap.c		standard
 arm/arm/generic_timer.c		standard
 arm/arm/pmu.c			standard
+arm/allwinner/a10_ehci.c	optional	soc_allwinner_a64
+arm/allwinner/console.c		optional	soc_allwinner_a64
 arm/broadcom/bcm2835/bcm2835_dma.c   optional	soc_brcm_bcm2837
 arm/broadcom/bcm2835/bcm2835_intr.c  optional	soc_brcm_bcm2837
 arm/broadcom/bcm2835/bcm2835_mbox.c  optional	soc_brcm_bcm2837
