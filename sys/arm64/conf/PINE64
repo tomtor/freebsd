@@ -86,12 +86,10 @@ options 	WITNESS			# Enable checks to detect deadlocks and cycles
 options 	WITNESS_SKIPSPIN	# Don't run witness on spinlocks for speed
 options 	MALLOC_DEBUG_MAXZONES=8	# Separate malloc(9) zones
 
-options 	ROOTDEVNAME=\"ufs:/dev/mmcsd0s2a\"
+options 	ROOTDEVNAME=\"ufs:/dev/mmcsd0s3a\"
 
 # SoC support
-options 	SOC_BRCM_BCM2837
-options 	SOC_CAVM_THUNDERX
-options 	SOC_HISI_HI6220
+#options 	SOC_BRCM_BCM2837
 options		SOC_ALLWINNER_A64
 
 # VirtIO support
@@ -101,18 +99,11 @@ device		virtio_blk
 device		vtnet
 
 # Bus drivers
-device		pci
-options 	PCI_IOV		# PCI SR-IOV support
 
 # Ethernet NICs
 device		mii
 device		miibus		# MII bus support
-device		em		# Intel PRO/1000 Gigabit Ethernet Family
-device		igb		# Intel PRO/1000 PCIE Server Gigabit Family
-device		ix		# Intel 10Gb Ethernet Family
-device		msk		# Marvell/SysKonnect Yukon II Gigabit Ethernet
 device		smsc		# SMSC LAN95xx USB Ethernet
-device		vnic		# Cavium ThunderX NIC
 
 # Block devices
 device		ahci
@@ -139,7 +130,6 @@ device		pl011
 # USB support
 options 	USB_DEBUG		# enable debug msgs
 device		dwcotg			# DWC OTG controller
-device		xhci			# XHCI PCI->USB interface (USB 3.0)
 device		usb			# USB Bus (required)
 device		ukbd			# Keyboard
 device		umass			# Disks/Mass storage - Requires scbus and da
@@ -159,9 +149,6 @@ device		psci		# Support for ARM PSCI
 # Be aware of the administrative consequences of enabling this!
 # Note that 'bpf' is required for DHCP.
 device		bpf		# Berkeley packet filter
-
-# Chip-specific errata
-options 	THUNDERX_PASS_1_1_ERRATA
 
 options 	FDT
 options		FDT_DTB_STATIC
