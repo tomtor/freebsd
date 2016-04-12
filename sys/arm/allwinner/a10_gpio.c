@@ -94,8 +94,6 @@ struct a10_gpio_softc {
 	bus_space_handle_t	sc_bsh;
 	void *			sc_intrhand;
 	const struct allwinner_padconf *	padconf;
-	hwreset_t		rst;
-	clk_t			clk;
 };
 
 /* Defined in a10_padconf.c */
@@ -533,6 +531,8 @@ a10_gpio_attach(device_t dev)
 	int rid, error;
 	phandle_t gpio;
 	struct a10_gpio_softc *sc;
+	clk_t clk;
+	hwreset_t rst;
 
 	sc = device_get_softc(dev);
 	sc->sc_dev = dev;
@@ -598,16 +598,16 @@ a10_gpio_attach(device_t dev)
 		break;
 	}
 
-	if (hwreset_get_by_ofw_idx(dev, 0, &sc->rst) == 0) {
-		error = hwreset_deassert(sc->rst);
+	if (hwreset_get_by_ofw_idx(dev, 0, &rst) == 0) {
+		error = hwreset_deassert(rst);
 		if (error != 0) {
 			device_printf(dev, "cannot de-assert reset\n");
 			return (error);
 		}
 	}
 
-	if (clk_get_by_ofw_index(dev, 0, &sc->clk) == 0) {
-		error = clk_enable(sc->clk);
+	if (clk_get_by_ofw_index(dev, 0, &clk) == 0) {
+		error = clk_enable(clk);
 		if (error != 0) {
 			device_printf(dev, "could not enable clock\n");
 			return (error);
