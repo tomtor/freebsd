@@ -53,87 +53,31 @@
 		#size-cells = <0>;
 
 		cpu@0 {
-			//compatible = "arm,cortex-a7";
-			//device_type = "cpu";
-			//reg = <0>;
+			compatible = "arm,cortex-a7";
 			device_type = "cpu";
-			compatible = "arm,cortex-a53", "arm,armv8";
-			reg = <0x00000000 0x00000000>;
-			enable-method = "psci";
-			cpufreq_tbl = <0x00075300 0x000927c0 0x000afc80 0x000c7380 0x000dea80 0x000ea600 0x000f6180 0x00101d00 0x0010d880 0x00119400 0x00124f80 0x00148200>;
-			clock-latency = <0x001e8480>;
-			clock-frequency = <0x3c14dc00>;
-			cpu-idle-states = <0x00000090 0x00000091 0x00000092>;
+			reg = <0>;
+			clock-frequency = <800000000>;
 		};
 
+/*
 		cpu@1 {
+			compatible = "arm,cortex-a7";
 			device_type = "cpu";
-			compatible = "arm,cortex-a53", "arm,armv8";
-			reg = <0x00000000 0x00000001>;
-			enable-method = "psci";
-			clock-frequency = <0x3c14dc00>;
-			cpu-idle-states = <0x00000090 0x00000091 0x00000092>;
-			//compatible = "arm,cortex-a7";
-			//device_type = "cpu";
-			//reg = <1>;
+			reg = <1>;
 		};
 
 		cpu@2 {
-			//compatible = "arm,cortex-a7";
-			//device_type = "cpu";
-			//reg = <2>;
+			compatible = "arm,cortex-a7";
 			device_type = "cpu";
-			compatible = "arm,cortex-a53", "arm,armv8";
-			reg = <0x00000000 0x00000002>;
-			enable-method = "psci";
-			clock-frequency = <0x3c14dc00>;
-			cpu-idle-states = <0x00000090 0x00000091 0x00000092>;
+			reg = <2>;
 		};
 
 		cpu@3 {
-			//compatible = "arm,cortex-a7";
-			//device_type = "cpu";
-			//reg = <3>;
+			compatible = "arm,cortex-a7";
 			device_type = "cpu";
-			compatible = "arm,cortex-a53", "arm,armv8";
-			reg = <0x00000000 0x00000003>;
-			enable-method = "psci";
-			clock-frequency = <0x3c14dc00>;
-			cpu-idle-states = <0x00000090 0x00000091 0x00000092>;
+			reg = <3>;
 		};
-		// Also copied from original Pine def:
-		/*
-		idle-states {
-		    entry-method = "arm,psci";
-		    cpu-sleep-0 {
-			compatible = "arm,idle-state";
-			arm,psci-suspend-param = <0x00010000>;
-			entry-latency-us = <0x00000028>;
-			exit-latency-us = <0x00000064>;
-			min-residency-us = <0x00000096>;
-			linux,phandle = <0x00000090>;
-			phandle = <0x00000090>;
-		    };
-		    cluster-sleep-0 {
-			compatible = "arm,idle-state";
-			arm,psci-suspend-param = <0x01010000>;
-			entry-latency-us = <0x000001f4>;
-			exit-latency-us = <0x000003e8>;
-			min-residency-us = <0x000009c4>;
-			linux,phandle = <0x00000091>;
-			phandle = <0x00000091>;
-		    };
-		    sys-sleep-0 {
-			compatible = "arm,idle-state";
-			arm,psci-suspend-param = <0x02010000>;
-			entry-latency-us = <0x000003e8>;
-			exit-latency-us = <0x000007d0>;
-			min-residency-us = <0x00001194>;
-			linux,phandle = <0x00000092>;
-			phandle = <0x00000092>;
-		    };
-		};
-		*/
+*/
 	};
 
 	timer {
