@@ -87,8 +87,17 @@ __FBSDID("$FreeBSD$");
 static device_attach_t a10_ehci_attach;
 static device_detach_t a10_ehci_detach;
 
-int bs_r_1_proto(int reversed);
-int bs_w_1_proto(int reversed);
+#ifdef __aarch64__
+#define bs_r_1_proto(f)                                                 \
+uint8_t __bs_c(f,_bs_r_1) (bus_space_tag_t t, bus_space_handle_t bsh,   \
+                    bus_size_t offset);
+
+#define bs_w_1_proto(f)                                                 \
+void    __bs_c(f,_bs_w_1) (bus_space_tag_t t, bus_space_handle_t bsh,           \
+            bus_size_t offset, uint8_t value);
+#endif
+bs_r_1_proto(reversed);
+bs_w_1_proto(reversed);
 
 struct aw_ehci_softc {
 	ehci_softc_t	sc;

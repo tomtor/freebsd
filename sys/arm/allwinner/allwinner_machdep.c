@@ -132,6 +132,7 @@ bus_dma_get_range_nb(void)
 	return (0);
 }
 
+#ifndef __aarch64__
 void
 cpu_reset()
 {
@@ -139,6 +140,7 @@ cpu_reset()
 	printf("Reset failed!\n");
 	while (1);
 }
+#endif
 
 #if defined(SOC_ALLWINNER_A10)
 static platform_method_t a10_methods[] = {

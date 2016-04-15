@@ -24,6 +24,9 @@ ident		GENERIC
 makeoptions	DEBUG=-g		# Build kernel with gdb(1) debug symbols
 makeoptions	WITH_CTF=1		# Run ctfconvert(1) for DTrace support
 
+#files           "../../arm/allwinner/files.allwinner"
+#files           "../../arm/allwinner/a20/files.a20"
+
 options		EARLY_PRINTF
 
 options 	SCHED_ULE		# ULE scheduler
@@ -104,6 +107,7 @@ device		vtnet
 device		mii
 device		miibus		# MII bus support
 device		smsc		# SMSC LAN95xx USB Ethernet
+device		dwc		# 10/100/1000 integrated GMAC controller
 
 # Block devices
 device		ahci
@@ -125,7 +129,7 @@ device		ehci
 # Serial (COM) ports
 device		uart		# Generic UART driver
 device		uart_ns8250	# ns8250-type UART driver
-device		pl011
+#device		pl011
 
 # USB support
 options 	USB_DEBUG		# enable debug msgs
@@ -133,6 +137,8 @@ device		dwcotg			# DWC OTG controller
 device		usb			# USB Bus (required)
 device		ukbd			# Keyboard
 device		umass			# Disks/Mass storage - Requires scbus and da
+
+device		gpio
 
 # Pseudo devices.
 device		loop		# Network loopback
