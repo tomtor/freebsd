@@ -220,7 +220,11 @@ a10_timer_attach(device_t dev)
 
 		device_printf(sc->sc_dev, "event timer clock frequency %u\n", 
 		    sc->timer0_freq);
+#ifdef __aarch64__
+		device_printf(sc->sc_dev, "timecounter clock frequency %ld\n", 
+#else
 		device_printf(sc->sc_dev, "timecounter clock frequency %lld\n", 
+#endif
 		    a10_timer_timecounter.tc_frequency);
 	}
 

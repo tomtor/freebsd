@@ -1,12 +1,43 @@
 # $FreeBSD$
 arm/arm/devmap.c		standard
-arm/arm/generic_timer.c		standard
+#arm/arm/generic_timer.c		standard
 arm/arm/pmu.c			standard
+#
+dev/fdt/fdt_common.c		optional	soc_allwinner_a64
 arm/allwinner/console.c		optional	soc_allwinner_a64
-arm/allwinner/a10_ehci.c	optional	soc_allwinner_a64
-#arm/allwinner/a10_ahci.c	optional	soc_allwinner_a64
-#arm/allwinner/a10_mmc.c		optional	soc_allwinner_a64
-#arm/allwinner/allwinner_machdep.c	optional	soc_allwinner_a64
+# A10:
+arm/allwinner/a10_padconf.c             standard
+#arm/allwinner/aintc.c                   standard
+arm/allwinner/timer.c                   standard 
+# ALLWINNER
+# must check clock and ether
+arm/allwinner/a10_ahci.c                optional        ahci
+arm/allwinner/a10_clk.c                 standard
+arm/allwinner/a10_codec.c               optional        sound
+#arm/allwinner/a10_common.c              standard
+arm/allwinner/a10_dmac.c                standard
+arm/allwinner/a10_ehci.c                optional        ehci
+arm/allwinner/aw_usbphy.c               optional        ehci
+arm/allwinner/a10_gpio.c                optional        gpio
+arm/allwinner/a10_mmc.c                 optional        mmc
+arm/allwinner/a10_sramc.c               standard
+arm/allwinner/aw_rtc.c                  standard
+arm/allwinner/aw_wdog.c                 standard
+arm/allwinner/a20/a20_cpu_cfg.c         standard
+arm/allwinner/allwinner_machdep.c       standard
+arm/allwinner/axp209.c                  optional        axp209
+arm/allwinner/if_emac.c                 optional        emac
+arm/allwinner/sunxi_dma_if.m            standard
+#
+arm/arm/platform_if.m		optional	soc_allwinner_a64
+dev/fdt/fdt_pinctrl_if.m	optional	soc_allwinner_a64
+dev/fdt/fdt_clock_if.m		optional	soc_allwinner_a64
+dev/fdt/fdt_arm_platform.c	optional	soc_allwinner_a64
+#arm/allwinner/a20/a20_if_dwc.c	optional	soc_allwinner_a64 dwc
+#arm/allwinner/a31/a31_clk.c	optional	soc_allwinner_a64 dwc
+dev/dwc/if_dwc.c		optional	dwc
+dev/dwc/if_dwc_if.m		optional	dwc
+#
 arm/broadcom/bcm2835/bcm2835_dma.c   optional	soc_brcm_bcm2837
 arm/broadcom/bcm2835/bcm2835_intr.c  optional	soc_brcm_bcm2837
 arm/broadcom/bcm2835/bcm2835_mbox.c  optional	soc_brcm_bcm2837
