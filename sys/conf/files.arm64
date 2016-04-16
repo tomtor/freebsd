@@ -17,7 +17,9 @@ arm/allwinner/a20/a20_if_dwc.c  optional        dwc soc_allwinner_a64
 # ALLWINNER
 # must check clock and ether
 arm/allwinner/a10_ahci.c        optional        ahci soc_allwinner_a64
-arm/allwinner/a10_clk.c         optional	soc_allwinner_a64
+#arm/allwinner/a10_clk.c         optional	soc_allwinner_a64
+dev/extres/clk/clknode_if.m	standard
+dev/extres/regulator/regnode_if.m standard
 arm/allwinner/a10_codec.c       optional        sound soc_allwinner_a64
 #arm/allwinner/a10_common.c     optional	soc_allwinner_a64
 arm/allwinner/a10_dmac.c        optional	soc_allwinner_a64

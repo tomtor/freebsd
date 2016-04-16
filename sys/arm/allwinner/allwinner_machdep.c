@@ -248,15 +248,6 @@ static platform_method_t a64_methods[] = {
 FDT_PLATFORM_DEF(a64, "a64", 0, "allwinner,sun50i-a64");
 #endif
 
-
-static platform_method_t a64_methods[] = {
-	PLATFORMMETHOD(platform_attach,         a64_attach),
-	PLATFORMMETHOD(platform_lastaddr,       allwinner_lastaddr),
-	PLATFORMMETHOD(platform_devmap_init,    allwinner_devmap_init),
-
-	PLATFORMMETHOD_END,
-};
-
 u_int
 allwinner_soc_type(void)
 {

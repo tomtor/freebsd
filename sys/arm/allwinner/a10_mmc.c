@@ -848,26 +848,6 @@ a10_mmc_update_ios(device_t bus, device_t child)
 			device_printf(sc->a10_dev,
 			    "failed to set frequency to %u Hz: %d\n",
 			    ios->clock, error);
-		switch (allwinner_soc_type()) {
-#if defined(SOC_ALLWINNER_A10) || defined(SOC_ALLWINNER_A20) || defined(SOC_ALLWINNER_H3) || defined(SOC_ALLWINNER_A64)
-		case ALLWINNERSOC_A10:
-		case ALLWINNERSOC_A10S:
-		case ALLWINNERSOC_A20:
-		case ALLWINNERSOC_H3:
-		case ALLWINNERSOC_A64:
-			error = a10_clk_mmc_cfg(sc->a10_id, ios->clock);
-			break;
-#endif
-#if defined(SOC_ALLWINNER_A31) || defined(SOC_ALLWINNER_A31S)
-		case ALLWINNERSOC_A31:
-		case ALLWINNERSOC_A31S:
-			error = a31_clk_mmc_cfg(sc->a10_id, ios->clock);
-			break;
-#endif
-		default:
-			error = ENXIO;
-		}
-		if (error != 0)
 			return (error);
 		}
 
