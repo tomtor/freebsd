@@ -58,6 +58,7 @@ static struct ofw_compat_data compat_data[] = {
 	{ NULL,					0 }
 };
 
+#if 0
 static int
 awusbphy_gpio_set(device_t dev, phandle_t node, const char *pname)
 {
@@ -121,6 +122,7 @@ awusbphy_supply_set(device_t dev, const char *pname)
 
 	return (awusbphy_gpio_set(dev, reg_node, "gpio"));
 }
+#endif
 
 static int
 awusbphy_init(device_t dev)
