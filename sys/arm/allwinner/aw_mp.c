@@ -39,7 +39,9 @@ __FBSDID("$FreeBSD$");
 #include <vm/pmap.h>
 
 #include <machine/cpu.h>
+#ifndef __aarch64__
 #include <machine/cpu-v6.h>
+#endif
 #include <machine/smp.h>
 #include <machine/fdt.h>
 #include <machine/intr.h>
@@ -84,13 +86,17 @@ void
 aw_mp_setmaxid(platform_t plat)
 {
 	int ncpu;
-	uint32_t reg;
 
 	if (mp_ncpus != 0)
 		return;
 
+#ifdef SOC_ALLWINNER_A64
+	ncpu = 4;
+#else
+	uint32_t reg;
 	reg = cp15_l2ctlr_get();
 	ncpu = CPUV7_L2CTLR_NPROC(reg);
+#endif
 
 	mp_ncpus = ncpu;
 	mp_maxid = ncpu - 1;
@@ -99,6 +105,9 @@ aw_mp_setmaxid(platform_t plat)
 static void
 aw_common_mp_start_ap(bus_space_handle_t cpucfg, bus_space_handle_t prcm)
 {
+#ifdef __aarch64__
+	printf("aw_common_mp_start_ap: check arm64 implementation");
+#else
 	int i, j;
 	uint32_t val;
 
@@ -168,11 +177,15 @@ aw_common_mp_start_ap(bus_space_handle_t cpucfg, bus_space_handle_t prcm)
 
 	armv7_sev();
 	bus_space_unmap(fdtbus_bs_tag, cpucfg, CPUCFG_SIZE);
+#endif
 }
 
 void
 a20_mp_start_ap(platform_t plat)
 {
+#ifdef __aarch64__
+	printf("a20_mp_start_ap: check arm64 implementation\n");
+#else
 	bus_space_handle_t cpucfg;
 
 	if (bus_space_map(fdtbus_bs_tag, A20_CPUCFG_BASE, CPUCFG_SIZE,
@@ -182,11 +195,15 @@ a20_mp_start_ap(platform_t plat)
 	aw_common_mp_start_ap(cpucfg, 0);
 	armv7_sev();
 	bus_space_unmap(fdtbus_bs_tag, cpucfg, CPUCFG_SIZE);
+#endif
 }
 
 void
 a31_mp_start_ap(platform_t plat)
 {
+#ifdef __aarch64__
+	printf("a31_mp_start_ap: check arm64 implementation\n");
+#else
 	bus_space_handle_t cpucfg;
 	bus_space_handle_t prcm;
 
@@ -201,4 +218,5 @@ a31_mp_start_ap(platform_t plat)
 	armv7_sev();
 	bus_space_unmap(fdtbus_bs_tag, cpucfg, CPUCFG_SIZE);
 	bus_space_unmap(fdtbus_bs_tag, prcm, PRCM_SIZE);
+#endif
 }
