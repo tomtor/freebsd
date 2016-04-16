@@ -6,6 +6,7 @@ arm/arm/pmu.c			standard
 #
 dev/fdt/fdt_common.c		optional	soc_allwinner_a64
 arm/allwinner/console.c		optional	soc_allwinner_a64
+arm/allwinner/aw_mp.c		optional	soc_allwinner_a64
 # A10:
 #arm/allwinner/a10_padconf.c	optional	soc_allwinner_a64
 ##arm/allwinner/aintc.c          standard
@@ -18,8 +19,17 @@ arm/allwinner/a20/a20_if_dwc.c  optional        dwc soc_allwinner_a64
 # must check clock and ether
 arm/allwinner/a10_ahci.c        optional        ahci soc_allwinner_a64
 #arm/allwinner/a10_clk.c         optional	soc_allwinner_a64
+dev/extres/clk/clkdev_if.m	standard
 dev/extres/clk/clknode_if.m	standard
+dev/extres/clk/clk.c		standard
+dev/extres/clk/clk_gate.c	standard
+dev/extres/clk/clk_mux.c	standard
+dev/extres/clk/clk_fixed.c	standard
+dev/extres/hwreset/hwreset.c	standard
+dev/extres/hwreset/hwreset_if.m	standard
 dev/extres/regulator/regnode_if.m standard
+dev/extres/regulator/regdev_if.m standard
+dev/extres/regulator/regulator.c standard
 arm/allwinner/a10_codec.c       optional        sound soc_allwinner_a64
 #arm/allwinner/a10_common.c     optional	soc_allwinner_a64
 arm/allwinner/a10_dmac.c        optional	soc_allwinner_a64
@@ -43,6 +53,23 @@ dev/fdt/fdt_arm_platform.c	optional	soc_allwinner_a64
 #arm/allwinner/a31/a31_clk.c	optional	soc_allwinner_a64 dwc
 dev/dwc/if_dwc.c		optional	dwc
 dev/dwc/if_dwc_if.m		optional	dwc
+#
+arm/allwinner/aw_ccu.c                  standard
+arm/allwinner/clk/aw_ahbclk.c           standard
+arm/allwinner/clk/aw_apbclk.c           standard
+arm/allwinner/clk/aw_axiclk.c           standard
+arm/allwinner/clk/aw_codecclk.c         standard
+arm/allwinner/clk/aw_cpuclk.c           standard
+arm/allwinner/clk/aw_debeclk.c          standard
+arm/allwinner/clk/aw_gate.c             standard
+arm/allwinner/clk/aw_gmacclk.c          standard
+arm/allwinner/clk/aw_hdmiclk.c          standard
+arm/allwinner/clk/aw_lcdclk.c           standard
+arm/allwinner/clk/aw_modclk.c           standard
+arm/allwinner/clk/aw_mmcclk.c           standard
+arm/allwinner/clk/aw_oscclk.c           standard
+arm/allwinner/clk/aw_pll.c              standard
+arm/allwinner/clk/aw_usbclk.c           standard
 #
 arm/broadcom/bcm2835/bcm2835_dma.c   optional	soc_brcm_bcm2837
 arm/broadcom/bcm2835/bcm2835_intr.c  optional	soc_brcm_bcm2837

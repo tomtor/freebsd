@@ -47,7 +47,7 @@ __FBSDID("$FreeBSD$");
 
 #include <dev/extres/clk/clk.h>
 
-#include <dt-bindings/clock/sun4i-a10-pll2.h>
+#include <gnu/dts/include/dt-bindings/clock/sun4i-a10-pll2.h>
 
 #include "clkdev_if.h"
 
