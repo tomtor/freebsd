@@ -187,7 +187,6 @@ a10_mmc_attach(device_t dev)
 	case ALLWINNERSOC_SUN4I:
 	case ALLWINNERSOC_SUN5I:
 	case ALLWINNERSOC_SUN7I:
-	case ALLWINNERSOC_SUN50I:
 		sc->a10_fifo_reg = A10_MMC_FIFO;
 		break;
 	default:
@@ -209,24 +208,6 @@ a10_mmc_attach(device_t dev)
 	if (error != 0) {
 		device_printf(dev, "cannot get ahb clock\n");
 		goto fail;
-	switch (allwinner_soc_type()) {
-#if defined(SOC_ALLWINNER_A10) || defined(SOC_ALLWINNER_A20) || defined(SOC_ALLWINNER_H3) || defined(SOC_ALLWINNER_A64)
-	case ALLWINNERSOC_A10:
-	case ALLWINNERSOC_A10S:
-	case ALLWINNERSOC_A20:
-	case ALLWINNERSOC_H3:
-	case ALLWINNERSOC_A64:
-		clk = a10_clk_mmc_activate(sc->a10_id);
-		break;
-#endif
-#if defined(SOC_ALLWINNER_A31) || defined(SOC_ALLWINNER_A31S)
-	case ALLWINNERSOC_A31:
-	case ALLWINNERSOC_A31S:
-		clk = a31_clk_mmc_activate(sc->a10_id);
-		break;
-#endif
-	default:
-		clk = -1;
 	}
 	error = clk_enable(sc->a10_clk_ahb);
 	if (error != 0) {

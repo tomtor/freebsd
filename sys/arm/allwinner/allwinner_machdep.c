@@ -216,13 +216,38 @@ static platform_method_t a31s_methods[] = {
 FDT_PLATFORM_DEF(a31s, "a31s", 0, "allwinner,sun6i-a31s");
 #endif
 
+#if defined(SOC_ALLWINNER_H3)
 static platform_method_t h3_methods[] = {
 	PLATFORMMETHOD(platform_attach,         h3_attach),
 	PLATFORMMETHOD(platform_lastaddr,       allwinner_lastaddr),
 	PLATFORMMETHOD(platform_devmap_init,    allwinner_devmap_init),
 
+#ifdef SMP
+	// use a31 code?
+	PLATFORMMETHOD(platform_mp_start_ap,	a31_mp_start_ap),
+	PLATFORMMETHOD(platform_mp_setmaxid,	aw_mp_setmaxid),
+#endif
 	PLATFORMMETHOD_END,
 };
+FDT_PLATFORM_DEF(h3, "h3", 0, "allwinner,sun8i-h3");
+#endif
+
+#if defined(SOC_ALLWINNER_A64)
+static platform_method_t a64_methods[] = {
+	PLATFORMMETHOD(platform_attach,         a64_attach),
+	PLATFORMMETHOD(platform_lastaddr,       allwinner_lastaddr),
+	PLATFORMMETHOD(platform_devmap_init,    allwinner_devmap_init),
+
+#ifdef SMP
+	// use a31 code?
+	PLATFORMMETHOD(platform_mp_start_ap,	a31_mp_start_ap),
+	PLATFORMMETHOD(platform_mp_setmaxid,	aw_mp_setmaxid),
+#endif
+	PLATFORMMETHOD_END,
+};
+FDT_PLATFORM_DEF(a64, "a64", 0, "allwinner,sun50i-a64");
+#endif
+
 
 static platform_method_t a64_methods[] = {
 	PLATFORMMETHOD(platform_attach,         a64_attach),
@@ -243,10 +268,3 @@ allwinner_soc_family(void)
 {
 	return (soc_family);
 }
-
-FDT_PLATFORM_DEF(a10, "a10", 0, "allwinner,sun4i-a10");
-FDT_PLATFORM_DEF(a20, "a20", 0, "allwinner,sun7i-a20");
-FDT_PLATFORM_DEF(a31, "a31", 0, "allwinner,sun6i-a31");
-FDT_PLATFORM_DEF(a31s, "a31s", 0, "allwinner,sun6i-a31s");
-FDT_PLATFORM_DEF(h3, "h3", 0, "allwinner,sun8i-h3");
-FDT_PLATFORM_DEF(a64, "a64", 0, "allwinner,sun50i-a64");
