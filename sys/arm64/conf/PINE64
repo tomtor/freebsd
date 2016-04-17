@@ -106,11 +106,11 @@ device		vtnet
 # Ethernet NICs
 device		mii
 device		miibus		# MII bus support
-device		smsc		# SMSC LAN95xx USB Ethernet
-device		dwc		# 10/100/1000 integrated GMAC controller
+#device		smsc		# SMSC LAN95xx USB Ethernet
+#device		dwc		# 10/100/1000 integrated GMAC controller
 
 # Block devices
-device		ahci
+#device		ahci
 device		scbus
 device		da
 
