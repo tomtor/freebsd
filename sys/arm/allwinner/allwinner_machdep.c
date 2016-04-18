@@ -94,6 +94,15 @@ a31s_attach(platform_t plat)
 	return (0);
 }
 
+static int
+h3_attach(platform_t plat)
+{
+	soc_type = ALLWINNERSOC_H3;
+	soc_family = ALLWINNERSOC_SUN8I;
+
+	return (0);
+}
+
 static vm_offset_t
 allwinner_lastaddr(platform_t plat)
 {
@@ -194,6 +203,21 @@ static platform_method_t a31s_methods[] = {
 	PLATFORMMETHOD_END,
 };
 FDT_PLATFORM_DEF(a31s, "a31s", 0, "allwinner,sun6i-a31s");
+#endif
+
+#if defined(SOC_ALLWINNER_H3)
+static platform_method_t h3_methods[] = {
+	PLATFORMMETHOD(platform_attach,         h3_attach),
+	PLATFORMMETHOD(platform_lastaddr,       allwinner_lastaddr),
+	PLATFORMMETHOD(platform_devmap_init,    allwinner_devmap_init),
+
+#ifdef SMP
+	PLATFORMMETHOD(platform_mp_start_ap,	a31_mp_start_ap),
+	PLATFORMMETHOD(platform_mp_setmaxid,	aw_mp_setmaxid),
+#endif
+	PLATFORMMETHOD_END,
+};
+FDT_PLATFORM_DEF(h3, "h3", 0, "allwinner,sun8i-h3");
 #endif
 
 u_int

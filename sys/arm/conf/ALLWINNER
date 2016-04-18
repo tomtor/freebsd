@@ -27,6 +27,7 @@ options 	ARM_INTRNG
 
 options 	SOC_ALLWINNER_A20
 options 	SOC_ALLWINNER_A31
+options 	SOC_ALLWINNER_H3
 
 options 	HZ=100
 options 	SCHED_ULE		# ULE scheduler
