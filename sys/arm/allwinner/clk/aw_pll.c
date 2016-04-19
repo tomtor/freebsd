@@ -144,6 +144,7 @@ enum aw_pll_type {
 	AWPLL_A10_PLL3,
 	AWPLL_A10_PLL5,
 	AWPLL_A10_PLL6,
+	AWPLL_A23_PLL1,
 	AWPLL_A31_PLL1,
 	AWPLL_A31_PLL6,
 };
@@ -537,6 +538,7 @@ static struct aw_pll_funcs aw_pll_func[] = {
 	PLL(AWPLL_A10_PLL3, a10_pll3_recalc, a10_pll3_set_freq, a10_pll3_init),
 	PLL(AWPLL_A10_PLL5, a10_pll5_recalc, NULL, NULL),
 	PLL(AWPLL_A10_PLL6, a10_pll6_recalc, a10_pll6_set_freq, a10_pll6_init),
+	PLL(AWPLL_A23_PLL1, a31_pll1_recalc, NULL, NULL),
 	PLL(AWPLL_A31_PLL1, a31_pll1_recalc, NULL, NULL),
 	PLL(AWPLL_A31_PLL6, a31_pll6_recalc, NULL, a31_pll6_init),
 };
@@ -549,6 +551,7 @@ static struct ofw_compat_data compat_data[] = {
 	{ "allwinner,sun4i-a10-pll6-clk",	AWPLL_A10_PLL6 },
 	{ "allwinner,sun6i-a31-pll1-clk",	AWPLL_A31_PLL1 },
 	{ "allwinner,sun6i-a31-pll6-clk",	AWPLL_A31_PLL6 },
+	{ "allwinner,sun8i-a23-pll1-clk",	AWPLL_A23_PLL1 },
 	{ NULL, 0 }
 };
 

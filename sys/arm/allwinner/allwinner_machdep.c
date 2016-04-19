@@ -223,7 +223,6 @@ static platform_method_t h3_methods[] = {
 	PLATFORMMETHOD(platform_devmap_init,    allwinner_devmap_init),
 
 #ifdef SMP
-	// use a31 code?
 	PLATFORMMETHOD(platform_mp_start_ap,	a31_mp_start_ap),
 	PLATFORMMETHOD(platform_mp_setmaxid,	aw_mp_setmaxid),
 #endif
