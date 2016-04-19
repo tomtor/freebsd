@@ -14,10 +14,10 @@ arm/allwinner/aw_mp.c		optional	soc_allwinner_a64
 # A20:
 arm/allwinner/a20/a20_padconf.c optional	soc_allwinner_a64
 #arm/allwinner/a20/a20_mp.c              optional        smp
-arm/allwinner/a20/a20_if_dwc.c  optional        dwc soc_allwinner_a64
+#arm/allwinner/a20/a20_if_dwc.c  optional        dwc soc_allwinner_a64
 # ALLWINNER
 # must check clock and ether
-arm/allwinner/a10_ahci.c        optional        ahci soc_allwinner_a64
+#arm/allwinner/a10_ahci.c        optional        ahci soc_allwinner_a64
 #arm/allwinner/a10_clk.c         optional	soc_allwinner_a64
 dev/extres/clk/clkdev_if.m	standard
 dev/extres/clk/clknode_if.m	standard
@@ -43,7 +43,7 @@ arm/allwinner/aw_wdog.c         optional	soc_allwinner_a64
 arm/allwinner/a20/a20_cpu_cfg.c optional	soc_allwinner_a64
 arm/allwinner/allwinner_machdep.c optional	soc_allwinner_a64
 arm/allwinner/axp209.c          optional        axp209 soc_allwinner_a64
-arm/allwinner/if_emac.c         optional        emac soc_allwinner_a64
+#arm/allwinner/if_emac.c         optional        emac soc_allwinner_a64
 arm/allwinner/sunxi_dma_if.m    optional	soc_allwinner_a64
 #
 arm/arm/platform_if.m		optional	soc_allwinner_a64
@@ -51,8 +51,8 @@ dev/fdt/fdt_pinctrl_if.m	optional	soc_allwinner_a64
 dev/fdt/fdt_clock_if.m		optional	soc_allwinner_a64
 dev/fdt/fdt_arm_platform.c	optional	soc_allwinner_a64
 #arm/allwinner/a31/a31_clk.c	optional	soc_allwinner_a64 dwc
-dev/dwc/if_dwc.c		optional	dwc
-dev/dwc/if_dwc_if.m		optional	dwc
+#dev/dwc/if_dwc.c		optional	dwc
+#dev/dwc/if_dwc_if.m		optional	dwc
 #
 arm/allwinner/aw_ccu.c                  standard
 arm/allwinner/clk/aw_ahbclk.c           standard
