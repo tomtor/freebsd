@@ -549,9 +549,9 @@ static struct ofw_compat_data compat_data[] = {
 	{ "allwinner,sun4i-a10-pll3-clk",	AWPLL_A10_PLL3 },
 	{ "allwinner,sun4i-a10-pll5-clk",	AWPLL_A10_PLL5 },
 	{ "allwinner,sun4i-a10-pll6-clk",	AWPLL_A10_PLL6 },
-	{ "allwinner,sun6i-a23-pll1-clk",	AWPLL_A23_PLL1 },
 	{ "allwinner,sun6i-a31-pll1-clk",	AWPLL_A31_PLL1 },
 	{ "allwinner,sun6i-a31-pll6-clk",	AWPLL_A31_PLL6 },
+	{ "allwinner,sun8i-a23-pll1-clk",	AWPLL_A23_PLL1 },
 	{ NULL, 0 }
 };
 
