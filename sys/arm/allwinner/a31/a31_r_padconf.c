@@ -35,6 +35,8 @@ __FBSDID("$FreeBSD$");
 
 #include <arm/allwinner/allwinner_pinctrl.h>
 
+#if defined(SOC_ALLWINNER_A31) || defined(SOC_ALLWINNER_A31S)
+
 const static struct allwinner_pins a31_r_pins[] = {
 	{"PL0",  0, 0,  {"gpio_in", "gpio_out", "s_twi", "s_p2wi", NULL, NULL, NULL, NULL}},
 	{"PL1",  0, 1,  {"gpio_in", "gpio_out", "s_twi", "s_p2wi", NULL, NULL, NULL, NULL}},
@@ -60,3 +62,5 @@ const struct allwinner_padconf a31_r_padconf = {
 	.npins = nitems(a31_r_pins),
 	.pins = a31_r_pins,
 };
+
+#endif

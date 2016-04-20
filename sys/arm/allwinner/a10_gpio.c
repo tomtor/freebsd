@@ -594,7 +594,9 @@ a10_gpio_attach(device_t dev)
 		}
 		break;
 	case AW_R_PINCTRL:
+#if defined(SOC_ALLWINNER_A31) || defined(SOC_ALLWINNER_A31S)
 		sc->padconf = &a31_r_padconf;
+#endif
 		break;
 	}
 
