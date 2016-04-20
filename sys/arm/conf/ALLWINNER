@@ -23,10 +23,11 @@ ident		ALLWINNER
 include 	"std.armv6"
 include 	"../allwinner/std.allwinner"
 
-options 	ARM_INTRNG
+options 	INTRNG
 
 options 	SOC_ALLWINNER_A20
 options 	SOC_ALLWINNER_A31
+options 	SOC_ALLWINNER_A31S
 
 options 	HZ=100
 options 	SCHED_ULE		# ULE scheduler
