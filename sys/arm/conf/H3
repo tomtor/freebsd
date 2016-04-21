@@ -20,6 +20,8 @@
 
 include		ALLWINNER
 
+include 	"../allwinner/h3/std.h3"
+
 ident		H3
 
 options 	SOC_ALLWINNER_H3
