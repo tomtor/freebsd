@@ -7,6 +7,6 @@ DTS=	\
 	cubieboard2.dts \
 	olimex-a20-som-evb.dts \
 	olinuxino-lime.dts \
-	orangepi-plus.dts
+	sun8i-h3-orangepi-one.dts
 
 .include <bsd.dtb.mk>
