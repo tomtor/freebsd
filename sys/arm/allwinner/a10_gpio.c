@@ -75,27 +75,6 @@ __FBSDID("$FreeBSD$");
 #define	AW_PINCTRL	1
 #define	AW_R_PINCTRL	2
 
-static struct ofw_compat_data compat_data[] = {
-	{"allwinner,sun4i-a10-pinctrl", AW_PINCTRL},
-	{"allwinner,sun7i-a20-pinctrl", AW_PINCTRL},
-	{"allwinner,sun6i-a31-pinctrl", AW_PINCTRL},
-	{"allwinner,sun6i-a31-r-pinctrl", AW_R_PINCTRL},
-	{"allwinner,sun6i-a31s-pinctrl", AW_PINCTRL},
-	{NULL,             0}
-};
-
-struct a10_gpio_softc {
-	device_t		sc_dev;
-	device_t		sc_busdev;
-	struct mtx		sc_mtx;
-	struct resource *	sc_mem_res;
-	struct resource *	sc_irq_res;
-	bus_space_tag_t		sc_bst;
-	bus_space_handle_t	sc_bsh;
-	void *			sc_intrhand;
-	const struct allwinner_padconf *	padconf;
-};
-
 /* Defined in a10_padconf.c */
 #ifdef SOC_ALLWINNER_A10
 extern const struct allwinner_padconf a10_padconf;
@@ -119,6 +98,38 @@ extern const struct allwinner_padconf a31s_padconf;
 extern const struct allwinner_padconf a31_r_padconf;
 #endif
 #endif
+
+static struct ofw_compat_data compat_data[] = {
+#ifdef SOC_ALLWINNER_A10
+	{"allwinner,sun4i-a10-pinctrl",		(uintptr_t)&a10_padconf},
+#endif
+#ifdef SOC_ALLWINNER_A20
+	{"allwinner,sun7i-a20-pinctrl",		(uintptr_t)&a20_padconf},
+#endif
+#ifdef SOC_ALLWINNER_A31
+	{"allwinner,sun6i-a31-pinctrl",		(uintptr_t)&a31_padconf},
+	{"allwinner,sun6i-a31-r-pinctrl",	(uintptr_t)&a31_r_padconf},
+#endif
+#ifdef SOC_ALLWINNER_A31S
+	{"allwinner,sun6i-a31s-pinctrl",	(uintptr_t)&a31s_padconf},
+#ifndef SOC_ALLWINNER_A31
+	{"allwinner,sun6i-a31-r-pinctrl",	(uintptr_t)&a31_r_padconf},
+#endif
+#endif
+	{NULL,	0}
+};
+
+struct a10_gpio_softc {
+	device_t		sc_dev;
+	device_t		sc_busdev;
+	struct mtx		sc_mtx;
+	struct resource *	sc_mem_res;
+	struct resource *	sc_irq_res;
+	bus_space_tag_t		sc_bst;
+	bus_space_handle_t	sc_bsh;
+	void *			sc_intrhand;
+	const struct allwinner_padconf *	padconf;
+};
 
 #define	A10_GPIO_LOCK(_sc)		mtx_lock_spin(&(_sc)->sc_mtx)
 #define	A10_GPIO_UNLOCK(_sc)		mtx_unlock_spin(&(_sc)->sc_mtx)
@@ -565,40 +576,8 @@ a10_gpio_attach(device_t dev)
 		goto fail;
 
 	/* Use the right pin data for the current SoC */
-	switch (ofw_bus_search_compatible(dev, compat_data)->ocd_data) {
-	case AW_PINCTRL:
-		switch (allwinner_soc_type()) {
-#ifdef SOC_ALLWINNER_A10
-		case ALLWINNERSOC_A10:
-			sc->padconf = &a10_padconf;
-			break;
-#endif
-#ifdef SOC_ALLWINNER_A20
-		case ALLWINNERSOC_A20:
-			sc->padconf = &a20_padconf;
-			break;
-#endif
-#ifdef SOC_ALLWINNER_A31
-		case ALLWINNERSOC_A31:
-			sc->padconf = &a31_padconf;
-			break;
-		break;
-#endif
-#ifdef SOC_ALLWINNER_A31S
-		case ALLWINNERSOC_A31S:
-			sc->padconf = &a31s_padconf;
-			break;
-#endif
-		default:
-			return (ENOENT);
-		}
-		break;
-	case AW_R_PINCTRL:
-#if defined(SOC_ALLWINNER_A31) || defined(SOC_ALLWINNER_A31S)
-		sc->padconf = &a31_r_padconf;
-#endif
-		break;
-	}
+	sc->padconf = (struct allwinner_padconf *)ofw_bus_search_compatible(dev,
+	    compat_data)->ocd_data;
 
 	if (hwreset_get_by_ofw_idx(dev, 0, &rst) == 0) {
 		error = hwreset_deassert(rst);
