@@ -77,8 +77,7 @@ static struct ofw_compat_data compat_data[] = {
 	  (uintptr_t)"Allwinner APB2 Clock Gates" },
 
 	{ "allwinner,sun8i-h3-bus-gates-clk",
-	  (uintptr_t)"Allwinner ABus Clock Gates" },
-
+	  (uintptr_t)"Allwinner Bus Clock Gates"},
 	{ NULL, 0 }
 };
 

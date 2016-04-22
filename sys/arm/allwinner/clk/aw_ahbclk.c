@@ -67,6 +67,7 @@ enum aw_ahbclk_type {
 	AW_A10_AHB = 1,
 	AW_A13_AHB,
 	AW_A31_AHB1,
+	AW_H3_AHB2,
 };
 
 static struct ofw_compat_data compat_data[] = {
@@ -74,8 +75,8 @@ static struct ofw_compat_data compat_data[] = {
 	{ "allwinner,sun5i-a13-ahb-clk",	AW_A13_AHB },
 	{ "allwinner,sun6i-a31-ahb1-clk",	AW_A31_AHB1 },
 /*
-	{ "allwinner,sun8i-h3-ahb2-clk",	AW_A31_AHB2 },
-	{ "allwinner,sun50i-a64-ahb2-clk",	AW_A64_AHB2 },
+	{ "allwinner,sun8i-h3-ahb2-clk",	AW_H3_AHB2 },
+	{ "allwinner,sun50i-a64-ahb2-clk",	AW_H3_AHB2 },
 */
 	{ NULL, 0 }
 };
