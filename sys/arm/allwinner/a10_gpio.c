@@ -99,7 +99,7 @@ extern const struct allwinner_padconf a31s_padconf;
 extern const struct allwinner_padconf a31_r_padconf;
 #endif
 
-#ifdef SOC_ALLWINNER_H3
+#if defined(SOC_ALLWINNER_H3) || defined(SOC_ALLWINNER_A64)
 extern const struct allwinner_padconf h3_padconf;
 extern const struct allwinner_padconf h3_r_padconf;
 #endif
@@ -121,7 +121,7 @@ static struct ofw_compat_data compat_data[] = {
 #if defined(SOC_ALLWINNER_A31) || defined(SOC_ALLWINNER_A31S)
 	{"allwinner,sun6i-a31-r-pinctrl",	(uintptr_t)&a31_r_padconf},
 #endif
-#ifdef SOC_ALLWINNER_H3
+#if defined(SOC_ALLWINNER_H3) || defined(SOC_ALLWINNER_A64)
 	{"allwinner,sun8i-h3-pinctrl",		(uintptr_t)&h3_padconf},
 	{"allwinner,sun8i-h3-r-pinctrl",	(uintptr_t)&h3_r_padconf},
 #endif

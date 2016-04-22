@@ -125,6 +125,7 @@ device		sdhci
 
 # A64
 device		ehci
+device		fdt_pinctrl
 
 # Serial (COM) ports
 device		uart		# Generic UART driver

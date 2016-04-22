@@ -35,7 +35,7 @@ __FBSDID("$FreeBSD$");
 
 #include <arm/allwinner/allwinner_pinctrl.h>
 
-#ifdef SOC_ALLWINNER_H3
+#if defined(SOC_ALLWINNER_H3) || defined(SOC_ALLWINNER_A64)
 
 const static struct allwinner_pins h3_pins[] = {
 	{"PA0",  0, 0,  {"gpio_in", "gpio_out", "uart2", "jtag", NULL, NULL, "eint", NULL}},
