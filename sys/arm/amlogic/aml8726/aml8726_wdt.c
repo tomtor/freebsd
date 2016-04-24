@@ -290,6 +290,7 @@ static devclass_t aml8726_wdt_devclass;
 EARLY_DRIVER_MODULE(wdt, simplebus, aml8726_wdt_driver, aml8726_wdt_devclass,
     0, 0, BUS_PASS_INTERRUPT + BUS_PASS_ORDER_LATE);
 
+#ifndef __aarch64__
 void
 cpu_reset()
 {
@@ -306,3 +307,4 @@ cpu_reset()
 
 	while (1);
 }
+#endif

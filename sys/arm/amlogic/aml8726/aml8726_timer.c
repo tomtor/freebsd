@@ -333,6 +333,7 @@ static devclass_t aml8726_timer_devclass;
 EARLY_DRIVER_MODULE(timer, simplebus, aml8726_timer_driver,
     aml8726_timer_devclass, 0, 0, BUS_PASS_TIMER);
 
+#ifndef __aarch64__
 void
 DELAY(int usec)
 {
@@ -393,3 +394,4 @@ DELAY(int usec)
 		remaining -= delta;
 	}
 }
+#endif

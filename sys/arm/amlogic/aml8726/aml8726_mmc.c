@@ -604,7 +604,7 @@ aml8726_mmc_attach(device_t dev)
 		sc->port = AML_MMC_MULT_CONFIG_PORT_C;
 	else {
 		device_printf(dev, "unknown function attribute %.*s in FDT\n",
-		    len, function_name);
+		    (int)len, function_name);
 		free(function_name, M_OFWPROP);
 		return (ENXIO);
 	}
@@ -660,7 +660,7 @@ aml8726_mmc_attach(device_t dev)
 		else {
 			device_printf(dev,
 			    "unknown voltage attribute %.*s in FDT\n",
-			    len, voltage);
+			    (int)len, voltage);
 			free(voltages, M_OFWPROP);
 			return (ENXIO);
 		}

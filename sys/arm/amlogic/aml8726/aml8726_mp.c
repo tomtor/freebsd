@@ -71,10 +71,12 @@ static const char *scu_compatible[] = {
 	NULL
 };
 
+#ifndef __aarch64__
 static const char *scu_errata_764369[] = {
 	"arm,cortex-a9-scu",
 	NULL
 };
+#endif
 
 static const char *cpucfg_compatible[] = {
 	"amlogic,aml8726-cpuconfig",
@@ -341,6 +343,7 @@ power_on_cpu(int cpu)
 	}
 }
 
+#ifndef __aarch64__
 void
 platform_mp_setmaxid(void)
 {
@@ -417,7 +420,9 @@ moveon:
 	mp_ncpus = ncpu;
 	mp_maxid = ncpu - 1;
 }
+#endif
 
+#ifndef __aarch64__
 void
 platform_mp_start_ap(void)
 {
@@ -506,6 +511,7 @@ platform_mp_start_ap(void)
 	    0x100000);
 	memset(&aml8726_smp, 0, sizeof(aml8726_smp));
 }
+#endif
 
 /*
  * Stub drivers for cosmetic purposes.

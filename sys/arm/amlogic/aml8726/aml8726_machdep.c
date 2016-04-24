@@ -117,6 +117,7 @@ platform_gpio_init(void)
 	 */
 	aml8726_identify_soc();
 
+#ifndef __aarch64__
 	/*
 	 * My aml8726-m3 development box which identifies the CPU as
 	 * a Cortex A9-r2 rev 4 randomly locks up during boot when WFI
@@ -129,6 +130,7 @@ platform_gpio_init(void)
 	default:
 		break;
 	}
+#endif
 
 	/*
 	 * This FDT fixup should arguably be called through fdt_fixup_table,

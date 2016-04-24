@@ -209,7 +209,7 @@ aml8726_pinctrl_configure_pins(device_t dev, phandle_t cfgxref)
 
 	if (f->name == NULL) {
 		device_printf(dev, "unknown function attribute %.*s in FDT\n",
-		    len, function_name);
+		    (int)len, function_name);
 		free(function_name, M_OFWPROP);
 		return (ENXIO);
 	}
@@ -233,7 +233,7 @@ aml8726_pinctrl_configure_pins(device_t dev, phandle_t cfgxref)
 		else {
 			device_printf(dev,
 			    "unknown pull attribute %.*s in FDT\n",
-			    len, pull);
+			    (int)len, pull);
 			free(pull, M_OFWPROP);
 			return (ENXIO);
 		}
@@ -275,7 +275,7 @@ aml8726_pinctrl_configure_pins(device_t dev, phandle_t cfgxref)
 		if (p->name == NULL) {
 			/* display message prior to queuing up next string */
 			device_printf(dev, "unknown pin attribute %.*s in FDT\n",
-			    len, pin_name);
+			    (int)len, pin_name);
 		}
 
 		/* queue up next string */

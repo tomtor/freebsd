@@ -45,12 +45,12 @@ struct fdt_sense_level {
 	enum intr_polarity	pol;
 };
 
-#if defined(__arm__) && !defined(INTRNG)
+#if (defined(__arm__) || defined(__aarch64__)) && !defined(INTRNG)
 typedef int (*fdt_pic_decode_t)(phandle_t, pcell_t *, int *, int *, int *);
 extern fdt_pic_decode_t fdt_pic_table[];
 #endif
 
-#if defined(__arm__) || defined(__powerpc__)
+#if defined(__arm__) || defined(__powerpc__) || defined(__aarch64__)
 typedef void (*fdt_fixup_t)(phandle_t);
 struct fdt_fixup_entry {
 	char		*model;

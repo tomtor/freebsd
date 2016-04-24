@@ -107,7 +107,7 @@ aml8726_ccm_configure_gates(struct aml8726_ccm_softc *sc)
 			/* display message prior to queuing up next string */
 			device_printf(sc->dev,
 			    "unknown function attribute %.*s in FDT\n",
-			    len, function_name);
+			    (int)len, function_name);
 		}
 
 		/* queue up next string */

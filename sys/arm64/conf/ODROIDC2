@@ -19,15 +19,14 @@
 # $FreeBSD$
 
 cpu		ARM64
-ident		PINE64
+ident		ODROIDC2
+
+#include         "AMLS905"
 
 makeoptions	DEBUG=-g		# Build kernel with gdb(1) debug symbols
 makeoptions	WITH_CTF=1		# Run ctfconvert(1) for DTrace support
 
-#files           "../../arm/allwinner/files.allwinner"
-#files           "../../arm/allwinner/a20/files.a20"
-
-options		EARLY_PRINTF
+#options		EARLY_PRINTF
 
 options 	SCHED_ULE		# ULE scheduler
 options 	PREEMPTION		# Enable kernel thread preemption
@@ -93,7 +92,7 @@ options 	ROOTDEVNAME=\"ufs:/dev/mmcsd0s3a\"
 
 # SoC support
 #options 	SOC_BRCM_BCM2837
-options		SOC_ALLWINNER_A64
+#options	SOC_ALLWINNER_A64
 
 # VirtIO support
 device		virtio
@@ -127,6 +126,8 @@ device		sdhci
 device		ehci
 device		fdt_pinctrl
 
+# ODROIDC2
+
 # Serial (COM) ports
 device		uart		# Generic UART driver
 device		uart_ns8250	# ns8250-type UART driver
@@ -159,7 +160,7 @@ device		bpf		# Berkeley packet filter
 
 options 	FDT
 options		FDT_DTB_STATIC
-makeoptions	FDT_DTS_FILE=pine64.dts
+makeoptions	FDT_DTS_FILE=odroidc2.dts
 
 device		acpi
 
