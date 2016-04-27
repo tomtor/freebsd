@@ -7,6 +7,13 @@ THUNDERX_PASS_1_1_ERRATA	opt_global.h
 VFP				opt_global.h
 SOC_ALLWINNER_A64		opt_global.h
 
+KERNVIRTADDR			opt_global.h
+
+GIC_DEFAULT_ICFGR_INIT		opt_global.h
+
+IPI_IRQ_START			opt_global.h
+IPI_IRQ_END			opt_global.h
+
 # SoC Support
 SOC_BRCM_BCM2837		opt_soc.h
 SOC_CAVM_THUNDERX		opt_soc.h

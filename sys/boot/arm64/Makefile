@@ -1,5 +1,6 @@
 # $FreeBSD$
 
-SUBDIR=		rpi
+#SUBDIR=		rpi aml
+SUBDIR=		aml
 
 .include <bsd.subdir.mk>
