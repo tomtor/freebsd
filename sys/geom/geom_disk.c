@@ -107,7 +107,7 @@ g_disk_access(struct g_provider *pp, int r, int w, int e)
 	if (sc == NULL || (dp = sc->dp) == NULL || dp->d_destroyed) {
 		/*
 		 * Allow decreasing access count even if disk is not
-		 * avaliable anymore.
+		 * available anymore.
 		 */
 		if (r <= 0 && w <= 0 && e <= 0)
 			return (0);
@@ -846,7 +846,8 @@ disk_attr_changed(struct disk *dp, const char *attr, int flag)
 	if (gp != NULL)
 		LIST_FOREACH(pp, &gp->provider, provider)
 			(void)g_attr_changed(pp, attr, flag);
-	snprintf(devnamebuf, 128, "devname=%s%d", dp->d_name, dp->d_unit);
+	snprintf(devnamebuf, sizeof(devnamebuf), "devname=%s%d", dp->d_name,
+	    dp->d_unit);
 	devctl_notify("GEOM", "disk", attr, devnamebuf);
 }
 

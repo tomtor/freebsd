@@ -38,6 +38,11 @@
 #   xargs -n1 | sort | uniq -d;
 # done
 
+# 20160430: kvm_getfiles(3) removed from kvm(3)
+OLD_LIBS+=usr/lib/libkvm.so.6
+OLD_FILES+=usr/share/man/man3/kvm_getfiles.3.gz
+# 20160423: remove mroute6d
+OLD_FILES+=etc/rc.d/mroute6d
 # 20160419: rename units.lib -> definitions.units
 OLD_FILES+=usr/share/misc/units.lib
 # 20160419: remove Big5HKSCS locales
