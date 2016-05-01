@@ -44,6 +44,7 @@
 			next-level-cache = <&L2>;
 			reg = <0x200>;
 		};
+/*
 
 		cpu@201 {
 			device_type = "cpu";
@@ -65,6 +66,7 @@
 			next-level-cache = <&L2>;
 			reg = <0x203>;
 		};
+*/
 	};
 
 	clk81: clk@0 {

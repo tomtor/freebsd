@@ -104,7 +104,7 @@ uart_cninit(struct consdev *cp)
 	/*
 	 * Give pending characters a chance to drain.
 	 */
-	DELAY(4000);
+	DELAY(10000);
 #endif
 
 	cr = ub_getreg(AML_UART_CONTROL_REG);
@@ -166,7 +166,8 @@ CONSOLE_DRIVER(uart);
 #error SOCDEV_PA and SOCDEV_VA must be defined.
 #endif
 
-static void
+void eputc(int);
+void
 eputc(int c)
 {
 

@@ -32,7 +32,10 @@ options		IPI_IRQ_END=15
 
 options 	EARLY_PRINTF
 options 	SOCDEV_PA=0xc8100000
-options 	SOCDEV_VA=0xd8100000
+options 	SOCDEV_VA=0xc8100000
+#options		VERBOSE_SYSINIT
+
+#options         INTRNG
 
 options 	SCHED_ULE		# ULE scheduler
 options 	PREEMPTION		# Enable kernel thread preemption
@@ -79,7 +82,7 @@ options 	VFP			# Floating-point support
 options 	RACCT			# Resource accounting framework
 options 	RACCT_DEFAULT_TO_DISABLED # Set kern.racct.enable=0 by default
 options 	RCTL			# Resource limits
-options 	SMP
+#options 	SMP
 
 # Debugging support.  Always need this:
 options 	KDB			# Enable kernel debugger support.
@@ -96,9 +99,12 @@ options 	MALLOC_DEBUG_MAXZONES=8	# Separate malloc(9) zones
 
 options 	ROOTDEVNAME=\"ufs:/dev/mmcsd0s3a\"
 
+#options		fdt
+
 # SoC support
 #options 	SOC_BRCM_BCM2837
 #options	SOC_ALLWINNER_A64
+options		SOC_S905
 
 # VirtIO support
 device		virtio
@@ -137,7 +143,7 @@ device		fdt_pinctrl
 # Serial (COM) ports
 device		uart		# Generic UART driver
 device		uart_ns8250	# ns8250-type UART driver
-#device		pl011
+device		pl011
 
 # USB support
 options 	USB_DEBUG		# enable debug msgs

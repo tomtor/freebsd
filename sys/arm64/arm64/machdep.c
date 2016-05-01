@@ -674,6 +674,7 @@ add_fdt_mem_regions(struct mem_region *mr, int mrcnt, vm_paddr_t *physmap,
 {
 
 	for (int i = 0; i < mrcnt; i++) {
+#ifndef SOC_S905
 		/* Hack up reserve space for the firmware */
 		if (mr[i].mr_start == 0) {
 			if (mr[i].mr_size <= 0x100000)
@@ -681,6 +682,7 @@ add_fdt_mem_regions(struct mem_region *mr, int mrcnt, vm_paddr_t *physmap,
 			mr[i].mr_start += 0x100000;
 			mr[i].mr_size -= 0x100000;
 		}
+#endif
 		if (!add_physmap_entry(mr[i].mr_start, mr[i].mr_size, physmap,
 		    physmap_idxp))
 			break;
@@ -790,8 +792,16 @@ try_load_dtb(caddr_t kmdp)
 
 	dtbp = MD_FETCH(kmdp, MODINFOMD_DTBP, vm_offset_t);
 	if (dtbp == (vm_offset_t)NULL) {
+#if defined(FDT_DTB_STATIC)
+		/*
+		 * In case the device tree blob was not retrieved (from metadata) try
+		 * to use the statically embedded one.
+		 */
+		dtbp = (vm_offset_t)&fdt_static_dtb;
+#else
 		printf("ERROR loading DTB\n");
 		return;
+#endif
 	}
 
 	if (OF_install(OFW_FDT, 0) == FALSE)
@@ -851,15 +861,23 @@ initarm(struct arm64_bootparams *abp)
 	vm_paddr_t mem_len;
 	int i;
 
+#ifndef SOC_S905
 	/* Set the module data location */
 	preload_metadata = (caddr_t)(uintptr_t)(abp->modulep);
+#else
+	preload_metadata = 0;
+#endif
 
 	/* Find the kernel address */
 	kmdp = preload_search_by_type("elf kernel");
 	if (kmdp == NULL)
 		kmdp = preload_search_by_type("elf64 kernel");
 
+#ifndef SOC_S905
 	boothowto = MD_FETCH(kmdp, MODINFOMD_HOWTO, int);
+#else
+	boothowto = RB_VERBOSE;
+#endif
 	init_static_kenv(MD_FETCH(kmdp, MODINFOMD_ENVP, char *), 0);
 
 #ifdef FDT
@@ -868,6 +886,9 @@ initarm(struct arm64_bootparams *abp)
 
 	/* Find the address to start allocating from */
 	lastaddr = MD_FETCH(kmdp, MODINFOMD_KERNEND, vm_offset_t);
+#ifdef SOC_S905
+	lastaddr= KERNBASE + 0x800000; /* FIX THIS! */
+#endif
 
 	/* Load the physical memory ranges */
 	physmap_idx = 0;

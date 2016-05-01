@@ -86,6 +86,17 @@ _start:
 	 */
 
 	/* Create the page tables */
+/*
+	mov	x9,x28
+	bl	sayitx
+	bl	delay
+	mov	x9,x28
+	lsr	x9,x9,#32
+	bl	sayitx
+	bl	delay
+	ldr	x9,=0xDEADBEEF
+	bl	sayitx
+*/
 	bl	create_pagetables
 
 	/*
@@ -102,6 +113,101 @@ _start:
 	ldr	x15, .Lvirtdone
 	br	x15
 
+/*
+delay:
+	mov	x10,#0x00100000
+delloop:
+	sub	x10,x10,#1
+	cmp	x10,#0
+	b.ne	delloop
+	ret
+sayit:
+	ldr	x10,=0xc81004c0
+	strb	w9, [x10,0]
+	ret
+sayitx:
+	ldr	x10,=0xc81004c0
+	mov	x12,#0x30
+	lsr	x11,x9,#28
+	and	x11,x11,#0xF
+	add	x11,x11,x12
+	cmp	x11,#0x39
+	b.le	nofix1
+	add	x11,x11,#7
+nofix1:
+	strb	w11, [x10,0]
+	lsr	x11,x9,#24
+	and	x11,x11,#0xF
+	add	x11,x11,x12
+	cmp	x11,#0x39
+	b.le	nofix2
+	add	x11,x11,#7
+nofix2:
+	strb	w11, [x10,0]
+	lsr	x11,x9,#20
+	and	x11,x11,#0xF
+	add	x11,x11,x12
+	cmp	x11,#0x39
+	b.le	nofix3
+	add	x11,x11,#7
+nofix3:
+	strb	w11, [x10,0]
+	lsr	x11,x9,#16
+	and	x11,x11,#0xF
+	add	x11,x11,x12
+	cmp	x11,#0x39
+	b.le	nofix4
+	add	x11,x11,#7
+nofix4:
+	strb	w11, [x10,0]
+	lsr	x11,x9,#12
+	and	x11,x11,#0xF
+	add	x11,x11,x12
+	cmp	x11,#0x39
+	b.le	nofix5
+	add	x11,x11,#7
+nofix5:
+	strb	w11, [x10,0]
+	lsr	x11,x9,#8
+	and	x11,x11,#0xF
+	add	x11,x11,x12
+	cmp	x11,#0x39
+	b.le	nofix6
+	add	x11,x11,#7
+nofix6:
+	strb	w11, [x10,0]
+	lsr	x11,x9,#4
+	and	x11,x11,#0xF
+	add	x11,x11,x12
+	cmp	x11,#0x39
+	b.le	nofix7
+	add	x11,x11,#7
+nofix7:
+	strb	w11, [x10,0]
+	and	x11,x9,#0xF
+	add	x11,x11,x12
+	cmp	x11,#0x39
+	b.le	nofix8
+	add	x11,x11,#7
+nofix8:
+	strb	w11, [x10,0]
+	mov	x11,#0x0d
+	strb	w11, [x10,0]
+	mov	x11,#0x0a
+	strb	w11, [x10,0]
+	ret
+sayhip:
+	mov	x9, #0x48
+	ldr	x10,=0xc81004c0
+	strb	w9, [x10,0]
+	ret
+sayhiv:
+	mov	x9, #0x48
+	ldr	x10,=0xd81004c0
+	strb	w9, [x10,0]
+	ret
+*/
+	
 virtdone:
 	/* Set up the stack */
 	adr	x25, initstack_end
