@@ -30,7 +30,7 @@ options		GIC_DEFAULT_ICFGR_INIT=0xffffffff
 options		IPI_IRQ_START=0
 options		IPI_IRQ_END=15
 
-options 	EARLY_PRINTF
+#options 	EARLY_PRINTF
 options 	SOCDEV_PA=0xc8100000
 options 	SOCDEV_VA=0xc8100000
 #options		VERBOSE_SYSINIT

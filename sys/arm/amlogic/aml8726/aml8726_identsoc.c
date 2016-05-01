@@ -62,6 +62,7 @@ __FBSDID("$FreeBSD$");
 uint32_t aml8726_soc_hw_rev = AML_SOC_HW_REV_UNKNOWN;
 uint32_t aml8726_soc_metal_rev = AML_SOC_METAL_REV_UNKNOWN;
 
+#ifndef SOC_S905
 static const struct {
 	uint32_t hw_rev;
 	char *desc;
@@ -85,6 +86,7 @@ static const struct {
 	{ AML_SOC_M8_METAL_REV_C,	"C" },
 	{ 0xff, NULL }
 };
+#endif
 
 void
 aml8726_identify_soc()
@@ -112,6 +114,9 @@ aml8726_identify_soc()
 static void
 aml8726_identify_announce_soc(void *dummy)
 {
+#ifdef SOC_S905
+	printf("Fix this HW: %d\n",aml8726_soc_hw_rev);
+#else
 	int i;
 
 	for (i = 0; aml8726_soc_desc[i].desc; i++)
@@ -136,6 +141,7 @@ aml8726_identify_announce_soc(void *dummy)
 	}
 
 	printf("\n");
+#endif
 }
 
 SYSINIT(aml8726_identify_announce_soc, SI_SUB_CPU, SI_ORDER_SECOND,

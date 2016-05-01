@@ -64,19 +64,15 @@ void
 msgbuf_init(struct msgbuf *mbp, void *ptr, int size)
 {
 
-	printf("init: %lx\n", (unsigned long)mbp);
 	mbp->msg_ptr = ptr;
 	mbp->msg_size = size;
 	mbp->msg_seqmod = SEQMOD(size);
 	msgbuf_clear(mbp);
-	printf("clear\n");
 	mbp->msg_magic = MSG_MAGIC;
 	mbp->msg_lastpri = -1;
 	mbp->msg_flags = 0;
 	bzero(&mbp->msg_lock, sizeof(mbp->msg_lock));
-	printf("after 0\n");
 	mtx_init(&mbp->msg_lock, "msgbuf", NULL, MTX_SPIN);
-	printf("after init\n");
 }
 
 /*
