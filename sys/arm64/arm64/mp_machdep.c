@@ -182,6 +182,7 @@ arm64_cpu_attach(device_t dev)
 static void
 release_aps(void *dummy __unused)
 {
+#ifndef SOC_S905
 	int cpu, i;
 
 	/* Setup the IPI handler */
@@ -205,7 +206,7 @@ release_aps(void *dummy __unused)
 		}
 		DELAY(1000);
 	}
-
+#endif
 	printf("APs not started\n");
 }
 SYSINIT(start_aps, SI_SUB_SMP, SI_ORDER_FIRST, release_aps, NULL);

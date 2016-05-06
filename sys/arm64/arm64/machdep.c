@@ -78,6 +78,11 @@ __FBSDID("$FreeBSD$");
 #include <machine/reg.h>
 #include <machine/vmparam.h>
 
+#ifdef SOC_S905
+#include <machine/platform.h>
+#endif
+
+
 #ifdef VFP
 #include <machine/vfp.h>
 #endif
@@ -940,8 +945,14 @@ initarm(struct arm64_bootparams *abp)
 	pmap_bootstrap(abp->kern_l0pt, abp->kern_l1pt,
 	    KERNBASE - abp->kern_delta, lastaddr - KERNBASE);
 
+#ifdef SOC_S905
+	platform_devmap_init();
+#endif
 	devmap_bootstrap(0, NULL);
 
+#ifdef SOC_S905
+	platform_gpio_init();
+#endif
 	cninit();
 
 	init_proc0(abp->kern_stack);

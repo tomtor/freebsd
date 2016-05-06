@@ -121,14 +121,12 @@ cpu_reset(void)
 #define S905_Watchdog_CNTL	(volatile uint32_t *) 0xc11098d0
 
 	printf("trigger watchdog for reset\n");
-	DELAY(20000);
 	while (1) {
 		*S905_Watchdog_CNTL= ( 0x3 | (1 << 21) | (1 << 23) | (1 << 24)
 					| (1 << 25) | (1 << 26));
 		*S905_Watchdog_RESET= 0;
 
 		*S905_Watchdog_CNTL= (*(S905_Watchdog_CNTL) | (1<<18));
-		*S905_Watchdog_CNTL;
 	}
 #endif
 }

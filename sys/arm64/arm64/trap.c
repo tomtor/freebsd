@@ -258,7 +258,18 @@ void
 do_el1h_sync(struct trapframe *frame)
 {
 	uint32_t exception;
-	uint64_t esr, far;
+	uint64_t esr;
+#if 0
+	uint64_t far;
+#endif
+	static int handling;
+
+	if (handling) {
+		printf("Recursive do_el1h_sync\n");
+		cpu_reset();
+	}
+
+	handling++;
 
 	/* Read the esr register to get the exception details */
 	esr = READ_SPECIALREG(esr_el1);
@@ -280,10 +291,12 @@ do_el1h_sync(struct trapframe *frame)
 		printf(" esr:         %.8lx\n", esr);
 		panic("VFP exception in the kernel");
 	case EXCP_DATA_ABORT:
+#if 0
 		far = READ_SPECIALREG(far_el1);
 		intr_enable();
 		data_abort(frame, esr, far, 0);
 		break;
+#endif
 	case EXCP_BRK:
 #ifdef KDTRACE_HOOKS
 		if ((esr & ESR_ELx_ISS_MASK) == 0x40d && \
@@ -296,6 +309,7 @@ do_el1h_sync(struct trapframe *frame)
 	case EXCP_WATCHPT_EL1:
 	case EXCP_SOFTSTP_EL1:
 #ifdef KDB
+		printf("TRAP\n");
 		kdb_trap(exception, 0, frame);
 #else
 		panic("No debugger in kernel.\n");
@@ -306,6 +320,7 @@ do_el1h_sync(struct trapframe *frame)
 		panic("Unknown kernel exception %x esr_el1 %lx\n", exception,
 		    esr);
 	}
+	handling= 0;
 }
 
 /*

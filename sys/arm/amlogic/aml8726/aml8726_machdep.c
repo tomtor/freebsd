@@ -71,8 +71,10 @@ aml8726_fixup_busfreq()
 
 	if ((freq = aml8726_clkmsr_bus_frequency()) == 0 ||
 	    (node = OF_finddevice("/soc")) == 0 ||
-	    fdt_is_compatible_strict(node, "simple-bus") == 0)
+	    fdt_is_compatible_strict(node, "simple-bus") == 0) {
+		printf("Enter aml8726_fixup_busfreq loop\n");
 		while (1);
+	}
 
 	freq = cpu_to_fdt32(freq);
 
@@ -107,8 +109,13 @@ platform_gpio_init(void)
 	 * This means there's a deadzone in initarm between setttb
 	 * and platform_gpio_init during which printf can't be used.
 	 */
+#ifndef SOC_S905
 	aml8726_aobus_kva_base =
 	    (vm_offset_t)devmap_ptov(0xc8100000, 0x100000);
+#else
+	aml8726_aobus_kva_base =
+	    (vm_offset_t)devmap_ptov(0xc8100000, 0x10000);
+#endif
 
 	/*
 	 * The hardware mux used by clkmsr is unique to the SoC (though
@@ -155,8 +162,18 @@ platform_late_init(void)
 int
 platform_devmap_init(void)
 {
-
-	devmap_add_entry(0xc1100000, 0x200000); /* cbus */
+printf("platform_devmap_init (cbus)\n");
+#ifdef SOC_S905
+	devmap_add_entry(0xc1100000, 0x10000); /* cbus */
+	devmap_add_entry(0xc4300000, 0x10000); /* periph */
+	devmap_add_entry(0xc4300000, 0x10000); /* periph */
+	devmap_add_entry(0xc8000000, 0x10000); /* apbbus */
+	devmap_add_entry(0xc8100000, 0x10000); /* aobus */
+	devmap_add_entry(0xc9000000, 0x10000); /* ahbbus */
+	devmap_add_entry(0xd9000000, 0x10000); /* ahb */
+	devmap_add_entry(0xda000000, 0x10000); /* secbus */
+#else
+	devmap_add_entry(0xc1100000, 0x100000); /* cbus */
 	devmap_add_entry(0xc4200000, 0x100000); /* pl310 */
 	devmap_add_entry(0xc4300000, 0x100000); /* periph */
 	devmap_add_entry(0xc8000000, 0x100000); /* apbbus */
@@ -164,6 +181,7 @@ platform_devmap_init(void)
 	devmap_add_entry(0xc9000000, 0x800000); /* ahbbus */
 	devmap_add_entry(0xd9000000, 0x100000); /* ahb */
 	devmap_add_entry(0xda000000, 0x100000); /* secbus */
+#endif
 
 	return (0);
 }
@@ -186,6 +204,7 @@ struct fdt_fixup_entry fdt_fixup_table[] = {
 	{ NULL, NULL }
 };
 
+#ifndef __aarch64__
 #ifndef INTRNG
 #ifndef DEV_GIC
 static int
@@ -216,3 +235,4 @@ fdt_pic_decode_t fdt_pic_table[] = {
 	NULL
 };
 #endif /* INTRNG */
+#endif /* __aarch64__ */

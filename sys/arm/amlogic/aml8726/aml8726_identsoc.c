@@ -62,7 +62,6 @@ __FBSDID("$FreeBSD$");
 uint32_t aml8726_soc_hw_rev = AML_SOC_HW_REV_UNKNOWN;
 uint32_t aml8726_soc_metal_rev = AML_SOC_METAL_REV_UNKNOWN;
 
-#ifndef SOC_S905
 static const struct {
 	uint32_t hw_rev;
 	char *desc;
@@ -73,6 +72,7 @@ static const struct {
 	{ AML_SOC_HW_REV_M6TVL,	"aml8726-m6tvl" },
 	{ AML_SOC_HW_REV_M8,	"aml8726-m8" },
 	{ AML_SOC_HW_REV_M8B,	"aml8726-m8b" },
+	{ AML_SOC_HW_REV_S905,	"aml-s905" },
 	{ 0xff, NULL }
 };
 
@@ -84,13 +84,17 @@ static const struct {
 	{ AML_SOC_M8_METAL_REV_M2_A,	"MarkII A" },
 	{ AML_SOC_M8_METAL_REV_B,	"B" },
 	{ AML_SOC_M8_METAL_REV_C,	"C" },
+	{ AML_SOC_S905_REV_0,		"0" },
 	{ 0xff, NULL }
 };
-#endif
 
 void
 aml8726_identify_soc()
 {
+	/* bus_space_unmap hangs, so... */
+	aml8726_soc_hw_rev = 0x1F;
+	aml8726_soc_metal_rev = 0x0;
+	printf("Fix me\n");
 	int err;
 	struct resource res;
 
@@ -98,7 +102,11 @@ aml8726_identify_soc()
 
 	res.r_bustag = fdtbus_bs_tag;
 
+#ifdef SOC_S905
+	err = bus_space_map(res.r_bustag, AML_SOC_CBUS_BASE_ADDR, 0x10000,
+#else
 	err = bus_space_map(res.r_bustag, AML_SOC_CBUS_BASE_ADDR, 0x100000,
+#endif
 	    0, &res.r_bushandle);
 
 	if (err)
@@ -108,15 +116,16 @@ aml8726_identify_soc()
 
 	aml8726_soc_metal_rev = bus_read_4(&res, AML_SOC_METAL_REV_REG);
 
+#ifdef SOC_S905
+	bus_space_unmap(res.r_bustag, res.r_bushandle, 0x10000);
+#else
 	bus_space_unmap(res.r_bustag, res.r_bushandle, 0x100000);
+#endif
 }
 
 static void
 aml8726_identify_announce_soc(void *dummy)
 {
-#ifdef SOC_S905
-	printf("Fix this HW: %d\n",aml8726_soc_hw_rev);
-#else
 	int i;
 
 	for (i = 0; aml8726_soc_desc[i].desc; i++)
@@ -141,7 +150,6 @@ aml8726_identify_announce_soc(void *dummy)
 	}
 
 	printf("\n");
-#endif
 }
 
 SYSINIT(aml8726_identify_announce_soc, SI_SUB_CPU, SI_ORDER_SECOND,

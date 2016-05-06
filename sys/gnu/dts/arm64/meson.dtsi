@@ -57,6 +57,7 @@
 		cache-level = <2>;
 	};
 
+/*
 	gic: interrupt-controller@c4301000 {
 		compatible = "arm,cortex-a9-gic";
 		reg = <0xc4301000 0x1000>,
@@ -64,12 +65,62 @@
 		interrupt-controller;
 		#interrupt-cells = <3>;
 	};
+*/
+	gic: interrupt-controller@c4301000{
+		compatible = "arm,gic-400";
+		#interrupt-cells = <3>;
+		#address-cells = <0>; 
+		interrupt-controller;
+		reg = <0xc4301000 0x1000>,
+		      <0xc4302000 0x2000>,
+		      <0xc4304000 0x2000>,
+		      <0xc4306000 0x2000>;
+		interrupts = <0 9 1>;
+	};
+/*
+	gic: interrupt-controller@c4301000{
+			compatible = "arm,cortex-a15-gic";
+                        #interrupt-cells = <3>;
+                        #size-cells = <0>;
+                        #address-cells = <1>;
+                        interrupt-controller;
+                        interrupts = <1 9 0xf04>;
+                        reg = <0xc4301000 0x1000>,
+                              <0xc4302000 0x1000>,
+                              <0xc4304000 0x2000>,
+                              <0xc4306000 0x2000>;
+        };
+*/
 
+/*
 	timer@c1109940 {
 		compatible = "amlogic,meson6-timer";
 		reg = <0xc1109940 0x18>;
 		interrupts = <0 10 1>;
 	};
+*/
+	timer@c1109990 {
+		compatible = "amlogic,meson6-timer";
+		reg = <0xc1109990 0x18>;
+		interrupts = <0 60 1>;
+	};
+	timer {
+		compatible = "arm,armv7-timer";
+		interrupts = <3 0>, // PHYS_SECURE_PPI
+			     <3 1>, // PHYS_NONSECURE_PPI
+			     <3 3>, // VIRT_PPI
+			     <3 2>; // HYP_PPI
+		always-on;
+	};
+/*
+	timer {
+		compatible = "arm,armv7-timer";
+		interrupts = <1 13 0xf08>,
+				<1 14 0xf08>,
+			        <1 11 0xf08>,
+			        <1 10 0xf08>;
+	};
+*/
 
 	soc {
 		compatible = "simple-bus";
@@ -81,6 +132,7 @@
 			compatible = "amlogic,meson6-wdt";
 			reg = <0xc1109900 0x8>;
 			interrupts = <0 0 1>;
+			status = "disabled";
 		};
 
 		uart_AO: serial@c81004c0 {

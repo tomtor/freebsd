@@ -21,12 +21,12 @@ arm/allwinner/h3/h3_r_padconf.c optional	soc_allwinner_a64
 #arm/allwinner/a10_ahci.c        optional        ahci soc_allwinner_a64
 #arm/allwinner/a10_clk.c         optional	soc_allwinner_a64
 
-#dev/extres/clk/clkdev_if.m	standard
-#dev/extres/clk/clknode_if.m	standard
-#dev/extres/clk/clk.c		standard
-#dev/extres/clk/clk_gate.c	standard
-#dev/extres/clk/clk_mux.c	standard
-#dev/extres/clk/clk_fixed.c	standard
+dev/extres/clk/clkdev_if.m	standard
+dev/extres/clk/clknode_if.m	standard
+dev/extres/clk/clk.c		standard
+dev/extres/clk/clk_gate.c	standard
+dev/extres/clk/clk_mux.c	standard
+dev/extres/clk/clk_fixed.c	standard
 #dev/extres/hwreset/hwreset.c	standard
 #dev/extres/hwreset/hwreset_if.m	standard
 dev/extres/regulator/regnode_if.m standard
@@ -49,7 +49,9 @@ dev/extres/regulator/regulator.c standard
 ##arm/allwinner/if_emac.c         optional        emac soc_allwinner_a64
 #arm/allwinner/sunxi_dma_if.m    optional	soc_allwinner_a64
 #
-arm/arm/platform_if.m		optional	soc_allwinner_a64
+#arm/arm/platform_if.m		optional	soc_allwinner_a64
+#arm/arm/platform.c		standard
+#arm/arm/platform_if.m		standard
 #dev/fdt/fdt_pinctrl_if.m	optional	soc_allwinner_a64
 dev/fdt/fdt_clock_if.m		optional	soc_allwinner_a64
 dev/fdt/fdt_arm_platform.c	optional	soc_allwinner_a64
@@ -83,8 +85,9 @@ arm/amlogic/aml8726/aml8726_identsoc.c          standard
 arm/amlogic/aml8726/aml8726_ccm.c               standard
 arm/amlogic/aml8726/aml8726_clkmsr.c            standard
 #arm/amlogic/aml8726/aml8726_pic.c               optional        aml_pic
+#arm/amlogic/aml8726/aml8726_pic.c               standard
 arm/amlogic/aml8726/aml8726_rtc.c               standard
-arm/amlogic/aml8726/aml8726_timer.c             standard
+#arm/amlogic/aml8726/aml8726_timer.c             standard
 arm/amlogic/aml8726/aml8726_wdt.c               standard
 
 # serial console for debugging early boot code
@@ -194,6 +197,7 @@ dev/vnic/thunder_mdio.c		optional	vnic
 dev/vnic/lmac_if.m		optional	vnic
 kern/kern_clocksource.c		standard
 kern/subr_devmap.c		standard
+#kern/subr_intr.c		standard
 libkern/bcmp.c			standard
 libkern/ffs.c			standard
 libkern/ffsl.c			standard

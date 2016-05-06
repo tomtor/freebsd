@@ -43,6 +43,7 @@ void aml8726_identify_soc(void);
 #define	AML_SOC_HW_REV_M6TVL		0x18
 #define	AML_SOC_HW_REV_M8		0x19
 #define	AML_SOC_HW_REV_M8B		0x1b
+#define	AML_SOC_HW_REV_S905		0x1f
 
 #define	AML_SOC_METAL_REV_REG		0x81a8
 #define	AML_SOC_METAL_REV_UNKNOWN	0xffffffff
@@ -51,6 +52,7 @@ void aml8726_identify_soc(void);
 #define	AML_SOC_M8_METAL_REV_B		0x11111113
 #define	AML_SOC_M8_METAL_REV_C		0x11111133
 #define	AML_SOC_M8B_METAL_REV_A		0x11111111
+#define	AML_SOC_S905_REV_0		0x0
 
 extern uint32_t aml8726_soc_hw_rev;
 extern uint32_t aml8726_soc_metal_rev;

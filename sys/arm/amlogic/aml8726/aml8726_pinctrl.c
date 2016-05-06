@@ -138,6 +138,7 @@ aml8726_pinctrl_attach(device_t dev)
 		sc->soc.pud_ctrl = true;
 		break;
 	case AML_SOC_HW_REV_M8B:
+	case AML_SOC_HW_REV_S905:
 		sc->soc.func = aml8726_m8b_pinctrl;
 		sc->soc.ppin = aml8726_m8b_pkg_pin;
 		sc->soc.pud_ctrl = true;

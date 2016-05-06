@@ -25,12 +25,13 @@ makeoptions	DEBUG=-g		# Build kernel with gdb(1) debug symbols
 makeoptions	WITH_CTF=1		# Run ctfconvert(1) for DTrace support
 
 # Set all global interrupts to be edge triggered, active high.
-options		GIC_DEFAULT_ICFGR_INIT=0xffffffff
+#options		GIC_DEFAULT_ICFGR_INIT=0xffffffff
+#options		DEV_GIC
 
-options		IPI_IRQ_START=0
-options		IPI_IRQ_END=15
+#options		IPI_IRQ_START=0
+#options		IPI_IRQ_END=15
 
-#options 	EARLY_PRINTF
+options 	EARLY_PRINTF
 options 	SOCDEV_PA=0xc8100000
 options 	SOCDEV_VA=0xc8100000
 #options		VERBOSE_SYSINIT
@@ -40,53 +41,54 @@ options 	SOCDEV_VA=0xc8100000
 options 	SCHED_ULE		# ULE scheduler
 options 	PREEMPTION		# Enable kernel thread preemption
 options 	INET			# InterNETworking
-options 	INET6			# IPv6 communications protocols
-options 	IPSEC			# IP (v4/v6) security
-options 	TCP_OFFLOAD		# TCP offload
-options 	SCTP			# Stream Control Transmission Protocol
+#options 	INET6			# IPv6 communications protocols
+#options 	IPSEC			# IP (v4/v6) security
+#options 	TCP_OFFLOAD		# TCP offload
+#options 	SCTP			# Stream Control Transmission Protocol
 options 	FFS			# Berkeley Fast Filesystem
 options 	SOFTUPDATES		# Enable FFS soft updates support
-options 	UFS_ACL			# Support for access control lists
-options 	UFS_DIRHASH		# Improve performance on big directories
-options 	UFS_GJOURNAL		# Enable gjournal-based UFS journaling
-options 	QUOTA			# Enable disk quotas for UFS
-options 	MD_ROOT			# MD is a potential root device
-options 	NFSCL			# Network Filesystem Client
-options 	NFSD			# Network Filesystem Server
-options 	NFSLOCKD		# Network Lock Manager
-options 	NFS_ROOT		# NFS usable as /, requires NFSCL
+#options 	UFS_ACL			# Support for access control lists
+#options 	UFS_DIRHASH		# Improve performance on big directories
+#options 	UFS_GJOURNAL		# Enable gjournal-based UFS journaling
+#options 	QUOTA			# Enable disk quotas for UFS
+#options 	MD_ROOT			# MD is a potential root device
+#options 	NFSCL			# Network Filesystem Client
+#options 	NFSD			# Network Filesystem Server
+#options 	NFSLOCKD		# Network Lock Manager
+#options 	NFS_ROOT		# NFS usable as /, requires NFSCL
 options 	MSDOSFS			# MSDOS Filesystem
-options 	CD9660			# ISO 9660 Filesystem
+#options 	CD9660			# ISO 9660 Filesystem
 options 	PROCFS			# Process filesystem (requires PSEUDOFS)
 options 	PSEUDOFS		# Pseudo-filesystem framework
 options 	GEOM_PART_GPT		# GUID Partition Tables.
-options 	GEOM_RAID		# Soft RAID functionality.
+#options 	GEOM_RAID		# Soft RAID functionality.
 options 	GEOM_LABEL		# Provides labelization
-options 	SCSI_DELAY=5000		# Delay (in ms) before probing SCSI
-options 	KTRACE			# ktrace(1) support
-options 	STACK			# stack(9) support
-options 	SYSVSHM			# SYSV-style shared memory
-options 	SYSVMSG			# SYSV-style message queues
-options 	SYSVSEM			# SYSV-style semaphores
-options 	_KPOSIX_PRIORITY_SCHEDULING # POSIX P1003_1B real-time extensions
+#options 	SCSI_DELAY=5000		# Delay (in ms) before probing SCSI
+#options 	KTRACE			# ktrace(1) support
+#options 	STACK			# stack(9) support
+#options 	SYSVSHM			# SYSV-style shared memory
+#options 	SYSVMSG			# SYSV-style message queues
+#options 	SYSVSEM			# SYSV-style semaphores
+#options 	_KPOSIX_PRIORITY_SCHEDULING # POSIX P1003_1B real-time extensions
 options 	PRINTF_BUFR_SIZE=128	# Prevent printf output being interspersed.
-options 	KBD_INSTALL_CDEV	# install a CDEV entry in /dev
-options 	HWPMC_HOOKS		# Necessary kernel hooks for hwpmc(4)
-options 	AUDIT			# Security event auditing
-options 	CAPABILITY_MODE		# Capsicum capability mode
-options 	CAPABILITIES		# Capsicum capabilities
-options 	MAC			# TrustedBSD MAC Framework
-options 	KDTRACE_FRAME		# Ensure frames are compiled in
-options 	KDTRACE_HOOKS		# Kernel DTrace hooks
+#options 	KBD_INSTALL_CDEV	# install a CDEV entry in /dev
+#options 	HWPMC_HOOKS		# Necessary kernel hooks for hwpmc(4)
+#options 	AUDIT			# Security event auditing
+#options 	CAPABILITY_MODE		# Capsicum capability mode
+#options 	CAPABILITIES		# Capsicum capabilities
+#options 	MAC			# TrustedBSD MAC Framework
+#options 	KDTRACE_FRAME		# Ensure frames are compiled in
+#options 	KDTRACE_HOOKS		# Kernel DTrace hooks
 options 	VFP			# Floating-point support
-options 	RACCT			# Resource accounting framework
-options 	RACCT_DEFAULT_TO_DISABLED # Set kern.racct.enable=0 by default
-options 	RCTL			# Resource limits
-#options 	SMP
+#options 	RACCT			# Resource accounting framework
+#options 	RACCT_DEFAULT_TO_DISABLED # Set kern.racct.enable=0 by default
+#options 	RCTL			# Resource limits
+options 	SMP
 
 # Debugging support.  Always need this:
 options 	KDB			# Enable kernel debugger support.
 options 	KDB_TRACE		# Print a stack trace for a panic.
+options		BREAK_TO_DEBUGGER
 # For full debugger support use (turn off in stable branch):
 options 	DDB			# Support DDB.
 #options 	GDB			# Support remote GDB.
@@ -99,7 +101,6 @@ options 	MALLOC_DEBUG_MAXZONES=8	# Separate malloc(9) zones
 
 options 	ROOTDEVNAME=\"ufs:/dev/mmcsd0s3a\"
 
-#options		fdt
 
 # SoC support
 #options 	SOC_BRCM_BCM2837
@@ -107,10 +108,10 @@ options 	ROOTDEVNAME=\"ufs:/dev/mmcsd0s3a\"
 options		SOC_S905
 
 # VirtIO support
-device		virtio
-device		virtio_mmio
-device		virtio_blk
-device		vtnet
+#device		virtio
+#device		virtio_mmio
+#device		virtio_blk
+#device		vtnet
 
 # Bus drivers
 
@@ -121,12 +122,12 @@ device		miibus		# MII bus support
 #device		dwc		# 10/100/1000 integrated GMAC controller
 
 # Block devices
-#device		ahci
+device		ahci
 device		scbus
 device		da
 
 # ATA/SCSI peripherals
-device		pass		# Passthrough device (direct ATA/SCSI access)
+#device		pass		# Passthrough device (direct ATA/SCSI access)
 
 # MMC/SD/SDIO Card slot support
 device		mmc			# mmc/sd bus
@@ -135,46 +136,46 @@ device		dwmmc
 device		sdhci
 
 # A64
-device		ehci
-device		fdt_pinctrl
+#device		ehci
+#device		fdt_pinctrl
 
 # ODROIDC2
 
 # Serial (COM) ports
 device		uart		# Generic UART driver
 device		uart_ns8250	# ns8250-type UART driver
-device		pl011
+#device		pl011
 
 # USB support
-options 	USB_DEBUG		# enable debug msgs
-device		dwcotg			# DWC OTG controller
-device		usb			# USB Bus (required)
-device		ukbd			# Keyboard
-device		umass			# Disks/Mass storage - Requires scbus and da
+#options 	USB_DEBUG		# enable debug msgs
+#device		dwcotg			# DWC OTG controller
+#device		usb			# USB Bus (required)
+#device		ukbd			# Keyboard
+#device		umass			# Disks/Mass storage - Requires scbus and da
 
 device		gpio
 
 # Pseudo devices.
 device		loop		# Network loopback
-device		random		# Entropy device
+#device		random		# Entropy device
 device		ether		# Ethernet support
-device		vlan		# 802.1Q VLAN support
-device		tun		# Packet tunnel.
-device		md		# Memory "disks"
-device		gif		# IPv6 and IPv4 tunneling
-device		firmware	# firmware assist module
+#device		vlan		# 802.1Q VLAN support
+#device		tun		# Packet tunnel.
+#device		md		# Memory "disks"
+#device		gif		# IPv6 and IPv4 tunneling
+#device		firmware	# firmware assist module
 device		psci		# Support for ARM PSCI
 
 # The `bpf' device enables the Berkeley Packet Filter.
 # Be aware of the administrative consequences of enabling this!
 # Note that 'bpf' is required for DHCP.
-device		bpf		# Berkeley packet filter
+#device		bpf		# Berkeley packet filter
 
 options 	FDT
 options		FDT_DTB_STATIC
 makeoptions	FDT_DTS_FILE=odroidc2.dts
 
-device		acpi
+#device		acpi
 
 # The crypto framework is required by IPSEC
-device		crypto			# Required by IPSEC
+#device		crypto			# Required by IPSEC

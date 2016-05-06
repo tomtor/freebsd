@@ -142,6 +142,7 @@ arm_gic_fdt_attach(device_t dev)
 	device_t cdev;
 	int err;
 
+	printf("arm_gic_fdt_attach\n");
 	err = arm_gic_attach(dev);
 	if (err != 0)
 		return (err);
@@ -181,6 +182,7 @@ arm_gic_fdt_attach(device_t dev)
 		    sc->sc_size_cells, &dinfo->rl);
 
 		cdev = device_add_child(dev, NULL, -1);
+		printf("child: %s\n", dinfo->obdinfo.obd_name);
 		if (cdev == NULL) {
 			device_printf(dev, "<%s>: device_add_child failed\n",
 			    dinfo->obdinfo.obd_name);
@@ -205,7 +207,7 @@ arm_gic_fdt_alloc_resource(device_t bus, device_t child, int type, int *rid,
 	struct resource_list_entry *rle;
 	int j;
 
-	KASSERT(type == SYS_RES_MEMORY, ("Invalid resoure type %x", type));
+	KASSERT(type == SYS_RES_MEMORY, ("Invalid resource type %x", type));
 
 	/*
 	 * Request for the default allocation with a given rid: use resource
