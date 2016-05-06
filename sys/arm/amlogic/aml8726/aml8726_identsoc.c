@@ -94,7 +94,6 @@ aml8726_identify_soc()
 	/* bus_space_unmap hangs, so... */
 	aml8726_soc_hw_rev = 0x1F;
 	aml8726_soc_metal_rev = 0x0;
-	printf("Fix me\n");
 	int err;
 	struct resource res;
 

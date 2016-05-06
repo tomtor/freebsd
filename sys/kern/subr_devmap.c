@@ -190,10 +190,8 @@ devmap_bootstrap(vm_offset_t l1pt, const struct devmap_entry *table)
 		devmap_table = table;
 	else if (devmap_table == NULL)
 		return;
-printf("m\n");
 
 	for (pd = devmap_table; pd->pd_size != 0; ++pd) {
-printf("M\n");
 #if defined(__arm__)
 #if __ARM_ARCH >= 6
 		pmap_preboot_map_attr(pd->pd_pa, pd->pd_va, pd->pd_size,
