@@ -120,7 +120,6 @@ static struct aml8726_timer_softc *aml8726_timer_sc = NULL;
 #define	AML_TIMER_B_EN			(1 << 17)
 #define	AML_TIMER_C_EN			(1 << 18)
 #define	AML_TIMER_D_EN			(1 << 19)
-//Timer E is always enabled, don't write an undefined bit
 #define	AML_TIMER_E_EN			(1 << 20)
 #define	AML_TIMER_A_REG			4
 #define	AML_TIMER_B_REG			8
@@ -134,14 +133,10 @@ static struct aml8726_timer_softc *aml8726_timer_sc = NULL;
 static unsigned
 aml8726_get_timecount(struct timecounter *tc)
 {
-#ifndef SOC_S905
 	struct aml8726_timer_softc *sc =
 	    (struct aml8726_timer_softc *)tc->tc_priv;
 
 	return CSR_READ_4(sc, AML_TIMER_E_REG);
-#else
-	return *(unsigned*)0xc8100054;
-#endif
 }
 
 static int
@@ -193,11 +188,6 @@ aml8726_timer_start(struct eventtimer *et, sbintime_t first, sbintime_t period)
 	if (ticks == 0)
 		return (EINVAL);
 
-	printf("timer ticks:%x\n", ticks);
-	printf("timer pticks:%x\n", period_ticks);
-	printf("timer periodic:%x\n", periodic);
-	ticks= 1000;
-	periodic = AML_TIMER_A_PERIODIC;
 	AML_TIMER_LOCK(sc);
 
 	sc->first_ticks = first_ticks;
@@ -209,7 +199,6 @@ aml8726_timer_start(struct eventtimer *et, sbintime_t first, sbintime_t period)
 	    AML_TIMER_A_EN | periodic));
 
 	AML_TIMER_UNLOCK(sc);
-	//printf("timer start:%x\n",CSR_READ_4(sc, AML_TIMER_MUX_REG));
 
 	return (0);
 }
@@ -273,23 +262,9 @@ aml8726_timer_attach(device_t dev)
 	    (AML_TIMER_E_INPUT_1us << AML_TIMER_E_INPUT_SHIFT)));
 
 	CSR_WRITE_4(sc, AML_TIMER_E_REG, 0);
+
 	CSR_WRITE_4(sc, AML_TIMER_MUX_REG,
 	    (CSR_READ_4(sc, AML_TIMER_MUX_REG) | AML_TIMER_E_EN));
-#ifdef SOC_S905
-	// Use AO Timer E because ISA Timer E is not counting!?
-	*(unsigned*)0xc810004c= 0x11;
-	*(unsigned*)0xc8100054= 0;
-
-	//*(unsigned*)0xc11098A8= 0x4;
-	//*(unsigned*)0xc1109848= 0x2;
-	//printf("Int mask AO: %x\n", *(unsigned*)0xc11098A8);
-	//printf("Int mask EE: %x\n", *(unsigned*)0xc1109848);
-	*(unsigned*)0xc1104154= 0xF;
-	//*(unsigned*)0xc1104140= 0xFFFF;
-	//*(unsigned*)0xc1104144= 0xFFFF;
-	//*(unsigned*)0xc1104148= 0xFFFF;
-	printf("AO gates: %x\n", *(unsigned*)0xc1104154);
-#endif
 
 	/*
 	 * Initialize the mutex prior to installing the interrupt handler
@@ -358,14 +333,12 @@ static devclass_t aml8726_timer_devclass;
 EARLY_DRIVER_MODULE(timer, simplebus, aml8726_timer_driver,
     aml8726_timer_devclass, 0, 0, BUS_PASS_TIMER);
 
-#ifndef was__aarch64__
 void
 DELAY(int usec)
 {
 	uint32_t counter;
 	uint32_t delta, now, previous, remaining;
 
-	printf("DELAY\n");
 	/* Timer has not yet been initialized */
 	if (aml8726_timer_sc == NULL) {
 		for (; usec > 0; usec--)
@@ -419,6 +392,4 @@ DELAY(int usec)
 		previous = now;
 		remaining -= delta;
 	}
-	printf("DELAY DONE\n");
 }
-#endif
