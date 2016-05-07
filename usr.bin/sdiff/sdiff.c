@@ -508,18 +508,19 @@ binexec(char *diffprog, char *f1, char *f2)
 static int
 istextfile(FILE *f)
 {
-	int	i;
-	char ch;
+	int	ch, i;
 
 	if (f == NULL)
 		return (1);
 	rewind(f);
-	for (i = 0; i <= MAX_CHECK || ch != EOF; i++) {
+	for (i = 0; i <= MAX_CHECK; i++) {
 		ch = fgetc(f);
 		if (ch == '\0') {
 			rewind(f);
 			return (0);
 		}
+		if (ch == EOF)
+			break;
 	}
 	rewind(f);
 	return (1);
