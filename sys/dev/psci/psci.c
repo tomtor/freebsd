@@ -187,9 +187,11 @@ psci_cpu_on(unsigned long cpu, unsigned long entry, unsigned long context_id)
 
 	if (psci_softc == NULL) {
 		node = ofw_bus_find_compatible(OF_peer(0), "arm,psci-0.2");
-		if (node == 0)
-			/* TODO: Handle psci 0.1 */
-			return (PSCI_RETVAL_INTERNAL_FAILURE);
+		if (node == 0) {
+			node = ofw_bus_find_compatible(OF_peer(0), "arm,psci");
+			if (node == 0)
+				return (PSCI_RETVAL_INTERNAL_FAILURE);
+		}
 
 		fnid = PSCI_FNID_CPU_ON;
 		callfn = psci_get_callfn(node);

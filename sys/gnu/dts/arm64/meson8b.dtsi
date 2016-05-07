@@ -34,6 +34,7 @@
 
 	interrupt-parent = <&gic>;
 
+/*
 	cpus {
 		#address-cells = <1>;
 		#size-cells = <0>;
@@ -45,56 +46,107 @@
 			reg = <0x200>;
 			//clock-frequency = <800000000>;
 		};
-/*
-		v7_cpu0: cpu@0 {
-			device_type = "cpu";
-			compatible = "arm,cortex-a7";
-			reg = <0x000>;
-			clock-frequency = <800000000>;
-		};
-		v7_cpu1: cpu@1 {
-			device_type = "cpu";
-			compatible = "arm,cortex-a7";
-			reg = <0x001>;
-			clock-frequency = <800000000>;
-		};
-		v7_cpu2: cpu@2 {
-			device_type = "cpu";
-			compatible = "arm,cortex-a7";
-			reg = <0x002>;
-			clock-frequency = <800000000>;
-		};
-		v7_cpu3: cpu@3 {
-			device_type = "cpu";
-			compatible = "arm,cortex-a7";
-			reg = <0x003>;
-			clock-frequency = <800000000>;
-		};
 */
-/*
+	cpus:cpus {
+		//#address-cells = <2>;
+		#address-cells = <1>;
+		#size-cells = <0>;
+		#cooling-cells = <2>; /* min followed by max */
 
-		cpu@201 {
+		cpu@0 {
 			device_type = "cpu";
-			compatible = "arm,cortex-a5";
-			next-level-cache = <&L2>;
-			reg = <0x201>;
+			compatible = "arm,cortex-a53","arm,armv8";
+			reg = <0x0>;
+			enable-method = "psci";
+			//timer=<&timer_f>;
 		};
 
-		cpu@202 {
+		cpu@1 {
 			device_type = "cpu";
-			compatible = "arm,cortex-a5";
-			next-level-cache = <&L2>;
-			reg = <0x202>;
+			compatible = "arm,cortex-a53","arm,armv8";
+			reg = <0x1>;
+			enable-method = "psci";
+			//timer=<&timer_g>;
+		};
+		cpu@2 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a53","arm,armv8";
+			reg = <0x2>;
+			enable-method = "psci";
+			//timer=<&timer_h>;
 		};
 
-		cpu@203 {
+		cpu@3 {
 			device_type = "cpu";
-			compatible = "arm,cortex-a5";
-			next-level-cache = <&L2>;
-			reg = <0x203>;
+			compatible = "arm,cortex-a53","arm,armv8";
+			reg = <0x3>;
+			enable-method = "psci";
+			//timer=<&timer_i>;
 		};
-*/
 	};
+
+	psci {
+		compatible = "arm,psci";
+		method = "smc";
+		cpu_suspend = <0xC4000001>;
+		cpu_off = <0x84000002>;
+		cpu_on = <0xC4000003>;
+		migrate = <0xC4000005>;
+	};
+
+/*
+	timer{
+		compatible = "arm, meson-timer";
+		#address-cells = <2>;
+		#size-cells = <2>;
+		ranges;
+		reg=   <0x0 0xc1109990 0x0 0x4 0x0 0xc1109988 0x0 0x4>;
+		timer_f:timer-f{
+			timer_name="MESON TIMER-F";
+			clockevent-rating=<300>;
+			clockevent-shift=<20>;
+			clockevent-features=<0x03>;
+			interrupts = <0 60 1>;
+			bit_enable=<16>;
+			bit_mode=<12>;
+			bit_resolution=<0>;
+			reg=   <0x0 0xc1109994 0x0 0x4>;
+		};
+		timer_g:timer-g{
+			timer_name="MESON TIMER-G";
+			clockevent-rating=<300>;
+			clockevent-shift=<20>;
+			clockevent-features=<0x03>;
+			interrupts = <0 61 1>;
+			bit_enable=<17>;
+			bit_mode=<13>;
+			bit_resolution=<2>;
+			reg=<0x0 0xc1109998 0x0 0x4>;
+		};
+		timer_h:timer-h{
+			timer_name="MESON TIMER-H";
+			clockevent-rating=<300>;
+			clockevent-shift=<20>;
+			clockevent-features=<0x03>;
+			interrupts = <0 62 1>;
+			bit_enable=<18>;
+			bit_mode=<14>;
+			bit_resolution=<4>;
+			reg=<0x0 0xc110999c 0x0 0x4>;
+		};
+		timer_i:timer-i{
+			timer_name="MESON TIMER-I";
+			clockevent-rating=<300>;
+			clockevent-shift=<20>;
+			clockevent-features=<0x03>;
+			interrupts = <0 63 1>;
+			bit_enable=<19>;
+			bit_mode=<15>;
+			bit_resolution=<6>;
+			reg=<0x0 0xc11099a0 0x0 0x4>;
+		};
+	};
+*/
 
 	clk81: clk@0 {
 		#clock-cells = <0>;
