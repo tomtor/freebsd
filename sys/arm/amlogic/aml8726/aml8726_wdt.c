@@ -90,11 +90,16 @@ static struct aml8726_wdt_softc *aml8726_wdt_sc = NULL;
 #define	AML_WDT_CTRL_REG		0
 #define	AML_WDT_CTRL_CPU_WDRESET_MASK	aml8726_wdt_soc_params.ctrl_cpu_mask
 #define	AML_WDT_CTRL_CPU_WDRESET_SHIFT	24
+#ifdef SOC_S905
+#define	AML_WDT_CTRL_IRQ_EN		(1 << 18)
+#define	AML_WDT_RESET_REG		12
+#else
 #define	AML_WDT_CTRL_IRQ_EN		(1 << 23)
+#define	AML_WDT_RESET_REG		4
+#endif
 #define	AML_WDT_CTRL_EN			aml8726_wdt_soc_params.ctrl_en
 #define	AML_WDT_CTRL_TERMINAL_CNT_MASK	aml8726_wdt_soc_params.term_cnt_mask
 #define	AML_WDT_CTRL_TERMINAL_CNT_SHIFT	0
-#define	AML_WDT_RESET_REG		4
 #define	AML_WDT_RESET_CNT_MASK		aml8726_wdt_soc_params.reset_cnt_mask
 #define	AML_WDT_RESET_CNT_SHIFT		0
 
@@ -224,6 +229,15 @@ aml8726_wdt_attach(device_t dev)
 		aml8726_wdt_soc_params.reset_cnt_mask = 0x07ffff <<
 		    AML_WDT_RESET_CNT_SHIFT;
 		break;
+	case AML_SOC_HW_REV_S905:
+		aml8726_wdt_soc_params.ctrl_cpu_mask = 0xf <<
+		    AML_WDT_CTRL_CPU_WDRESET_SHIFT;
+		aml8726_wdt_soc_params.ctrl_en = 1 << 19;
+		aml8726_wdt_soc_params.term_cnt_mask = 0x0ffff <<
+		    AML_WDT_CTRL_TERMINAL_CNT_SHIFT;
+		aml8726_wdt_soc_params.reset_cnt_mask = 0x0ffff <<
+		    AML_WDT_RESET_CNT_SHIFT;
+		break;
 	default:
 		aml8726_wdt_soc_params.ctrl_cpu_mask = 3 <<
 		    AML_WDT_CTRL_CPU_WDRESET_SHIFT;
@@ -290,7 +304,7 @@ static devclass_t aml8726_wdt_devclass;
 EARLY_DRIVER_MODULE(wdt, simplebus, aml8726_wdt_driver, aml8726_wdt_devclass,
     0, 0, BUS_PASS_INTERRUPT + BUS_PASS_ORDER_LATE);
 
-#ifndef __aarch64__
+#ifndef was__aarch64__
 void
 cpu_reset()
 {

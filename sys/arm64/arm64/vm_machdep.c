@@ -107,29 +107,16 @@ cpu_fork(struct thread *td1, struct proc *p2, struct thread *td2, int flags)
 	td2->td_md.md_saved_daif = 0;
 }
 
+#ifndef SOC_S905
 void
 cpu_reset(void)
 {
 
-#ifndef SOC_S905
 	printf("cpu_reset");
 	while(1)
 		__asm volatile("wfi" ::: "memory");
-#else
-
-#define S905_Watchdog_RESET	(volatile uint32_t *) 0xc11098dc
-#define S905_Watchdog_CNTL	(volatile uint32_t *) 0xc11098d0
-
-	printf("trigger watchdog for reset\n");
-	while (1) {
-		*S905_Watchdog_CNTL= ( 0x3 | (1 << 21) | (1 << 23) | (1 << 24)
-					| (1 << 25) | (1 << 26));
-		*S905_Watchdog_RESET= 0;
-
-		*S905_Watchdog_CNTL= (*(S905_Watchdog_CNTL) | (1<<18));
-	}
-#endif
 }
+#endif
 
 void
 cpu_thread_swapin(struct thread *td)

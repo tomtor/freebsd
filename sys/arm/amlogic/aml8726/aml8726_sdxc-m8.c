@@ -749,6 +749,7 @@ aml8726_sdxc_attach(device_t dev)
 		}
 		break;
 	case AML_SOC_HW_REV_M8B:
+	case AML_SOC_HW_REV_S905:
 		miscr |= (7 << AML_SDXC_MISC_TXSTART_THOLD_SHIFT);
 		ectlr |= (63 << AML_SDXC_ENH_CNTRL_RX_FULL_THOLD_SHIFT) |
 		    AML_SDXC_ENH_CNTRL_DMA_NO_WR_RESP_CHECK_M8 |

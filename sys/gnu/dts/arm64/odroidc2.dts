@@ -262,7 +262,7 @@
 
 			mmc-pwr-en = <&gpio5 31 0>;	/* card_8 */
 			ins-detect = <&gpio5 29 0>;	/* card_6 */
-status = "disabled";
+//status = "disabled";
 		};
 
 		sdxc@c1108e00 {
@@ -277,7 +277,7 @@ status = "disabled";
 			mmc-voltages = "1.8";
 
 			mmc-rst = <&gpio3 9 0>;	/* boot_9 emmc-rst */
-status = "disabled";
+//status = "disabled";
 		};
 
 		rng@c1108100 {

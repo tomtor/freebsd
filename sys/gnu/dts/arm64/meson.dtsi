@@ -83,11 +83,13 @@
 		#size-cells = <1>;
 		ranges;
 
-		wdt: watchdog@c1109900 {
+		//wdt: watchdog@c1109900 {
+		wdt: watchdog@c11098D0 {
 			compatible = "amlogic,meson6-wdt";
-			reg = <0xc1109900 0x8>;
+			//reg = <0xc1109900 0x8>;
+			reg = <0xc11098D0 0x10>;
 			interrupts = <0 0 1>;
-			status = "disabled";
+			//status = "disabled";
 		};
 
 		uart_AO: serial@c81004c0 {
