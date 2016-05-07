@@ -55,6 +55,7 @@ __FBSDID("$FreeBSD$");
 #include <dev/usb/controller/dwc_otg.h>
 #include <dev/usb/controller/dwc_otg_fdt.h>
 
+
 static device_probe_t dwc_otg_probe;
 static device_detach_t dwc_otg_detach;
 

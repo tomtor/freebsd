@@ -142,7 +142,6 @@ arm_gic_fdt_attach(device_t dev)
 	device_t cdev;
 	int err;
 
-	printf("arm_gic_fdt_attach\n");
 	err = arm_gic_attach(dev);
 	if (err != 0)
 		return (err);

@@ -142,11 +142,11 @@ device		uart_ns8250	# ns8250-type UART driver
 #device		pl011
 
 # USB support
-#options 	USB_DEBUG		# enable debug msgs
-#device		dwcotg			# DWC OTG controller
-#device		usb			# USB Bus (required)
-#device		ukbd			# Keyboard
-#device		umass			# Disks/Mass storage - Requires scbus and da
+options 	USB_DEBUG		# enable debug msgs
+device		dwcotg			# DWC OTG controller
+device		usb			# USB Bus (required)
+device		ukbd			# Keyboard
+device		umass			# Disks/Mass storage - Requires scbus and da
 
 device		gpio
 

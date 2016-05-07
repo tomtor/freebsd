@@ -43,7 +43,7 @@
 			compatible = "arm,cortex-a7";
 			next-level-cache = <&L2>;
 			reg = <0x200>;
-			clock-frequency = <800000000>;
+			//clock-frequency = <800000000>;
 		};
 /*
 		v7_cpu0: cpu@0 {
