@@ -166,8 +166,7 @@ CONSOLE_DRIVER(uart);
 #error SOCDEV_PA and SOCDEV_VA must be defined.
 #endif
 
-void eputc(int);
-void
+static void
 eputc(int c)
 {
 
