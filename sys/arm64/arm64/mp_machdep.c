@@ -205,6 +205,8 @@ release_aps(void *dummy __unused)
 		}
 		DELAY(1000);
 	}
+
+	printf("APs not started\n");
 }
 SYSINIT(start_aps, SI_SUB_SMP, SI_ORDER_FIRST, release_aps, NULL);
 
