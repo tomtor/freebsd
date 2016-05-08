@@ -177,5 +177,6 @@
 			clock-names = "stmmaceth";
 			status = "disabled";
 		};
+
 	};
 }; /* end of / */

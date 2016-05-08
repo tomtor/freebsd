@@ -89,9 +89,14 @@ gpio_alloc_intr_resource(device_t consumer_dev, int *rid, u_int alloc_flags,
 	 * Allocate new fictitious interrupt number and store configuration
 	 * into it.
 	 */
+#ifndef __aarch64__
 	irqnum = intr_gpio_map_irq(pin->dev, pin->pin, pin->flags, intr_mode);
 	if (irqnum == INTR_IRQ_INVALID)
 		return (NULL);
+#else
+	printf("intr_gpio_map_irq removed\n");
+	return (NULL);
+#endif
 
 	return (bus_alloc_resource(consumer_dev, SYS_RES_IRQ, rid,
 	    irqnum, irqnum, 1, alloc_flags));

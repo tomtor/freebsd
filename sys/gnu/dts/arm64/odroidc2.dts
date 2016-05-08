@@ -287,35 +287,29 @@ status = "disabled";
 status = "disabled";
 		};
 
-		//usb-phy@c1108800 {
 		usb-phy@c0000000 {
 			/* usb-a phy */
 			compatible = "amlogic,aml8726-m8-usb-phy";
-			//reg = <0xc1108800 32>;	/* cbus 0x2200 */
-			reg = <0xc0000000 20>;	/* cbus 0x2200 */
+			reg = <0xc0000000 20>;
 
 			usb-pwr-en = <&gpioao 5 1>;	/* gpioao_5 vbus */
 //status = "disabled";
 		};
 
-		//usb-phy@c1108820 {
 		usb-phy@c0000020 {
 			/* usb-b phy */
 			compatible = "amlogic,aml8726-m8-usb-phy";
-			//reg = <0xc1108820 32>;	/* cbus 0x2208 */
-			reg = <0xc0000020 20>;	/* cbus 0x2208 */
+			reg = <0xc0000020 20>;
 
 			force-aca = "true";
 			usb-hub-rst = <&gpioao 4 0>;	/* gpioao_4 hub-rst */
 //status = "disabled";
 		};
 
-		//usb@c9040000 {
 		usb@c9000000 {
 			/* usb-a */
 			compatible = "synopsys,designware-hs-otg2";
-			//reg = <0xc9040000 0x40000>;	/* ahbbus 0x40000*/
-			reg = <0xc9000000 0x40000>;	/* ahbbus 0x40000*/
+			reg = <0xc9000000 0x40000>;
 			interrupts = <0 30 4>;
 			#address-cells = <1>;
 			#size-cells = <0>;
@@ -324,12 +318,10 @@ status = "disabled";
 //status = "disabled";
 		};
 
-		//usb@c90c0000 {
 		usb@c9100000 {
 			/* usb-b */
 			compatible = "synopsys,designware-hs-otg2";
-			//reg = <0xc90c0000 0x40000>;	/* ahbbus 0xc0000 */
-			reg = <0xc9100000 0x40000>;	/* ahbbus 0xc0000 */
+			reg = <0xc9100000 0x40000>;
 			interrupts = <0 31 4>;
 			#address-cells = <1>;
 			#size-cells = <0>;
@@ -347,7 +339,7 @@ status = "disabled";
 			#size-cells = <0>;
 
 			eth-phy-rst = <&gpio3 23 0>;	/* gpioh_4 phy-rst */
-status = "disabled";
+//status = "disabled";
 		};
 
 		screen: fb@c8006020 {

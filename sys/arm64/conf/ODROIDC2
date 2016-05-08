@@ -32,7 +32,7 @@ options 	SOCDEV_VA=0xc8100000
 #options		VERBOSE_SYSINIT
 options		BOOTVERBOSE
 
-#options         INTRNG
+options         INTRNG
 
 options 	SCHED_ULE		# ULE scheduler
 options 	PREEMPTION		# Enable kernel thread preemption
@@ -115,7 +115,7 @@ options		SOC_S905
 device		mii
 device		miibus		# MII bus support
 #device		smsc		# SMSC LAN95xx USB Ethernet
-#device		dwc		# 10/100/1000 integrated GMAC controller
+device		dwc		# 10/100/1000 integrated GMAC controller
 
 # Block devices
 device		ahci

@@ -56,8 +56,8 @@ dev/extres/regulator/regulator.c standard
 dev/fdt/fdt_clock_if.m		optional	soc_allwinner_a64
 dev/fdt/fdt_arm_platform.c	optional	soc_allwinner_a64
 #arm/allwinner/a31/a31_clk.c	optional	soc_allwinner_a64 dwc
-#dev/dwc/if_dwc.c		optional	dwc
-#dev/dwc/if_dwc_if.m		optional	dwc
+dev/dwc/if_dwc.c		optional	dwc
+dev/dwc/if_dwc_if.m		optional	dwc
 #
 #arm/allwinner/aw_ccu.c                  standard
 #arm/allwinner/clk/aw_ahbclk.c           standard
@@ -89,6 +89,7 @@ arm/amlogic/aml8726/aml8726_clkmsr.c            standard
 arm/amlogic/aml8726/aml8726_rtc.c               standard
 #arm/amlogic/aml8726/aml8726_timer.c             standard
 arm/amlogic/aml8726/aml8726_wdt.c               standard
+arm/amlogic/aml8726/aml8726_if_dwc.c               standard
 
 # serial console for debugging early boot code
 # also define SOCDEV_PA and SOCDEV_VA in std.aml8726
@@ -186,6 +187,7 @@ dev/psci/psci_arm64.S		optional	psci
 dev/uart/uart_cpu_fdt.c		optional	uart fdt
 dev/uart/uart_dev_pl011.c	optional	uart pl011
 dev/usb/controller/dwc_otg_hisi.c optional	dwcotg soc_hisi_hi6220
+dev/usb/controller/dwc_otg.c	standard
 dev/vnic/mrml_bridge.c		optional	vnic fdt
 dev/vnic/nic_main.c		optional	vnic pci
 dev/vnic/nicvf_main.c		optional	vnic pci pci_iov

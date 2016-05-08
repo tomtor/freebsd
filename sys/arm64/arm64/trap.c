@@ -309,7 +309,6 @@ do_el1h_sync(struct trapframe *frame)
 	case EXCP_WATCHPT_EL1:
 	case EXCP_SOFTSTP_EL1:
 #ifdef KDB
-		printf("TRAP\n");
 		kdb_trap(exception, 0, frame);
 #else
 		panic("No debugger in kernel.\n");
