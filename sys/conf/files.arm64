@@ -21,6 +21,7 @@ arm/allwinner/h3/h3_r_padconf.c optional	soc_allwinner_a64
 #arm/allwinner/a10_ahci.c        optional        ahci soc_allwinner_a64
 #arm/allwinner/a10_clk.c         optional	soc_allwinner_a64
 
+dev/gpio/gpioled.c		standard
 dev/extres/clk/clkdev_if.m	standard
 dev/extres/clk/clknode_if.m	standard
 dev/extres/clk/clk.c		standard
@@ -52,7 +53,8 @@ dev/extres/regulator/regulator.c standard
 #arm/arm/platform_if.m		optional	soc_allwinner_a64
 #arm/arm/platform.c		standard
 #arm/arm/platform_if.m		standard
-#dev/fdt/fdt_pinctrl_if.m	optional	soc_allwinner_a64
+dev/fdt/fdt_pinctrl.c		standard
+dev/fdt/fdt_pinctrl_if.m	standard
 dev/fdt/fdt_clock_if.m		optional	soc_allwinner_a64
 dev/fdt/fdt_arm_platform.c	optional	soc_allwinner_a64
 #arm/allwinner/a31/a31_clk.c	optional	soc_allwinner_a64 dwc
@@ -80,7 +82,7 @@ dev/dwc/if_dwc_if.m		optional	dwc
 #arm/amlogic/aml8726/aml8726_l2cache.c           standard
 
 arm/amlogic/aml8726/aml8726_machdep.c           standard
-arm/amlogic/aml8726/aml8726_mp.c                optional        smp
+#arm/amlogic/aml8726/aml8726_mp.c                optional        smp
 arm/amlogic/aml8726/aml8726_identsoc.c          standard
 arm/amlogic/aml8726/aml8726_ccm.c               standard
 arm/amlogic/aml8726/aml8726_clkmsr.c            standard
@@ -100,8 +102,8 @@ arm/amlogic/aml8726/aml8726_gpio.c              optional        gpio
 arm/amlogic/aml8726/aml8726_i2c.c               optional        iicbus
 arm/amlogic/aml8726/aml8726_mmc.c               optional        mmc gpio
 arm/amlogic/aml8726/aml8726_sdxc-m8.c           optional        mmc gpio
-arm/amlogic/aml8726/aml8726_pinctrl.c           optional        fdt_pinctrl
-#arm/amlogic/aml8726/aml8726_rng.c              optional        random
+arm/amlogic/aml8726/aml8726_pinctrl.c           optional        soc_s905
+#arm/amlogic/aml8726/aml8726_rng.c              	optional        soc_s905
 arm/amlogic/aml8726/uart_dev_aml8726.c          optional        uart
 arm/amlogic/aml8726/aml8726_usb_phy-m3.c        optional        dwcotg usb gpio
 arm/amlogic/aml8726/aml8726_usb_phy-m6.c        optional        dwcotg usb gpio

@@ -386,6 +386,7 @@ aml8726_rtc_attach(device_t dev)
 	case AML_SOC_HW_REV_M6:
 	case AML_SOC_HW_REV_M8:
 	case AML_SOC_HW_REV_M8B:
+	case AML_SOC_HW_REV_S905:
 		sc->init.always = false;
 		sc->init.xo = 0x180a;
 		sc->init.gpo = 0x500000;

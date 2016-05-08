@@ -127,6 +127,17 @@ aml8726_gpio_attach(device_t dev)
 		device_printf(dev, "can not allocate resources for device\n");
 		return (ENXIO);
 	}
+printf("R1 %lx\n", (long)rman_get_start(sc->res[0]));
+printf("R2 %lx\n", (long)rman_get_start(sc->res[1]));
+printf("R3 %lx\n", (long)rman_get_start(sc->res[2]));
+printf("V1 %x\n", *(int*)rman_get_start(sc->res[0]));
+printf("V2 %x\n", *(int*)rman_get_start(sc->res[1]));
+printf("V3 %x\n", *(int*)rman_get_start(sc->res[2]));
+if ((int*)rman_get_start(sc->res[1]) == (int*)0xc8100024) {
+	printf("Blue OFF\n");
+	*(int*)rman_get_start(sc->res[1])=*(int*)rman_get_start(sc->res[1]) | (1 << 13);
+	printf("V3 %x\n", *(int*)rman_get_start(sc->res[1]));
+}
 
 	/*
 	 * The GPIOAO OUT bits occupy the upper word of the OEN register.

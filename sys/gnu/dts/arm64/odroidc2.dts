@@ -64,6 +64,7 @@
 		device_type = "soc";
 		bus-frequency = <0>;
 
+/*
 		scu: scu@c4300000 {
 			compatible = "arm,cortex-a5-scu";
 			reg = <0xc4300000 0x1000>;
@@ -73,6 +74,7 @@
 			compatible = "amlogic,aml8726-cpuconfig";
 			reg = <0xd901ff80 16>;
 		};
+*/
 
 		ccm@c1104140 {
 			compatible = "amlogic,aml8726-ccm";
@@ -85,12 +87,17 @@
 
 		pinctrl@c11080b0 {
 			compatible = "amlogic,aml8726-pinctrl";
-			reg = <0xc11080b0 40>,	/* mux */
-			      <0xc11080e8 24>,	/* pu/pd */
-			      <0xc1108120 24>,	/* pull enable */
+			//reg = <0xc11080b0 40>,	/* mux */
+			      //<0xc11080e8 24>,	/* pu/pd */
+			      //<0xc1108120 24>,	/* pull enable */
+			reg = <0xc88344b0 40>,	/* mux */
+			      <0xc88344e8  24>,	/* pu/pd */
+			      <0xc8834120 24>,	/* pull enable */
+
 			      <0xc8100014 4>,	/* ao mux */
 			      <0xc810002c 4>,	/* ao pu/pd */
 			      <0xc810002c 4>;	/* ao pull enable */
+			      //<0xc8100024 4>;	/* ao pull enable */
 
 			/*
 			 * Currently only pin muxing that deviates
@@ -218,9 +225,12 @@
 
 		gpio3: gpio@c1108054 {
 			compatible = "amlogic,aml8726-gpio";
-			reg = <0xc1108054 4>,	/* oen cbus 0x2015 */
-			      <0xc1108058 4>,	/* out */
-			      <0xc110805c 4>;	/* in */
+			//reg = <0xc1108054 4>,	/* oen cbus 0x2015 */
+			      //<0xc1108058 4>,	/* out */
+			      //<0xc110805c 4>;	/* in */
+			reg = <0xc8834454 4>,	/* oen cbus 0x2015 */
+			      <0xc8834458 4>,	/* out */
+			      <0xc883445c 4>;	/* in */
 
 			gpio-controller;
 			#gpio-cells = <1>;
@@ -229,9 +239,12 @@
 
 		gpio5: gpio@c110806c {
 			compatible = "amlogic,aml8726-gpio";
-			reg = <0xc110806c 4>,	/* oen cbus 0x201b */
-			      <0xc1108070 4>,	/* out */
-			      <0xc1108074 4>;	/* in */
+			//reg = <0xc110806c 4>,	/* oen cbus 0x201b */
+			      //<0xc1108070 4>,	/* out */
+			      //<0xc1108074 4>;	/* in */
+			reg = <0xc883446c 4>,	/* oen cbus 0x201b */
+			      <0xc8834470 4>,	/* out */
+			      <0xc8834474 4>;	/* in */
 
 			gpio-controller;
 			#gpio-cells = <1>;
@@ -278,12 +291,13 @@ status = "disabled";
 			mmc-voltages = "1.8";
 
 			mmc-rst = <&gpio3 9 0>;	/* boot_9 emmc-rst */
-status = "disabled";
+//status = "disabled";
 		};
 
-		rng@c1108100 {
+		//rng@c1108100 {
+		rng@0xc8834000 {
 			compatible = "amlogic,aml8726-rng";
-			reg = <0xc1108100 8>;	/* cbus 0x2040 */
+			reg = <0xc8834000 8>;	/* cbus 0x2040 */
 status = "disabled";
 		};
 
@@ -363,11 +377,12 @@ status = "disabled";
 	};
 
 	leds {
-		compatible = "Xgpio-leds";
+		compatible = "gpio-leds";
 
 		sys_led {
 			gpios = <&gpioao 13>;	/* gpioao_13 sys_led */
 			label = "sys_led";
+			default_state = "off";
 		};
 	};
 
