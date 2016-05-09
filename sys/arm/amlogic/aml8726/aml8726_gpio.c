@@ -102,6 +102,11 @@ aml8726_gpio_probe(device_t dev)
 	return (BUS_PROBE_DEFAULT);
 }
 
+#if 1
+static device_t devs[10];
+static int ndev;
+#endif
+
 static int
 aml8726_gpio_attach(device_t dev)
 {
@@ -109,6 +114,9 @@ aml8726_gpio_attach(device_t dev)
 	phandle_t node;
 	pcell_t prop;
 
+#if 1
+	devs[ndev++]= dev;
+#endif
 	sc->dev = dev;
 
 	node = ofw_bus_get_node(dev);
@@ -127,17 +135,6 @@ aml8726_gpio_attach(device_t dev)
 		device_printf(dev, "can not allocate resources for device\n");
 		return (ENXIO);
 	}
-printf("R1 %lx\n", (long)rman_get_start(sc->res[0]));
-printf("R2 %lx\n", (long)rman_get_start(sc->res[1]));
-printf("R3 %lx\n", (long)rman_get_start(sc->res[2]));
-printf("V1 %x\n", *(int*)rman_get_start(sc->res[0]));
-printf("V2 %x\n", *(int*)rman_get_start(sc->res[1]));
-printf("V3 %x\n", *(int*)rman_get_start(sc->res[2]));
-if ((int*)rman_get_start(sc->res[1]) == (int*)0xc8100024) {
-	printf("Blue OFF\n");
-	*(int*)rman_get_start(sc->res[1])=*(int*)rman_get_start(sc->res[1]) | (1 << 13);
-	printf("V3 %x\n", *(int*)rman_get_start(sc->res[1]));
-}
 
 	/*
 	 * The GPIOAO OUT bits occupy the upper word of the OEN register.
@@ -381,3 +378,32 @@ static devclass_t aml8726_gpio_devclass;
 
 DRIVER_MODULE(aml8726_gpio, simplebus, aml8726_gpio_driver,
     aml8726_gpio_devclass, 0, 0);
+
+#if 1
+#include	<sys/kthread.h>
+
+static void show_gpio()
+{
+  printf("GPIO test\n");
+  while (1) {
+	pause("gpiots", 1000);
+	printf("Blue OFF\n");
+	aml8726_gpio_pin_toggle(devs[0],13);
+	pause("gpiots", 1000);
+	printf("Blue ON\n");
+	aml8726_gpio_pin_toggle(devs[0],13);
+  }
+}
+
+static void start_gpio()
+{
+  static struct kproc_desc kp;
+  kp.arg0= "gpio_test";
+  kp.func= show_gpio;
+  kp.global_procpp= NULL;
+
+  kproc_start(&kp);
+}
+
+SYSINIT(show_gpio, SI_SUB_DRIVERS, SI_ORDER_THIRD, start_gpio, NULL);
+#endif

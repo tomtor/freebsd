@@ -253,8 +253,9 @@
 
 		mmc@c1108c20 {
 			compatible = "amlogic,aml8726-mmc";
-			reg = <0xc1108c20 32>;	/* cbus 0x2308 */
-			interrupts = <0 28 1>;
+			//reg = <0xc1108c20 32>;	/* cbus 0x2308 */
+			reg = <0xd0074000 32>;	/* cbus 0x2308 */
+			interrupts = <0 218 1>;
 
 			clocks = <&clk81>;
 
@@ -275,15 +276,15 @@
 
 			mmc-pwr-en = <&gpio5 31 0>;	/* card_8 */
 			ins-detect = <&gpio5 29 0>;	/* card_6 */
-status = "disabled";
+//status = "disabled";
 		};
 
 		//sdxc@c1108e00 {
-		sdxc@0xd0074000 {
+		sdxc@0xd0072000 {
 			compatible = "amlogic,aml8726-sdxc-m8";
 			clock-frequency = <1275000000>;
-			reg = <0xd0074000 60>;
-			interrupts = <0 78 1>;
+			reg = <0xd0072000 60>;
+			interrupts = <0 217 1>;
 
 			pinctrl-names = "default";
 			pinctrl-0 = <&pins_sdxc_c>;
@@ -329,7 +330,7 @@ status = "disabled";
 			#size-cells = <0>;
 
 			dr_mode = "host";
-//status = "disabled";
+status = "disabled";
 		};
 
 		usb@c9100000 {
