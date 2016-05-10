@@ -162,7 +162,6 @@ platform_late_init(void)
 int
 platform_devmap_init(void)
 {
-printf("platform_devmap_init (cbus)\n");
 #ifdef SOC_S905
 	devmap_add_entry(0xc1100000, 0x10000); /* cbus */
 	devmap_add_entry(0xc4300000, 0x10000); /* periph */

@@ -330,7 +330,7 @@ status = "disabled";
 			#size-cells = <0>;
 
 			dr_mode = "host";
-status = "disabled";
+//status = "disabled";
 		};
 
 		usb@c9100000 {
@@ -354,7 +354,7 @@ status = "disabled";
 			#size-cells = <0>;
 
 			eth-phy-rst = <&gpio3 23 0>;	/* gpioh_4 phy-rst */
-//status = "disabled";
+status = "disabled";
 		};
 
 		screen: fb@c8006020 {

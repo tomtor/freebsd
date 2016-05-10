@@ -87,6 +87,8 @@ static struct resource_spec aml8726_gpio_spec[] = {
 #define	CSR_WRITE_4(sc, reg, val)	bus_write_4((sc)->res[reg], 0, (val))
 #define	CSR_READ_4(sc, reg)		bus_read_4((sc)->res[reg], 0)
 
+#define	HEARTBEAT
+
 static int
 aml8726_gpio_probe(device_t dev)
 {
@@ -102,9 +104,8 @@ aml8726_gpio_probe(device_t dev)
 	return (BUS_PROBE_DEFAULT);
 }
 
-#if 1
-static device_t devs[10];
-static int ndev;
+#ifdef HEARTBEAT
+static device_t gpio0;
 #endif
 
 static int
@@ -114,8 +115,9 @@ aml8726_gpio_attach(device_t dev)
 	phandle_t node;
 	pcell_t prop;
 
-#if 1
-	devs[ndev++]= dev;
+#ifdef HEARTBEAT
+	if (gpio0 == 0)
+		gpio0= dev;
 #endif
 	sc->dev = dev;
 
@@ -379,31 +381,30 @@ static devclass_t aml8726_gpio_devclass;
 DRIVER_MODULE(aml8726_gpio, simplebus, aml8726_gpio_driver,
     aml8726_gpio_devclass, 0, 0);
 
-#if 1
+#ifdef HEARTBEAT
+
 #include	<sys/kthread.h>
 
-static void show_gpio()
+static void show_heartbeat()
 {
-  printf("GPIO test\n");
+  printf("Start GPIO led 13 heart beat\n");
   while (1) {
-	pause("gpiots", 1000);
-	printf("Blue OFF\n");
-	aml8726_gpio_pin_toggle(devs[0],13);
-	pause("gpiots", 1000);
-	printf("Blue ON\n");
-	aml8726_gpio_pin_toggle(devs[0],13);
+	pause("htbeat", 700 * hz/1000);
+	aml8726_gpio_pin_set(gpio0, 13, 1);
+	pause("htbeat", 300 * hz/1000);
+	aml8726_gpio_pin_set(gpio0, 13, 0);
   }
 }
 
-static void start_gpio()
+static void start_heartbeat()
 {
   static struct kproc_desc kp;
-  kp.arg0= "gpio_test";
-  kp.func= show_gpio;
+  kp.arg0= "heartbeat LED";
+  kp.func= show_heartbeat;
   kp.global_procpp= NULL;
 
   kproc_start(&kp);
 }
 
-SYSINIT(show_gpio, SI_SUB_DRIVERS, SI_ORDER_THIRD, start_gpio, NULL);
+SYSINIT(start_heartbeat, SI_SUB_DRIVERS, SI_ORDER_ANY, start_heartbeat, NULL);
 #endif
