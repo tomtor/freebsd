@@ -235,6 +235,9 @@ aml8726_usb_phy_attach(device_t dev)
 	switch (aml8726_soc_hw_rev) {
 	case AML_SOC_HW_REV_M8:
 	case AML_SOC_HW_REV_M8B:
+#ifdef SOC_S905
+	case AML_SOC_HW_REV_S905:
+#endif
 		value |= AML_USB_PHY_CFG_CLK_SEL_32K_ALT;
 		break;
 	default:
@@ -261,6 +264,9 @@ aml8726_usb_phy_attach(device_t dev)
 	switch (aml8726_soc_hw_rev) {
 	case AML_SOC_HW_REV_M8:
 	case AML_SOC_HW_REV_M8B:
+#ifdef SOC_S905
+	case AML_SOC_HW_REV_S905:
+#endif
 		value |= AML_USB_PHY_CTRL_FSEL_24M;
 		break;
 	default:

@@ -93,7 +93,7 @@
 			      //<0xc1108120 24>,	/* pull enable */
 			reg = <0xc88344b0 40>,	/* mux */
 			      <0xc88344e8  24>,	/* pu/pd */
-			      <0xc8834520 24>,	/* pull enable */
+			      <0xc8834120 24>,	/* pull enable */
 
 			      <0xc8100014 4>,	/* ao mux */
 			      <0xc810002c 4>,	/* ao pu/pd */
