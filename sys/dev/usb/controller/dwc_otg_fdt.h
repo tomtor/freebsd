@@ -29,10 +29,7 @@
 #define	_DWC_OTG_FDT_H_
 
 struct dwc_otg_fdt_softc {
-	struct dwc_otg_softc	sc_otg;	/* must be first */
-#ifdef SOC_S905
-	struct resource		*res[2];
-#endif
+	struct dwc_otg_softc sc_otg;	/* must be first */
 };
 
 extern driver_t dwc_otg_driver;

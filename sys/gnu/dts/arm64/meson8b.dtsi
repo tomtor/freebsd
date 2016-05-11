@@ -44,25 +44,25 @@
 			reg = <0x0>;
 			enable-method = "psci";
 			//next-level-cache = <&L2>;
-			//clock-frequency = <800000000>;
+			clock-frequency = <1536000000>;
 		};
 
-/*
 		cpu@1 {
 			device_type = "cpu";
 			compatible = "arm,cortex-a53","arm,armv8";
 			reg = <0x1>;
 			enable-method = "psci";
-			next-level-cache = <&L2>;
-			//clock-frequency = <800000000>;
+			//next-level-cache = <&L2>;
+			clock-frequency = <1536000000>;
 		};
+
 		cpu@2 {
 			device_type = "cpu";
 			compatible = "arm,cortex-a53","arm,armv8";
 			reg = <0x2>;
 			enable-method = "psci";
-			next-level-cache = <&L2>;
-			//clock-frequency = <800000000>;
+			//next-level-cache = <&L2>;
+			clock-frequency = <1536000000>;
 		};
 
 		cpu@3 {
@@ -70,10 +70,9 @@
 			compatible = "arm,cortex-a53","arm,armv8";
 			reg = <0x3>;
 			enable-method = "psci";
-			next-level-cache = <&L2>;
-			//clock-frequency = <800000000>;
+			//next-level-cache = <&L2>;
+			clock-frequency = <1536000000>;
 		};
-*/
 	};
 
 	psci {

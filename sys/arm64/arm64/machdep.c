@@ -890,9 +890,12 @@ initarm(struct arm64_bootparams *abp)
 #endif
 
 	/* Find the address to start allocating from */
-	lastaddr = MD_FETCH(kmdp, MODINFOMD_KERNEND, vm_offset_t);
 #ifdef SOC_S905
-	lastaddr= KERNBASE + 0x800000; /* FIX THIS! */
+	extern int *end;
+	lastaddr = (vm_offset_t)&end;
+	printf("lastaddr is 0x%016lx\n", (uint64_t)lastaddr);
+#else
+	lastaddr = MD_FETCH(kmdp, MODINFOMD_KERNEND, vm_offset_t);
 #endif
 
 	/* Load the physical memory ranges */

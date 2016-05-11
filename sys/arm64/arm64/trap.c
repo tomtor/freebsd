@@ -259,7 +259,7 @@ do_el1h_sync(struct trapframe *frame)
 {
 	uint32_t exception;
 	uint64_t esr;
-#if 0
+#ifndef wasSOC_S905
 	uint64_t far;
 #endif
 	static int handling;
@@ -291,7 +291,7 @@ do_el1h_sync(struct trapframe *frame)
 		printf(" esr:         %.8lx\n", esr);
 		panic("VFP exception in the kernel");
 	case EXCP_DATA_ABORT:
-#if 0
+#ifndef wasSOC_S905
 		far = READ_SPECIALREG(far_el1);
 		intr_enable();
 		data_abort(frame, esr, far, 0);

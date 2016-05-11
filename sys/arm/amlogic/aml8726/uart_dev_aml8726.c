@@ -154,6 +154,7 @@ aml8726_uart_param(struct uart_bas *bas, int baudrate, int databits, int stopbit
 		case AML_SOC_HW_REV_M6:
 		case AML_SOC_HW_REV_M8:
 		case AML_SOC_HW_REV_M8B:
+		case AML_SOC_HW_REV_S905:
 			if (divisor > (AML_UART_NEW_BAUD_RATE_MASK >>
 			    AML_UART_NEW_BAUD_RATE_SHIFT))
 				return (EINVAL);
@@ -510,6 +511,7 @@ aml8726_uart_bus_ioctl(struct uart_softc *sc, int request, intptr_t data)
 		case AML_SOC_HW_REV_M6:
 		case AML_SOC_HW_REV_M8:
 		case AML_SOC_HW_REV_M8B:
+		case AML_SOC_HW_REV_S905:
 			nbr = uart_getreg(bas, AML_UART_NEW_BAUD_REG);
 			if ((nbr & AML_UART_NEW_BAUD_RATE_EN) != 0) {
 				divisor = (nbr & AML_UART_NEW_BAUD_RATE_MASK) >>

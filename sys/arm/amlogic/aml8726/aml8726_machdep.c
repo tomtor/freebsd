@@ -109,7 +109,7 @@ platform_gpio_init(void)
 	 * This means there's a deadzone in initarm between setttb
 	 * and platform_gpio_init during which printf can't be used.
 	 */
-#ifndef SOC_S905
+#ifndef wasSOC_S905
 	aml8726_aobus_kva_base =
 	    (vm_offset_t)devmap_ptov(0xc8100000, 0x100000);
 #else
@@ -163,14 +163,14 @@ int
 platform_devmap_init(void)
 {
 #ifdef SOC_S905
-	devmap_add_entry(0xc1100000, 0x10000); /* cbus */
-	devmap_add_entry(0xc4300000, 0x10000); /* periph */
-	devmap_add_entry(0xc4300000, 0x10000); /* periph */
-	devmap_add_entry(0xc8000000, 0x10000); /* apbbus */
-	devmap_add_entry(0xc8100000, 0x10000); /* aobus */
-	devmap_add_entry(0xc9000000, 0x10000); /* ahbbus */
-	devmap_add_entry(0xd9000000, 0x10000); /* ahb */
-	devmap_add_entry(0xda000000, 0x10000); /* secbus */
+	devmap_add_entry(0xc1100000, 0x100000); /* cbus */
+	//devmap_add_entry(0xc4300000, 0x10000); /* periph */
+	//devmap_add_entry(0xc4300000, 0x10000); /* periph */
+	//devmap_add_entry(0xc8000000, 0x10000); /* apbbus */
+	devmap_add_entry(0xc8100000, 0x100000); /* aobus */
+	//devmap_add_entry(0xc9000000, 0x10000); /* ahbbus */
+	//devmap_add_entry(0xd9000000, 0x10000); /* ahb */
+	//devmap_add_entry(0xda000000, 0x10000); /* secbus */
 #else
 	devmap_add_entry(0xc1100000, 0x100000); /* cbus */
 	devmap_add_entry(0xc4200000, 0x100000); /* pl310 */

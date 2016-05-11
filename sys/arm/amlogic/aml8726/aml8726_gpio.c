@@ -390,9 +390,9 @@ static void show_heartbeat()
   printf("Start GPIO led 13 heart beat\n");
   while (1) {
 	pause("htbeat", 700 * hz/1000);
-	aml8726_gpio_pin_set(gpio0, 13, 1);
-	pause("htbeat", 300 * hz/1000);
 	aml8726_gpio_pin_set(gpio0, 13, 0);
+	pause("htbeat", 300 * hz/1000);
+	aml8726_gpio_pin_set(gpio0, 13, 1);
   }
 }
 

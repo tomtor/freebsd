@@ -55,14 +55,6 @@ __FBSDID("$FreeBSD$");
 #include <dev/usb/controller/dwc_otg.h>
 #include <dev/usb/controller/dwc_otg_fdt.h>
 
-#ifdef SOC_S905
-static struct resource_spec dwc_otg_spec[] = {
-	{ SYS_RES_MEMORY,	0,	RF_ACTIVE },
-	{ SYS_RES_IRQ,		0,	RF_ACTIVE },
-	{ -1, 0 }
-};
-#endif
-
 static device_probe_t dwc_otg_probe;
 static device_detach_t dwc_otg_detach;
 
@@ -87,9 +79,7 @@ dwc_otg_attach(device_t dev)
 	struct dwc_otg_fdt_softc *sc = device_get_softc(dev);
 	char usb_mode[24];
 	int err;
-#ifndef SOC_S905
 	int rid;
-#endif
 
 	/* initialise some bus fields */
 	sc->sc_otg.sc_bus.parent = dev;
@@ -119,18 +109,6 @@ dwc_otg_attach(device_t dev)
 	    USB_GET_DMA_TAG(dev), NULL)) {
 		return (ENOMEM);
 	}
-#ifdef SOC_S905
-	if (bus_alloc_resources(dev, dwc_otg_spec, sc->res)) {
-		device_printf(dev, "could not allocate resources\n");
-		return (ENXIO);
-	}
-	sc->sc_otg.sc_io_res = sc->res[0];
-	sc->sc_otg.sc_irq_res = sc->res[1];
-
-	sc->sc_otg.sc_io_tag = rman_get_bustag(sc->sc_otg.sc_io_res);
-	sc->sc_otg.sc_io_hdl = rman_get_bushandle(sc->sc_otg.sc_io_res);
-	sc->sc_otg.sc_io_size = rman_get_size(sc->sc_otg.sc_io_res);
-#else
 	rid = 0;
 	sc->sc_otg.sc_io_res =
 	    bus_alloc_resource_any(dev, SYS_RES_MEMORY, &rid, RF_ACTIVE);
@@ -143,12 +121,12 @@ dwc_otg_attach(device_t dev)
 	sc->sc_otg.sc_io_hdl = rman_get_bushandle(sc->sc_otg.sc_io_res);
 	sc->sc_otg.sc_io_size = rman_get_size(sc->sc_otg.sc_io_res);
 
-	rid = 1;
+	rid = 0;
 	sc->sc_otg.sc_irq_res =
 	    bus_alloc_resource_any(dev, SYS_RES_IRQ, &rid, RF_ACTIVE);
 	if (sc->sc_otg.sc_irq_res == NULL)
 		goto error;
-#endif
+
 	sc->sc_otg.sc_bus.bdev = device_add_child(dev, "usbus", -1);
 	if (sc->sc_otg.sc_bus.bdev == NULL)
 		goto error;
@@ -203,7 +181,7 @@ dwc_otg_detach(device_t dev)
 	}
 	/* free IRQ channel, if any */
 	if (sc->sc_otg.sc_irq_res) {
-		bus_release_resource(dev, SYS_RES_IRQ, 1,
+		bus_release_resource(dev, SYS_RES_IRQ, 0,
 		    sc->sc_otg.sc_irq_res);
 		sc->sc_otg.sc_irq_res = NULL;
 	}

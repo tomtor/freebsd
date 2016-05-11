@@ -98,7 +98,7 @@ aml8726_identify_soc()
 
 	res.r_bustag = fdtbus_bs_tag;
 
-#ifdef SOC_S905
+#ifdef wasSOC_S905
 	err = bus_space_map(res.r_bustag, AML_SOC_CBUS_BASE_ADDR, 0x10000,
 #else
 	err = bus_space_map(res.r_bustag, AML_SOC_CBUS_BASE_ADDR, 0x100000,
@@ -112,7 +112,7 @@ aml8726_identify_soc()
 
 	aml8726_soc_metal_rev = bus_read_4(&res, AML_SOC_METAL_REV_REG);
 
-#ifdef SOC_S905
+#ifdef wasSOC_S905
 	bus_space_unmap(res.r_bustag, res.r_bushandle, 0x10000);
 #else
 	bus_space_unmap(res.r_bustag, res.r_bushandle, 0x100000);

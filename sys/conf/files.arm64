@@ -92,10 +92,11 @@ arm/amlogic/aml8726/aml8726_rtc.c               standard
 #arm/amlogic/aml8726/aml8726_timer.c             standard
 arm/amlogic/aml8726/aml8726_wdt.c               standard
 arm/amlogic/aml8726/aml8726_if_dwc.c               standard
+arm/amlogic/aml8726/aml8726_fb.c               standard
 
 # serial console for debugging early boot code
 # also define SOCDEV_PA and SOCDEV_VA in std.aml8726
-arm/amlogic/aml8726/aml8726_uart_console.c     standard
+#arm/amlogic/aml8726/aml8726_uart_console.c     standard
 
 arm/amlogic/aml8726/aml8726_fb.c                optional        vt
 arm/amlogic/aml8726/aml8726_gpio.c              optional        gpio

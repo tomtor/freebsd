@@ -37,7 +37,7 @@
 
 /dts-v1/;
 
-/* /memreserve/ 0x7900000 0x00600000;			/* 6MB frame buffer */
+/memreserve/ 0x7900000 0x00600000;			/* 6MB frame buffer */
 
 #include "meson8b.dtsi"
 
@@ -56,7 +56,6 @@
 
 	memory {
 		device_type = "memory";
-		/* reg = <0x0 0x80000000>;		/* 2GB RAM */
 		reg = <0x1000000 0x7F000000>;		/* 2GB RAM */
 	};
 
@@ -277,7 +276,7 @@
 
 			mmc-pwr-en = <&gpio5 31 0>;	/* card_8 */
 			ins-detect = <&gpio5 29 0>;	/* card_6 */
-//status = "disabled";
+status = "disabled";
 		};
 
 		//sdxc@c1108e00 {
@@ -293,7 +292,7 @@
 			mmc-voltages = "1.8";
 
 			mmc-rst = <&gpio3 9 0>;	/* boot_9 emmc-rst */
-//status = "disabled";
+status = "disabled";
 		};
 
 		//rng@c1108100 {
@@ -331,7 +330,7 @@ status = "disabled";
 			#size-cells = <0>;
 
 			dr_mode = "host";
-//status = "disabled";
+status = "disabled";
 		};
 
 		usb@c9100000 {
@@ -360,7 +359,7 @@ status = "disabled";
 
 		screen: fb@c8006020 {
 			device_type = "display";
-			compatible = "Xamlogic,aml8726-fb";
+			compatible = "amlogic,aml8726-fb";
 			reg = <0xc8006048 12>,	/* CANVAS */
 			      <0xc1106800 1024>,	/* VIU */
 			      <0xc1107400 1024>;	/* VPP */
@@ -384,7 +383,7 @@ status = "disabled";
 		sys_led {
 			gpios = <&gpioao 13>;	/* gpioao_13 sys_led */
 			label = "sys_led";
-			default_state = "off";
+			default_state = "on"; // = OFF, reverse logic on the C2
 		};
 	};
 
@@ -406,16 +405,21 @@ status = "disabled";
 /*
 &uart_A {
 	status = "okay";
+	current-speed = <115200>;
 };
 
 &uart_B {
 	status = "okay";
+	current-speed = <115200>;
 };
 
 &uart_C {
 	status = "okay";
+	current-speed = <115200>;
 };
+*/
 
+/*
 
 &i2c_A {
 	status = "okay";
