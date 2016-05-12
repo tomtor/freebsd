@@ -26,7 +26,6 @@
  * SUCH DAMAGE.
  */
 
-#include "opt_soc.h"
 
 #include <sys/cdefs.h>
 __FBSDID("$FreeBSD$");
@@ -49,7 +48,7 @@ __FBSDID("$FreeBSD$");
 #include <dev/ofw/ofw_bus.h>
 #include <dev/ofw/ofw_bus_subr.h>
 
-#if defined(SOC_BCM2836) || defined(SOC_BRCM_BCM2837)
+#ifdef SOC_BCM2836
 #include <arm/broadcom/bcm2835/bcm2836.h>
 #endif
 
@@ -353,7 +352,7 @@ bcm_intc_probe(device_t dev)
 	if (!ofw_bus_status_okay(dev))
 		return (ENXIO);
 
-	if (!ofw_bus_is_compatible(dev, "brcm,bcm2708-armctrl-ic"))
+	if (!ofw_bus_is_compatible(dev, "broadcom,bcm2835-armctrl-ic"))
 		return (ENXIO);
 	device_set_desc(dev, "BCM2835 Interrupt Controller");
 	return (BUS_PROBE_DEFAULT);
@@ -409,48 +408,8 @@ bcm_intc_attach(device_t dev)
 
 	bcm_intc_sc = sc;
 
-#ifdef __aarch64__
-	arm_register_root_pic(dev, BANK3_END);
-#endif
-
 	return (0);
 }
-
-#ifdef __aarch64__
-static void
-bcm_intc_dispatch(device_t dev, struct trapframe *frame)
-{
-	int irq;
-
-	irq = -1;
-	while (1) {
-		irq = bcm_get_next_irq(irq);
-		if (irq < 0)
-			return;
-
-		arm_dispatch_intr(irq, frame);
-	}
-}
-
-static void
-bcm_intc_eoi(device_t dev, u_int irq)
-{
-}
-
-static void
-bcm_intc_mask_irq(device_t dev, u_int irq)
-{
-
-	bcm_mask_irq(irq);
-}
-
-static void
-bcm_intc_unmask_irq(device_t dev, u_int irq)
-{
-
-	bcm_unmask_irq(irq);
-}
-#endif
 
 static device_method_t bcm_intc_methods[] = {
 	DEVMETHOD(device_probe,		bcm_intc_probe),
@@ -476,8 +435,7 @@ static driver_t bcm_intc_driver = {
 
 static devclass_t bcm_intc_devclass;
 
-EARLY_DRIVER_MODULE(intc, simplebus, bcm_intc_driver, bcm_intc_devclass, 0, 0,
-    BUS_PASS_INTERRUPT + BUS_PASS_ORDER_MIDDLE);
+DRIVER_MODULE(intc, simplebus, bcm_intc_driver, bcm_intc_devclass, 0, 0);
 
 #ifndef INTRNG
 int
@@ -486,7 +444,7 @@ arm_get_next_irq(int last_irq)
 	struct bcm_intc_softc *sc = bcm_intc_sc;
 	uint32_t pending;
 	int32_t irq = last_irq + 1;
-#if defined(SOC_BCM2836) || defined(SOC_BRCM_BCM2837)
+#ifdef SOC_BCM2836
 	int ret;
 #endif
 
@@ -494,7 +452,7 @@ arm_get_next_irq(int last_irq)
 	if (irq < 0)
 		irq = 0;
 
-#if defined(SOC_BCM2836) || defined(SOC_BRCM_BCM2837)
+#ifdef SOC_BCM2836
 	if ((ret = bcm2836_get_next_irq(irq)) < 0)
 		return (-1);
 	if (ret != BCM2836_GPU_IRQ)
@@ -533,11 +491,11 @@ arm_get_next_irq(int last_irq)
 	return (-1);
 }
 
-static void
-bcm_mask_irq(uintptr_t nb)
+void
+arm_mask_irq(uintptr_t nb)
 {
 	struct bcm_intc_softc *sc = bcm_intc_sc;
-	dprintf("%s: %lu\n", __func__, nb);
+	dprintf("%s: %d\n", __func__, nb);
 
 	if (IS_IRQ_BASIC(nb))
 		intc_write_4(sc, INTC_DISABLE_BASIC, (1 << nb));
@@ -545,19 +503,19 @@ bcm_mask_irq(uintptr_t nb)
 		intc_write_4(sc, INTC_DISABLE_BANK1, (1 << IRQ_BANK1(nb)));
 	else if (IS_IRQ_BANK2(nb))
 		intc_write_4(sc, INTC_DISABLE_BANK2, (1 << IRQ_BANK2(nb)));
-#if defined(SOC_BCM2836) || defined(SOC_BRCM_BCM2837)
+#ifdef SOC_BCM2836
 	else if (ID_IRQ_BCM2836(nb))
 		bcm2836_mask_irq(nb - BANK3_START);
 #endif
 	else
-		printf("arm_mask_irq: Invalid IRQ number: %lu\n", nb);
+		printf("arm_mask_irq: Invalid IRQ number: %d\n", nb);
 }
 
-static void
-bcm_unmask_irq(uintptr_t nb)
+void
+arm_unmask_irq(uintptr_t nb)
 {
 	struct bcm_intc_softc *sc = bcm_intc_sc;
-	dprintf("%s: %lu\n", __func__, nb);
+	dprintf("%s: %d\n", __func__, nb);
 
 	if (IS_IRQ_BASIC(nb))
 		intc_write_4(sc, INTC_ENABLE_BASIC, (1 << nb));
@@ -565,15 +523,14 @@ bcm_unmask_irq(uintptr_t nb)
 		intc_write_4(sc, INTC_ENABLE_BANK1, (1 << IRQ_BANK1(nb)));
 	else if (IS_IRQ_BANK2(nb))
 		intc_write_4(sc, INTC_ENABLE_BANK2, (1 << IRQ_BANK2(nb)));
-#if defined(SOC_BCM2836) || defined(SOC_BRCM_BCM2837)
+#ifdef SOC_BCM2836
 	else if (ID_IRQ_BCM2836(nb))
 		bcm2836_unmask_irq(nb - BANK3_START);
 #endif
 	else
-		printf("arm_mask_irq: Invalid IRQ number: %lu\n", nb);
+		printf("arm_mask_irq: Invalid IRQ number: %d\n", nb);
 }
 
-#if defined(__arm__)
 #ifdef SMP
 void
 intr_pic_init_secondary(void)

@@ -697,7 +697,6 @@ fdt_get_mem_regions(struct mem_region *mr, int *mrcnt, uint64_t *memsize)
 
 		regp += addr_cells + size_cells;
 		memory_size += mr[i].mr_size;
-printf("size %lx\n",memory_size);
 	}
 
 	if (memory_size == 0) {

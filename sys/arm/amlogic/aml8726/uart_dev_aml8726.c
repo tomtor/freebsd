@@ -643,6 +643,7 @@ aml8726_uart_bus_receive(struct uart_softc *sc)
 	}
 
 	uart_unlock(sc->sc_hwmtx);
+printf(".");
 
 	return (0);
 }
