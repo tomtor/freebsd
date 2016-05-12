@@ -264,15 +264,13 @@ do_el1h_sync(struct trapframe *frame)
 #endif
 	static int handling;
 
-	if (handling) {
+	if (handling++) {
 		printf("Recursive do_el1h_sync\n");
-		if (handling == 1)
+		if (handling++ == 1)
 			panic("Double Fault");
 		else
 			cpu_reset();
 	}
-
-	handling++;
 
 	/* Read the esr register to get the exception details */
 	esr = READ_SPECIALREG(esr_el1);
