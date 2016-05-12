@@ -67,8 +67,16 @@ __FBSDID("$FreeBSD$");
 #define	BCM_GPIO_IRQS		4
 #define	BCM_GPIO_PINS		54
 #define	BCM_GPIO_PINS_PER_BANK	32
+
+#ifdef INTRNG
+#define	BCM_GPIO_DEFAULT_CAPS	(GPIO_PIN_INPUT | GPIO_PIN_OUTPUT |	\
+    GPIO_PIN_PULLUP | GPIO_PIN_PULLDOWN | GPIO_INTR_LEVEL_LOW |		\
+    GPIO_INTR_LEVEL_HIGH | GPIO_INTR_EDGE_RISING |			\
+    GPIO_INTR_EDGE_FALLING | GPIO_INTR_EDGE_BOTH)
+#else
 #define	BCM_GPIO_DEFAULT_CAPS	(GPIO_PIN_INPUT | GPIO_PIN_OUTPUT |	\
     GPIO_PIN_PULLUP | GPIO_PIN_PULLDOWN)
+#endif
 
 static struct resource_spec bcm_gpio_res_spec[] = {
 	{ SYS_RES_MEMORY, 0, RF_ACTIVE },
@@ -624,7 +632,7 @@ bcm_gpio_get_ro_pins(struct bcm_gpio_softc *sc, phandle_t node,
 	if (npins < 0)
 		return (-1);
 	if (npins == 0) {
-		free(pins, M_OFWPROP);
+		OF_prop_free(pins);
 		return (0);
 	}
 	for (i = 0; i < npins; i++)
@@ -652,7 +660,7 @@ bcm_gpio_get_ro_pins(struct bcm_gpio_softc *sc, phandle_t node,
 		printf("%d-%d.\n", range_start, range_stop);
 	else
 		printf("%d.\n", range_start);
-	free(pins, M_OFWPROP);
+	OF_prop_free(pins);
 
 	return (0);
 }
@@ -678,7 +686,7 @@ bcm_gpio_get_reserved_pins(struct bcm_gpio_softc *sc)
 			return (-1);
 		if (strcmp(name, "reserved") == 0)
 			reserved = node;
-		free(name, M_OFWPROP);
+		OF_prop_free(name);
 		node = OF_peer(node);
 	}
 	if (reserved == 0)
