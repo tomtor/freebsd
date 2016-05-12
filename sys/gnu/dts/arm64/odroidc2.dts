@@ -354,7 +354,7 @@ status = "disabled";
 			#size-cells = <0>;
 
 			eth-phy-rst = <&gpio3 23 0>;	/* gpioh_4 phy-rst */
-//status = "disabled";
+status = "disabled";
 		};
 
 		screen: fb@c8006020 {
@@ -402,11 +402,12 @@ status = "disabled";
 	current-speed = <115200>;
 };
 
-/*
 &uart_A {
 	status = "okay";
 	current-speed = <115200>;
 };
+
+/*
 
 &uart_B {
 	status = "okay";

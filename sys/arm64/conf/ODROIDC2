@@ -83,6 +83,7 @@ options 	SMP
 options 	KDB			# Enable kernel debugger support.
 options 	KDB_TRACE		# Print a stack trace for a panic.
 options		BREAK_TO_DEBUGGER
+options		ALT_BREAK_TO_DEBUGGER
 # For full debugger support use (turn off in stable branch):
 options 	DDB			# Support DDB.
 #options 	GDB			# Support remote GDB.
@@ -136,6 +137,7 @@ device		sdhci
 #device		fdt_pinctrl
 
 # ODROIDC2
+device		axe
 
 # Serial (COM) ports
 device		uart		# Generic UART driver
@@ -157,7 +159,7 @@ device		loop		# Network loopback
 device		ether		# Ethernet support
 #device		vlan		# 802.1Q VLAN support
 #device		tun		# Packet tunnel.
-#device		md		# Memory "disks"
+device		md		# Memory "disks"
 #device		gif		# IPv6 and IPv4 tunneling
 #device		firmware	# firmware assist module
 device		psci		# Support for ARM PSCI
