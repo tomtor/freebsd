@@ -408,7 +408,6 @@ status = "disabled";
 };
 
 /*
-
 &uart_B {
 	status = "okay";
 	current-speed = <115200>;

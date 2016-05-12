@@ -256,6 +256,7 @@ aml8726_wdt_attach(device_t dev)
 	    (CSR_READ_4(sc, AML_WDT_CTRL_REG) & ~(AML_WDT_CTRL_IRQ_EN |
 	    AML_WDT_CTRL_EN)));
 
+#ifndef SOC_S905
 	/*
 	 * Initialize the mutex prior to installing the interrupt handler
 	 * in case of a spurious interrupt.
@@ -273,6 +274,9 @@ aml8726_wdt_attach(device_t dev)
 	aml8726_wdt_sc = sc;
 
 	EVENTHANDLER_REGISTER(watchdog_list, aml8726_wdt_watchdog, sc, 0);
+#else
+	aml8726_wdt_sc = sc;
+#endif
 
 	return (0);
 }

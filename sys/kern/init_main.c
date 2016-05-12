@@ -755,8 +755,7 @@ start_init(void *dummy)
 		options = 0;
 		ucp = (char *)p->p_sysent->sv_usrstack;
 		(void)subyte(--ucp, 0);		/* trailing zero */
-		//if (boothowto & RB_SINGLE) {
-		if (1) {
+		if (boothowto & RB_SINGLE) {
 			(void)subyte(--ucp, 's');
 			options = 1;
 		}

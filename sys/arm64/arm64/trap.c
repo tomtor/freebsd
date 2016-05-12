@@ -266,7 +266,10 @@ do_el1h_sync(struct trapframe *frame)
 
 	if (handling) {
 		printf("Recursive do_el1h_sync\n");
-		cpu_reset();
+		if (handling == 1)
+			panic("Double Fault");
+		else
+			cpu_reset();
 	}
 
 	handling++;
