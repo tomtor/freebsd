@@ -47,7 +47,6 @@
 			clock-frequency = <1536000000>;
 		};
 
-/*
 		cpu@1 {
 			device_type = "cpu";
 			compatible = "arm,cortex-a53","arm,armv8";
@@ -73,6 +72,7 @@
 			//next-level-cache = <&L2>;
 			clock-frequency = <1536000000>;
 		};
+/*
 */
 	};
 
