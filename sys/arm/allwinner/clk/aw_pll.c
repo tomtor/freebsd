@@ -101,6 +101,12 @@ __FBSDID("$FreeBSD$");
 
 #define	A10_PLL2_POST_DIV		(0xf << 26)
 
+#define	A23_PLL1_FACTOR_N		(0x1f << 8)
+#define	A23_PLL1_FACTOR_N_SHIFT		8
+#define	A23_PLL1_FACTOR_K		(0x3 << 4)
+#define	A23_PLL1_FACTOR_K_SHIFT		4
+#define	A23_PLL1_FACTOR_M		(0x3 << 0)
+#define	A23_PLL1_FACTOR_M_SHIFT		0
 #define	A23_PLL1_FACTOR_P		(0x3 << 16)
 #define	A23_PLL1_FACTOR_P_SHIFT		16
 
@@ -464,9 +470,9 @@ a23_pll1_recalc(struct aw_pll_sc *sc, uint64_t *freq)
 	PLL_READ(sc, &val);
 	DEVICE_UNLOCK(sc);
 
-	m = ((val & A31_PLL1_FACTOR_M) >> A31_PLL1_FACTOR_M_SHIFT) + 1;
-	k = ((val & A31_PLL1_FACTOR_K) >> A31_PLL1_FACTOR_K_SHIFT) + 1;
-	n = ((val & A31_PLL1_FACTOR_N) >> A31_PLL1_FACTOR_N_SHIFT) + 1;
+	m = ((val & A23_PLL1_FACTOR_M) >> A23_PLL1_FACTOR_M_SHIFT) + 1;
+	k = ((val & A23_PLL1_FACTOR_K) >> A23_PLL1_FACTOR_K_SHIFT) + 1;
+	n = ((val & A23_PLL1_FACTOR_N) >> A23_PLL1_FACTOR_N_SHIFT) + 1;
 	p = ((val & A23_PLL1_FACTOR_P) >> A23_PLL1_FACTOR_P_SHIFT) + 1;
 
 	*freq = (*freq * n * k) / (m * p);
@@ -599,6 +605,7 @@ static struct ofw_compat_data compat_data[] = {
 	{ "allwinner,sun4i-a10-pll6-clk",	AWPLL_A10_PLL6 },
 	{ "allwinner,sun6i-a31-pll1-clk",	AWPLL_A31_PLL1 },
 	{ "allwinner,sun6i-a31-pll6-clk",	AWPLL_A31_PLL6 },
+	{ "allwinner,sun8i-a23-pll1-clk",	AWPLL_A23_PLL1 },
 	{ "allwinner,sun9i-a80-pll4-clk",	AWPLL_A80_PLL4 },
 	{ NULL, 0 }
 };
