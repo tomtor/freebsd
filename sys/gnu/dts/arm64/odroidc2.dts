@@ -37,6 +37,14 @@
 
 /dts-v1/;
 
+// /memreserve/ 0x10000000 0x00200000;	// Secmon reserved
+// /memreserve/ 0x100000 0x00200000;	// Secmon reserved ???
+// /memreserve/ 0x73000000 0x00200000;	// Give mtest error
+// /memreserve/ 0x2c000000 0x00200000;	// Give mtest error
+
+/memreserve/ 0x01000000 0x0f000000;	// reserved ???
+/memreserve/ 0x70000000 0x10000000;	// reserved ???
+
 /memreserve/ 0x7900000 0x00600000;			/* 6MB frame buffer */
 
 #include "meson8b.dtsi"
@@ -330,7 +338,7 @@ status = "disabled";
 			#size-cells = <0>;
 
 			dr_mode = "host";
-status = "disabled";
+//status = "disabled";
 		};
 
 		usb@c9100000 {
