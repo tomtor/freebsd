@@ -60,33 +60,33 @@ dev/fdt/fdt_arm_platform.c	optional	soc_allwinner_a64
 dev/dwc/if_dwc.c		optional	dwc
 dev/dwc/if_dwc_if.m		optional	dwc
 #
-arm/allwinner/aw_ccu.c                  standard
-arm/allwinner/clk/aw_ahbclk.c           standard
-arm/allwinner/clk/aw_apbclk.c           standard
-arm/allwinner/clk/aw_axiclk.c           standard
-arm/allwinner/clk/aw_codecclk.c         standard
-arm/allwinner/clk/aw_cpuclk.c           standard
-arm/allwinner/clk/aw_debeclk.c          standard
-arm/allwinner/clk/aw_gate.c             standard
-arm/allwinner/clk/aw_gmacclk.c          standard
-arm/allwinner/clk/aw_hdmiclk.c          standard
-arm/allwinner/clk/aw_lcdclk.c           standard
-arm/allwinner/clk/aw_modclk.c           standard
-arm/allwinner/clk/aw_mmcclk.c           standard
-arm/allwinner/clk/aw_oscclk.c           standard
-arm/allwinner/clk/aw_pll.c              standard
-arm/allwinner/clk/aw_usbclk.c           standard
+arm/allwinner/aw_ccu.c                  optional        soc_allwinner_a64
+arm/allwinner/clk/aw_ahbclk.c           optional        soc_allwinner_a64
+arm/allwinner/clk/aw_apbclk.c           optional        soc_allwinner_a64
+arm/allwinner/clk/aw_axiclk.c           optional        soc_allwinner_a64
+arm/allwinner/clk/aw_codecclk.c         optional        soc_allwinner_a64
+arm/allwinner/clk/aw_cpuclk.c           optional        soc_allwinner_a64
+arm/allwinner/clk/aw_debeclk.c          optional        soc_allwinner_a64
+arm/allwinner/clk/aw_gate.c             optional        soc_allwinner_a64
+arm/allwinner/clk/aw_gmacclk.c          optional        soc_allwinner_a64
+arm/allwinner/clk/aw_hdmiclk.c          optional        soc_allwinner_a64
+arm/allwinner/clk/aw_lcdclk.c           optional        soc_allwinner_a64
+arm/allwinner/clk/aw_modclk.c           optional        soc_allwinner_a64
+arm/allwinner/clk/aw_mmcclk.c           optional        soc_allwinner_a64
+arm/allwinner/clk/aw_oscclk.c           optional        soc_allwinner_a64
+arm/allwinner/clk/aw_pll.c              optional        soc_allwinner_a64
+arm/allwinner/clk/aw_usbclk.c           optional        soc_allwinner_a64
 #
 # AMLogic
 
 arm/amlogic/aml8726/aml8726_machdep.c           optional soc_s905
-arm/amlogic/aml8726/aml8726_identsoc.c          optional soc_905
-arm/amlogic/aml8726/aml8726_ccm.c               optional soc_905
-arm/amlogic/aml8726/aml8726_clkmsr.c            optional soc_905
-arm/amlogic/aml8726/aml8726_rtc.c              optional soc_905
-arm/amlogic/aml8726/aml8726_wdt.c              optional soc_905
-arm/amlogic/aml8726/aml8726_if_dwc.c           optional soc_905
-arm/amlogic/aml8726/aml8726_fb.c               optional soc_905
+arm/amlogic/aml8726/aml8726_identsoc.c          optional soc_s905
+arm/amlogic/aml8726/aml8726_ccm.c               optional soc_s905
+arm/amlogic/aml8726/aml8726_clkmsr.c            optional soc_s905
+arm/amlogic/aml8726/aml8726_rtc.c              optional soc_s905
+arm/amlogic/aml8726/aml8726_wdt.c              optional soc_s905
+arm/amlogic/aml8726/aml8726_if_dwc.c           optional soc_s905
+arm/amlogic/aml8726/aml8726_fb.c               optional soc_s905
 
 # serial console for debugging early boot code
 # also define SOCDEV_PA and SOCDEV_VA in std.aml8726
