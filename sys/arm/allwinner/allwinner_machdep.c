@@ -247,16 +247,11 @@ static platform_method_t h3_methods[] = {
 	PLATFORMMETHOD(platform_devmap_init,    allwinner_devmap_init),
 
 #ifdef SMP
-<<<<<<< HEAD
 	PLATFORMMETHOD(platform_mp_start_ap,	a31_mp_start_ap),
-=======
-	PLATFORMMETHOD(platform_mp_start_ap,	aw_mp_start_ap),
->>>>>>> 2cdbb70fc045aec2cdd12721e4a83890f2aea5b4
 	PLATFORMMETHOD(platform_mp_setmaxid,	aw_mp_setmaxid),
 #endif
 	PLATFORMMETHOD_END,
 };
-<<<<<<< HEAD
 FDT_PLATFORM_DEF(h3, "h3", 0, "allwinner,sun8i-h3");
 #endif
 
@@ -266,17 +261,9 @@ static platform_method_t a64_methods[] = {
 	PLATFORMMETHOD(platform_lastaddr,       allwinner_lastaddr),
 	PLATFORMMETHOD(platform_devmap_init,    allwinner_devmap_init),
 
-#ifdef SMP
-	// use a31 code?
-	PLATFORMMETHOD(platform_mp_start_ap,	a31_mp_start_ap),
-	PLATFORMMETHOD(platform_mp_setmaxid,	aw_mp_setmaxid),
-#endif
 	PLATFORMMETHOD_END,
 };
 FDT_PLATFORM_DEF(a64, "a64", 0, "allwinner,sun50i-a64");
-=======
-FDT_PLATFORM_DEF(h3, "h3", 0, "allwinner,sun8i-h3", 200);
->>>>>>> 2cdbb70fc045aec2cdd12721e4a83890f2aea5b4
 #endif
 
 u_int
