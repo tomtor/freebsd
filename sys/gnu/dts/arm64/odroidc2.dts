@@ -37,15 +37,9 @@
 
 /dts-v1/;
 
-// /memreserve/ 0x10000000 0x00200000;	// Secmon reserved
-// /memreserve/ 0x100000 0x00200000;	// Secmon reserved ???
-// /memreserve/ 0x73000000 0x00200000;	// Give mtest error
-// /memreserve/ 0x2c000000 0x00200000;	// Give mtest error
+/memreserve/ 0x10000000 0x020000;			/* secmon */
 
-/memreserve/ 0x01000000 0x0f000000;	// reserved ???
-/memreserve/ 0x70000000 0x10000000;	// reserved ???
-
-/memreserve/ 0x7900000 0x00600000;			/* 6MB frame buffer */
+// /memreserve/ 0x07900000 0x00600000;			/* 6MB frame buffer */
 
 #include "meson8b.dtsi"
 
@@ -64,7 +58,8 @@
 
 	memory {
 		device_type = "memory";
-		reg = <0x1000000 0x7F000000>;		/* 2GB RAM */
+		//reg = <0x01000000 0x7F000000>;		/* 2GB RAM */
+		reg = <0x20000000 0x40000000>;		/* 2GB RAM */
 	};
 
 	soc: soc {
@@ -361,8 +356,9 @@ status = "disabled";
 			#address-cells = <1>;
 			#size-cells = <0>;
 
-			eth-phy-rst = <&gpio3 23 0>;	/* gpioh_4 phy-rst */
-status = "disabled";
+			//eth-phy-rst = <&gpio3 23 0>;	/* gpioh_4 phy-rst */
+			eth-phy-rst = <&gpio3 14 0>;	/* gpioh_4 phy-rst */
+//status = "disabled";
 		};
 
 		screen: fb@c8006020 {
