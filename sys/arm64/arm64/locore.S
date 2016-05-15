@@ -57,9 +57,6 @@
 	.text
 	.globl _start
 _start:
-	ldr	x10,=0x01c28000
-	ldr	x9,#0x48
-	strb	w9, [x10,0]
 	/* Drop to EL1 */
 	bl	drop_to_el1
 
