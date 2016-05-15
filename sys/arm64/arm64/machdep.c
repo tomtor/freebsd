@@ -878,11 +878,7 @@ initarm(struct arm64_bootparams *abp)
 	if (kmdp == NULL)
 		kmdp = preload_search_by_type("elf64 kernel");
 
-#ifndef SOC_S905
 	boothowto = MD_FETCH(kmdp, MODINFOMD_HOWTO, int);
-#else
-	boothowto = RB_VERBOSE;
-#endif
 	init_static_kenv(MD_FETCH(kmdp, MODINFOMD_ENVP, char *), 0);
 
 #ifdef FDT

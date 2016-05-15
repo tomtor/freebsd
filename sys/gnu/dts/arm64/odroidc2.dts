@@ -37,7 +37,7 @@
 
 /dts-v1/;
 
-/memreserve/ 0x10000000 0x20000;			/* secmon */
+/memreserve/ 0x10000000 0x100000;			/* secmon */
 
 // /memreserve/ 0x07900000 0x00600000;			/* 6MB frame buffer */
 
@@ -355,8 +355,9 @@ status = "disabled";
 			#address-cells = <1>;
 			#size-cells = <0>;
 
-			eth-phy-rst = <&gpio3 23 0>;	/* gpioh_4 phy-rst */
-status = "disabled";
+			//eth-phy-rst = <&gpio3 23 0>;	/* gpioh_4 phy-rst */
+			eth-phy-rst = <&gpio3 14 0>;	/* gpioh_4 phy-rst */
+//status = "disabled";
 		};
 
 		screen: fb@c8006020 {
