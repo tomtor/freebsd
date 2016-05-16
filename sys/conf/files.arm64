@@ -43,7 +43,7 @@ arm/allwinner/a10_gpio.c        optional        gpio soc_allwinner_a64
 arm/allwinner/a10_mmc.c         optional        mmc soc_allwinner_a64
 #arm/allwinner/a10_sramc.c       optional	soc_allwinner_a64
 #arm/allwinner/aw_rtc.c          optional	soc_allwinner_a64
-#arm/allwinner/aw_wdog.c         optional	soc_allwinner_a64
+arm/allwinner/aw_wdog.c         optional	soc_allwinner_a64
 #arm/allwinner/a20/a20_cpu_cfg.c optional	soc_allwinner_a64
 arm/allwinner/allwinner_machdep.c optional	soc_allwinner_a64
 #arm/allwinner/axp209.c          optional        axp209 soc_allwinner_a64

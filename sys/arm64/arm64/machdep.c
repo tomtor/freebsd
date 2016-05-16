@@ -679,7 +679,7 @@ add_fdt_mem_regions(struct mem_region *mr, int mrcnt, vm_paddr_t *physmap,
 {
 
 	for (int i = 0; i < mrcnt; i++) {
-#ifndef SOC_S905
+#ifdef RPI_HACK
 		/* Hack up reserve space for the firmware */
 		if (mr[i].mr_start == 0) {
 			if (mr[i].mr_size <= 0x100000)
@@ -866,11 +866,11 @@ initarm(struct arm64_bootparams *abp)
 	vm_paddr_t mem_len;
 	int i;
 
-#ifndef SOC_S905
+#if defined(SOC_S905) || defined(SOC_ALLWINNER_A64)
+	preload_metadata = 0;
+#else
 	/* Set the module data location */
 	preload_metadata = (caddr_t)(uintptr_t)(abp->modulep);
-#else
-	preload_metadata = 0;
 #endif
 
 	/* Find the kernel address */
@@ -886,7 +886,8 @@ initarm(struct arm64_bootparams *abp)
 #endif
 
 	/* Find the address to start allocating from */
-#ifdef SOC_S905
+#if defined(SOC_S905) || defined(SOC_ALLWINNER_A64)
+	boothowto = RB_VERBOSE;
 	extern int *end;
 	lastaddr = (vm_offset_t)&end;
 	printf("lastaddr is 0x%016lx\n", (uint64_t)lastaddr);

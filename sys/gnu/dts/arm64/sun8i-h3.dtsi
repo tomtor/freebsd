@@ -53,45 +53,12 @@
 		#size-cells = <0>;
 
 		cpu@0 {
-			device_type = "cpu";
-			compatible = "arm,cortex-a53","arm,armv8";
-			reg = <0x0>;
-			enable-method = "psci";
-			clock-frequency = <1008000000>;
-		};
-
-/*
-		cpu@1 {
-			device_type = "cpu";
-			compatible = "arm,cortex-a53","arm,armv8";
-			reg = <0x1>;
-			enable-method = "psci";
-			clock-frequency = <1008000000>;
-		};
-		cpu@2 {
-			device_type = "cpu";
-			compatible = "arm,cortex-a53","arm,armv8";
-			reg = <0x2>;
-			enable-method = "psci";
-			clock-frequency = <1008000000>;
-		};
-		cpu@3 {
-			device_type = "cpu";
-			compatible = "arm,cortex-a53","arm,armv8";
-			reg = <0x3>;
-			enable-method = "psci";
-			clock-frequency = <1008000000>;
-		};
-*/
-
-/*
-		cpu@0 {
 			compatible = "arm,cortex-a7";
 			device_type = "cpu";
 			reg = <0>;
-			clock-frequency = <800000000>;
 		};
 
+/*
 		cpu@1 {
 			compatible = "arm,cortex-a7";
 			device_type = "cpu";
@@ -113,22 +80,12 @@
 	};
 
 	timer {
-		compatible = "arm,armv8-timer";
-		interrupts = <1 13 0xf08>,
-				<1 14 0xf08>,
-			        <1 11 0xf08>,
-			        <1 10 0xf08>;
-	};
-
-/*
-	timer {
 		compatible = "arm,armv7-timer";
 		interrupts = <GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
 			     <GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
 			     <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
 			     <GIC_PPI 10 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>;
 	};
-*/
 
 	clocks {
 		#address-cells = <1>;
@@ -292,7 +249,6 @@
 			clock-output-names = "mmc0",
 					     "mmc0_output",
 					     "mmc0_sample";
-//status = "disabled";
 		};
 
 		mmc1_clk: clk@01c2008c {
@@ -303,7 +259,6 @@
 			clock-output-names = "mmc1",
 					     "mmc1_output",
 					     "mmc1_sample";
-//status = "disabled";
 		};
 
 		mmc2_clk: clk@01c20090 {
@@ -314,7 +269,6 @@
 			clock-output-names = "mmc2",
 					     "mmc2_output",
 					     "mmc2_sample";
-//status = "disabled";
 		};
 
 		usb_clk: clk@01c200cc {
@@ -323,12 +277,10 @@
 			compatible = "allwinner,sun8i-h3-usb-clk";
 			reg = <0x01c200cc 0x4>;
 			clocks = <&osc24M>;
-/* A64 has less USB controllers than H3, check this */
 			clock-output-names = "usb_phy0", "usb_phy1",
 					     "usb_phy2", "usb_phy3",
 					     "usb_ohci0", "usb_ohci1",
 					     "usb_ohci2", "usb_ohci3";
-//status = "disabled";
 		};
 
 		mbus_clk: clk@01c2015c {
@@ -356,17 +308,17 @@
 			clocks = <&apb0>;
 			clock-indices = <0>, <1>;
 			clock-output-names = "apb0_pio", "apb0_ir";
-//status = "disabled";
 		};
 
+/*
 		ir_clk: ir_clk@01f01454 {
 			compatible = "allwinner,sun4i-a10-mod0-clk";
 			reg = <0x01f01454 0x4>;
 			#clock-cells = <0>;
 			clocks = <&osc32k>, <&osc24M>;
 			clock-output-names = "ir";
-status = "disabled";
 		};
+*/
 	};
 
 	soc {
@@ -382,7 +334,6 @@ status = "disabled";
 			clocks = <&bus_gates 6>;
 			resets = <&ahb_rst 6>;
 			#dma-cells = <1>;
-//status = "disabled";
 		};
 
 		mmc0: mmc@01c0f000 {
@@ -442,7 +393,6 @@ status = "disabled";
 			#size-cells = <0>;
 		};
 
-/* A64 has less USB controllers than H3, check this */
 		usbphy: phy@01c19400 {
 			compatible = "allwinner,sun8i-h3-usb-phy";
 			reg = <0x01c19400 0x2c>,
@@ -590,21 +540,18 @@ status = "disabled";
 			#reset-cells = <1>;
 			compatible = "allwinner,sun6i-a31-ahb1-reset";
 			reg = <0x01c202c0 0xc>;
-status = "disabled";
 		};
 
 		apb1_rst: reset@01c202d0 {
 			#reset-cells = <1>;
 			compatible = "allwinner,sun6i-a31-clock-reset";
 			reg = <0x01c202d0 0x4>;
-status = "disabled";
 		};
 
 		apb2_rst: reset@01c202d8 {
 			#reset-cells = <1>;
 			compatible = "allwinner,sun6i-a31-clock-reset";
 			reg = <0x01c202d8 0x4>;
-status = "disabled";
 		};
 
 		timer@01c20c00 {
@@ -613,7 +560,6 @@ status = "disabled";
 			interrupts = <GIC_SPI 18 IRQ_TYPE_LEVEL_HIGH>,
 				     <GIC_SPI 19 IRQ_TYPE_LEVEL_HIGH>;
 			clocks = <&osc24M>;
-status = "disabled";
 		};
 
 		wdt0: watchdog@01c20ca0 {
@@ -675,16 +621,14 @@ status = "disabled";
 		};
 
 		gic: interrupt-controller@01c81000 {
-			//compatible = "arm,cortex-a7-gic", "arm,cortex-a15-gic";
-			compatible = "arm,gic-400";
+			compatible = "arm,cortex-a7-gic", "arm,cortex-a15-gic";
 			reg = <0x01c81000 0x1000>,
-			      <0x01c82000 0x2000>,
+			      <0x01c82000 0x1000>,
 			      <0x01c84000 0x2000>,
 			      <0x01c86000 0x2000>;
 			interrupt-controller;
 			#interrupt-cells = <3>;
-			// interrupts = <GIC_PPI 9 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_HIGH)>;
-			interrupts = <0 9 1>;
+			interrupts = <GIC_PPI 9 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_HIGH)>;
 		};
 
 		rtc: rtc@01f00000 {
@@ -700,6 +644,7 @@ status = "disabled";
 			#reset-cells = <1>;
 		};
 
+/*
 		ir: ir@01f02000 {
 			compatible = "allwinner,sun5i-a13-ir";
 			clocks = <&apb0_gates 1>, <&ir_clk>;
@@ -709,6 +654,7 @@ status = "disabled";
 			reg = <0x01f02000 0x40>;
 			status = "disabled";
 		};
+*/
 
 		r_pio: pinctrl@01f02c00 {
 			compatible = "allwinner,sun8i-h3-r-pinctrl";

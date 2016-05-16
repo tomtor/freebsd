@@ -1,9 +1,5 @@
 /*
- * Copyright (C) 2015 Jens Kuske <jenskuske@gmail.com>
- *
- * Changes for sun50i (Pine64):
- *
- * Copyright (C) 2016 Tom Vijlbrief <tvijlbrief@gmail.com>
+ * Copyright (C) 2016 Hans de Goede <hdegoede@redhat.com>
  *
  * This file is dual-licensed: you can use it either under the terms
  * of the GPL or the X11 license, at your option. Note that this dual
@@ -45,8 +41,7 @@
  */
 
 /dts-v1/;
-
-#include "sun50i-a64.dtsi"
+#include "sun8i-h3.dtsi"
 #include "sunxi-common-regulators.dtsi"
 
 #include <dt-bindings/gpio/gpio.h>
@@ -59,8 +54,7 @@
 
 	memory {
 		device_type = "memory";
-		//reg = <0x41000000 0x3F000000>;		/* 1GB RAM */
-		reg = <0x41000000 0x1F000000>;		/* 1GB RAM */
+		reg = <0x41000000 0x3F000000>;		/* 1GB RAM */
 	};
 
 	aliases {
@@ -69,6 +63,23 @@
 
 	chosen {
 		stdout-path = "serial0:115200n8";
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		pinctrl-names = "default";
+		pinctrl-0 = <&leds_opc>, <&leds_r_opc>;
+
+		pwr_led {
+			label = "orangepi:green:pwr";
+			gpios = <&r_pio 0 10 GPIO_ACTIVE_HIGH>;
+			default-state = "on";
+		};
+
+		status_led {
+			label = "orangepi:red:status";
+			gpios = <&pio 0 15 GPIO_ACTIVE_HIGH>;
+		};
 	};
 
 	r_gpio_keys {
@@ -85,7 +96,7 @@
 };
 
 &ehci1 {
-	// status = "okay";
+	status = "okay";
 };
 
 &mmc0 {
@@ -95,11 +106,11 @@
 	bus-width = <4>;
 	cd-gpios = <&pio 5 6 GPIO_ACTIVE_HIGH>; /* PF6 */
 	cd-inverted;
-	// status = "okay";
+	status = "okay";
 };
 
 &ohci1 {
-	// status = "okay";
+	status = "okay";
 };
 
 &pio {
