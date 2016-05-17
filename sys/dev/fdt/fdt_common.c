@@ -246,7 +246,6 @@ fdt_is_compatible(phandle_t node, const char *compatstr)
 	char *compat;
 	int len, onelen, l, rv;
 
-printf("CS: %s\n",compatstr);
 	if ((len = OF_getproplen(node, "compatible")) <= 0)
 		return (0);
 

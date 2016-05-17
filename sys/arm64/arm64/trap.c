@@ -258,7 +258,8 @@ void
 do_el1h_sync(struct trapframe *frame)
 {
 	uint32_t exception;
-#if 0
+#define NORMTRAP	1
+#if NORMTRAP
 	uint64_t esr, far;
 #else
 	uint64_t esr;
@@ -284,7 +285,7 @@ do_el1h_sync(struct trapframe *frame)
 		printf(" esr:         %.8lx\n", esr);
 		panic("VFP exception in the kernel");
 	case EXCP_DATA_ABORT:
-#if 0
+#if NORMTRAP
 		far = READ_SPECIALREG(far_el1);
 		intr_enable();
 		data_abort(frame, esr, far, 0);

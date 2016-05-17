@@ -10,6 +10,7 @@ SOC_S905			opt_global.h
 
 INTRNG				opt_global.h
 DEV_GIC				opt_global.h
+MULTIDELAY			opt_global.h
 
 GIC_DEFAULT_ICFGR_INIT		opt_global.h
 

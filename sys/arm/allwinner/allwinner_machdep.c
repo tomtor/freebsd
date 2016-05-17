@@ -245,29 +245,12 @@ static platform_method_t h3_methods[] = {
 	PLATFORMMETHOD(platform_devmap_init,    allwinner_devmap_init),
 
 #ifdef SMP
-	PLATFORMMETHOD(platform_mp_start_ap,	a31_mp_start_ap),
+	PLATFORMMETHOD(platform_mp_start_ap,	aw_mp_start_ap),
 	PLATFORMMETHOD(platform_mp_setmaxid,	aw_mp_setmaxid),
 #endif
 	PLATFORMMETHOD_END,
 };
 FDT_PLATFORM_DEF(h3, "h3", 0, "allwinner,sun8i-h3", 200);
-#endif
-
-#if 0
-#if defined(SOC_ALLWINNER_A64)
-static platform_method_t a64_methods[] = {
-	PLATFORMMETHOD(platform_attach,         a64_attach),
-	PLATFORMMETHOD(platform_lastaddr,       allwinner_lastaddr),
-	PLATFORMMETHOD(platform_devmap_init,    allwinner_devmap_init),
-
-#ifdef SMP
-	PLATFORMMETHOD(platform_mp_start_ap,	a31_mp_start_ap),
-	PLATFORMMETHOD(platform_mp_setmaxid,	aw_mp_setmaxid),
-#endif
-	PLATFORMMETHOD_END,
-};
-FDT_PLATFORM_DEF(a64, "a64", 0, "allwinner,sun50i-a64");
-#endif
 #endif
 
 u_int

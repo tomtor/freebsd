@@ -1,25 +1,68 @@
 # $FreeBSD$
 arm/arm/generic_timer.c		standard
 arm/arm/pmu.c			standard
-#
-dev/fdt/fdt_common.c		optional	soc_allwinner_a64
-arm/allwinner/console.c		optional	soc_allwinner_a64
-#arm/allwinner/aw_mp.c		optional	soc_allwinner_a64
-# A10:
-#arm/allwinner/a10_padconf.c	optional	soc_allwinner_a64
-##arm/allwinner/aintc.c          standard
-#arm/allwinner/timer.c		optional 	soc_allwinner_a64
-# A20:
-arm/allwinner/a20/a20_padconf.c optional	soc_allwinner_a64
-#arm/allwinner/a20/a20_mp.c              optional        smp
-#arm/allwinner/a20/a20_if_dwc.c  optional        dwc soc_allwinner_a64
-# H3:
-arm/allwinner/h3/h3_padconf.c	optional	soc_allwinner_a64
-arm/allwinner/h3/h3_r_padconf.c optional	soc_allwinner_a64
-# ALLWINNER
-# must check clock and ether
-#arm/allwinner/a10_ahci.c        optional        ahci soc_allwinner_a64
-#arm/allwinner/a10_clk.c         optional	soc_allwinner_a64
+
+kern/kern_clocksource.c                 optional soc_allwinner_a64
+
+arm/allwinner/a10_ahci.c                optional soc_allwinner_a64        ahci
+arm/allwinner/a10_codec.c               optional soc_allwinner_a64        sound
+arm/allwinner/a10_common.c              optional soc_allwinner_a64
+arm/allwinner/a10_dmac.c                optional soc_allwinner_a64
+arm/allwinner/a10_ehci.c                optional soc_allwinner_a64        ehci
+arm/allwinner/aw_usbphy.c               optional soc_allwinner_a64        ehci
+arm/allwinner/a10_gpio.c                optional soc_allwinner_a64        gpio
+arm/allwinner/a10_mmc.c                 optional soc_allwinner_a64        mmc
+arm/allwinner/a10_sramc.c               optional soc_allwinner_a64
+#arm/allwinner/aw_nmi.c                  optional soc_allwinner_a64        intrng
+arm/allwinner/aw_if_dwc.c               optional soc_allwinner_a64        dwc
+arm/allwinner/aw_rsb.c                  optional soc_allwinner_a64        rsb
+arm/allwinner/aw_rtc.c                  optional soc_allwinner_a64
+arm/allwinner/aw_wdog.c                 optional soc_allwinner_a64
+arm/allwinner/a20/a20_cpu_cfg.c         optional soc_allwinner_a64
+arm/allwinner/allwinner_machdep.c       optional soc_allwinner_a64
+#arm/allwinner/aw_mp.c                   optional        smp
+arm/allwinner/axp209.c                  optional soc_allwinner_a64        axp209
+arm/allwinner/axp81x.c                  optional soc_allwinner_a64        axp81x
+arm/allwinner/if_awg.c                  optional soc_allwinner_a64        awg
+arm/allwinner/if_emac.c                 optional soc_allwinner_a64        emac
+arm/allwinner/sunxi_dma_if.m            optional soc_allwinner_a64
+dev/iicbus/twsi/a10_twsi.c              optional soc_allwinner_a64        twsi
+arm/allwinner/aw_sid.c                  optional soc_allwinner_a64
+arm/allwinner/aw_thermal.c              optional soc_allwinner_a64
+arm/allwinner/console.c                optional soc_allwinner_a64
+
+arm/allwinner/a10_fb.c                  optional soc_allwinner_a64        vt
+arm/allwinner/a10_hdmi.c                optional soc_allwinner_a64        hdmi
+arm/allwinner/a10_hdmiaudio.c           optional soc_allwinner_a64        hdmi sound
+arm/arm/hdmi_if.m                       optional soc_allwinner_a64        hdmi
+
+arm/allwinner/aw_reset.c                optional soc_allwinner_a64
+arm/allwinner/aw_ccu.c                  optional soc_allwinner_a64
+arm/allwinner/clk/aw_ahbclk.c           optional soc_allwinner_a64
+arm/allwinner/clk/aw_apbclk.c           optional soc_allwinner_a64
+arm/allwinner/clk/aw_axiclk.c           optional soc_allwinner_a64
+arm/allwinner/clk/aw_codecclk.c         optional soc_allwinner_a64
+arm/allwinner/clk/aw_cpuclk.c           optional soc_allwinner_a64
+arm/allwinner/clk/aw_cpusclk.c          optional soc_allwinner_a64
+arm/allwinner/clk/aw_debeclk.c          optional soc_allwinner_a64
+arm/allwinner/clk/aw_gate.c             optional soc_allwinner_a64
+arm/allwinner/clk/aw_gmacclk.c          optional soc_allwinner_a64
+arm/allwinner/clk/aw_hdmiclk.c          optional soc_allwinner_a64
+arm/allwinner/clk/aw_lcdclk.c           optional soc_allwinner_a64
+arm/allwinner/clk/aw_modclk.c           optional soc_allwinner_a64
+arm/allwinner/clk/aw_mmcclk.c           optional soc_allwinner_a64
+arm/allwinner/clk/aw_oscclk.c           optional soc_allwinner_a64
+arm/allwinner/clk/aw_pll.c              optional soc_allwinner_a64
+arm/allwinner/clk/aw_usbclk.c           optional soc_allwinner_a64
+
+arm/allwinner/h3/h3_padconf.c           optional soc_allwinner_a64
+arm/allwinner/h3/h3_r_padconf.c         optional soc_allwinner_a64
+
+dev/uart/uart_dev_snps.c		optional soc_allwinner_a64
+
+#@dev/iicbus/iicbus_if.m		optional	soc_allwinner_a64
+#@dev/iicbus/iicbus.c		optional	soc_allwinner_a64
+#@dev/iicbus/iiconf.c		optional	soc_allwinner_a64
 
 dev/gpio/gpioled.c		standard
 dev/extres/clk/clkdev_if.m	standard
@@ -34,50 +77,17 @@ dev/extres/regulator/regnode_if.m standard
 dev/extres/regulator/regdev_if.m standard
 dev/extres/regulator/regulator.c standard
 
-#arm/allwinner/a10_codec.c       optional        sound soc_allwinner_a64
-##arm/allwinner/a10_common.c     optional	soc_allwinner_a64
-arm/allwinner/a10_dmac.c        optional	soc_allwinner_a64
-#arm/allwinner/a10_ehci.c        optional        ehci soc_allwinner_a64
-arm/allwinner/aw_usbphy.c       optional        soc_allwinner_a64
-arm/allwinner/a10_gpio.c        optional        gpio soc_allwinner_a64
-arm/allwinner/a10_mmc.c         optional        mmc soc_allwinner_a64
-#arm/allwinner/a10_sramc.c       optional	soc_allwinner_a64
-#arm/allwinner/aw_rtc.c          optional	soc_allwinner_a64
-arm/allwinner/aw_wdog.c         optional	soc_allwinner_a64
-#arm/allwinner/a20/a20_cpu_cfg.c optional	soc_allwinner_a64
-arm/allwinner/allwinner_machdep.c optional	soc_allwinner_a64
-#arm/allwinner/axp209.c          optional        axp209 soc_allwinner_a64
-##arm/allwinner/if_emac.c         optional        emac soc_allwinner_a64
-arm/allwinner/sunxi_dma_if.m    optional	soc_allwinner_a64
-#
-arm/arm/platform_if.m		optional	soc_allwinner_a64
-arm/arm/platform.c		optional        soc_allwinner_a64
+#arm/arm/platform_if.m		optional	soc_allwinner_a64
+#arm/arm/platform.c		optional        soc_allwinner_a64
+#dev/fdt/fdt_clock_if.m		optional	soc_allwinner_a64
+#dev/fdt/fdt_arm_platform.c	optional	soc_allwinner_a64
+
 dev/fdt/fdt_pinctrl.c		standard
 dev/fdt/fdt_pinctrl_if.m	standard
-dev/fdt/fdt_clock_if.m		optional	soc_allwinner_a64
-dev/fdt/fdt_arm_platform.c	optional	soc_allwinner_a64
-#arm/allwinner/a31/a31_clk.c	optional	soc_allwinner_a64 dwc
-dev/dwc/if_dwc.c		optional	dwc
-dev/dwc/if_dwc_if.m		optional	dwc
-#
-arm/allwinner/aw_ccu.c                  optional        soc_allwinner_a64
-arm/allwinner/clk/aw_ahbclk.c           optional        soc_allwinner_a64
-arm/allwinner/clk/aw_apbclk.c           optional        soc_allwinner_a64
-arm/allwinner/clk/aw_axiclk.c           optional        soc_allwinner_a64
-arm/allwinner/clk/aw_codecclk.c         optional        soc_allwinner_a64
-arm/allwinner/clk/aw_cpuclk.c           optional        soc_allwinner_a64
-arm/allwinner/clk/aw_debeclk.c          optional        soc_allwinner_a64
-arm/allwinner/clk/aw_gate.c             optional        soc_allwinner_a64
-arm/allwinner/clk/aw_gmacclk.c          optional        soc_allwinner_a64
-arm/allwinner/clk/aw_hdmiclk.c          optional        soc_allwinner_a64
-arm/allwinner/clk/aw_lcdclk.c           optional        soc_allwinner_a64
-arm/allwinner/clk/aw_modclk.c           optional        soc_allwinner_a64
-arm/allwinner/clk/aw_mmcclk.c           optional        soc_allwinner_a64
-arm/allwinner/clk/aw_oscclk.c           optional        soc_allwinner_a64
-arm/allwinner/clk/aw_pll.c              optional        soc_allwinner_a64
-arm/allwinner/clk/aw_usbclk.c           optional        soc_allwinner_a64
+
 #
 # AMLogic
+#
 
 arm/amlogic/aml8726/aml8726_machdep.c           optional soc_s905
 arm/amlogic/aml8726/aml8726_identsoc.c          optional soc_s905
@@ -103,6 +113,9 @@ arm/amlogic/aml8726/uart_dev_aml8726.c          optional soc_s905 uart
 #arm/amlogic/aml8726/aml8726_usb_phy-m3.c        optional soc_s905 dwcotg usb gpio
 arm/amlogic/aml8726/aml8726_usb_phy-m6.c        optional soc_s905 dwcotg usb gpio
 arm/amlogic/aml8726/aml8726_if_dwc.c            optional soc_s905 dwc
+
+dev/dwc/if_dwc.c		optional	dwc
+dev/dwc/if_dwc_if.m		optional	dwc
 
 #
 arm/broadcom/bcm2835/bcm2835_dma.c   optional	soc_brcm_bcm2837

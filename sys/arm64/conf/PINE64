@@ -24,11 +24,16 @@ ident		PINE64
 makeoptions	DEBUG=-g		# Build kernel with gdb(1) debug symbols
 makeoptions	WITH_CTF=1		# Run ctfconvert(1) for DTrace support
 
+options 	IPI_IRQ_START=0
+options 	IPI_IRQ_END=15
+
 options 	SOCDEV_PA=0x01c20000
 options 	SOCDEV_VA=0x01c20000
-#options	VERBOSE_SYSINIT
-options		BOOTVERBOSE
 #options	EARLY_PRINTF
+#options	VERBOSE_SYSINIT
+#options	BOOTVERBOSE
+
+#options	INTRNG
 
 options 	SCHED_ULE		# ULE scheduler
 options 	PREEMPTION		# Enable kernel thread preemption
@@ -97,6 +102,9 @@ options 	ROOTDEVNAME=\"ufs:/dev/mmcsd0s3a\"
 # SoC support
 #options 	SOC_BRCM_BCM2837
 options		SOC_ALLWINNER_A64
+
+#options		axp81x
+#options		MULTIDELAY
 
 # VirtIO support
 device		virtio
