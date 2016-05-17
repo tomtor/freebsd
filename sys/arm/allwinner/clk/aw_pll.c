@@ -131,7 +131,11 @@ __FBSDID("$FreeBSD$");
 #define	A31_PLL6_FACTOR_K_SHIFT		4
 #define	A31_PLL6_DEFAULT_N		0x18
 #define	A31_PLL6_DEFAULT_K		0x1
+#ifdef __aarch64__
+#define	A31_PLL6_TIMEOUT		1000
+#else
 #define	A31_PLL6_TIMEOUT		10
+#endif
 
 #define	A80_PLL4_CLK_OUT_EN		(1 << 20)
 #define	A80_PLL4_PLL_DIV2		(1 << 18)
@@ -512,10 +516,59 @@ a31_pll6_init(device_t dev, bus_addr_t reg, struct clknode_init_def *def)
 	 * 600MHz.
 	 */
 	CLKDEV_DEVICE_LOCK(dev);
+#if 1
+	{
+	static int first= 1;
+	if (first) {
+	first= 0;
+	CLKDEV_READ_4(dev, 0x01c20200, &val);
+	printf("st:%x\n", val);
+	CLKDEV_READ_4(dev, 0x01c202f0, &val);
+	printf("sec:%x\n", val);
+	CLKDEV_READ_4(dev, 0x01c20320, &val);
+	printf("lc:%x\n", val);
+	CLKDEV_READ_4(dev, 0x01c20060, &val);
+	printf("1:%x\n", val);
+	CLKDEV_READ_4(dev, 0x01c20064, &val);
+	printf("2:%x\n", val);
+	CLKDEV_READ_4(dev, 0x01c20068, &val);
+	printf("3:%x\n", val);
+	CLKDEV_READ_4(dev, 0x01c2006c, &val);
+	printf("4:%x\n", val);
+	CLKDEV_READ_4(dev, 0x01c20070, &val);
+	printf("5:%x\n", val);
+	}
+	}
+#endif
+
+/* PLL Lock Ctrl is now disabled in aw_ccu attach */
+#ifdef was__aarch64__
+
+#define	PLL_LOCK_CTRL_REG	(reg + (0x320 - 0x028))
+#define	LOCK_EN_PLL_PERIPH0	(1 << 5)
+
+	/* Disable lock */
+	CLKDEV_READ_4(dev, PLL_LOCK_CTRL_REG, &val);
+	val &= ~LOCK_EN_PLL_PERIPH0; 
+	CLKDEV_WRITE_4(dev, PLL_LOCK_CTRL_REG, val);
+#endif
+
+	/* Configure */
 	CLKDEV_READ_4(dev, reg, &val);
 	val &= ~(A31_PLL6_FACTOR_N | A31_PLL6_FACTOR_K | A31_PLL6_BYPASS_EN);
 	val |= (A31_PLL6_DEFAULT_N << A31_PLL6_FACTOR_N_SHIFT);
 	val |= (A31_PLL6_DEFAULT_K << A31_PLL6_FACTOR_K_SHIFT);
+	CLKDEV_WRITE_4(dev, reg, val);
+
+#ifdef was__aarch64__
+	/* Enable lock */
+	CLKDEV_READ_4(dev, PLL_LOCK_CTRL_REG, &val);
+	val |= LOCK_EN_PLL_PERIPH0; 
+	CLKDEV_WRITE_4(dev, PLL_LOCK_CTRL_REG, val);
+#endif
+
+	/* Activate */
+	CLKDEV_READ_4(dev, reg, &val);
 	val |= (A31_PLL6_CLK_OUT_EN);
 	CLKDEV_WRITE_4(dev, reg, val);
 
@@ -527,12 +580,17 @@ a31_pll6_init(device_t dev, bus_addr_t reg, struct clknode_init_def *def)
 		DELAY(1);
 	}
 
+#ifdef was__aarch64__
+	/* Disable lock */
+	CLKDEV_READ_4(dev, PLL_LOCK_CTRL_REG, &val);
+	val &= ~LOCK_EN_PLL_PERIPH0; 
+	CLKDEV_WRITE_4(dev, PLL_LOCK_CTRL_REG, val);
+#endif
+
 	CLKDEV_DEVICE_UNLOCK(dev);
 
-#if 0
 	if (retry == 0)
 		return (ETIMEDOUT);
-#endif
 
 	return (0);
 }

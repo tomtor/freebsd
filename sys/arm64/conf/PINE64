@@ -26,6 +26,7 @@ makeoptions	WITH_CTF=1		# Run ctfconvert(1) for DTrace support
 
 options 	IPI_IRQ_START=0
 options 	IPI_IRQ_END=15
+options		HZ=100
 
 options 	SOCDEV_PA=0x01c20000
 options 	SOCDEV_VA=0x01c20000
@@ -104,7 +105,6 @@ options 	ROOTDEVNAME=\"ufs:/dev/mmcsd0s3a\"
 options		SOC_ALLWINNER_A64
 
 #options		axp81x
-#options		MULTIDELAY
 
 # VirtIO support
 device		virtio

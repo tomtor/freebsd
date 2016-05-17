@@ -30,7 +30,7 @@ arm/allwinner/sunxi_dma_if.m            optional soc_allwinner_a64
 dev/iicbus/twsi/a10_twsi.c              optional soc_allwinner_a64        twsi
 arm/allwinner/aw_sid.c                  optional soc_allwinner_a64
 arm/allwinner/aw_thermal.c              optional soc_allwinner_a64
-arm/allwinner/console.c                optional soc_allwinner_a64
+#arm/allwinner/console.c                optional soc_allwinner_a64
 
 arm/allwinner/a10_fb.c                  optional soc_allwinner_a64        vt
 arm/allwinner/a10_hdmi.c                optional soc_allwinner_a64        hdmi

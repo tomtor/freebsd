@@ -436,7 +436,6 @@
 
 		dma: dma-controller@01c02000 {
 			compatible = "allwinner,sun8i-h3-dma";
-			//compatible = "allwinner,sun4i-a10-dma";
 			reg = <0x01c02000 0x1000>;
 			//interrupts = <GIC_SPI 50 IRQ_TYPE_LEVEL_HIGH>;
             interrupts = <0x00000000 0x00000032 0x00000004>;
