@@ -30,6 +30,9 @@ makeoptions	WITH_CTF=1		# Run ctfconvert(1) for DTrace support
 #options		VERBOSE_SYSINIT
 options		BOOTVERBOSE
 
+options		HZ=100
+options		EXT_RESOURCES
+
 #options         INTRNG
 
 options 	SCHED_ULE		# ULE scheduler

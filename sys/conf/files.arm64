@@ -3,8 +3,6 @@ arm/arm/generic_timer.c		standard
 arm/arm/gic.c			optional	intrng
 arm/arm/pmu.c			standard
 
-kern/kern_clocksource.c                 optional soc_allwinner_a64
-
 arm/allwinner/a10_ahci.c                optional soc_allwinner_a64        ahci
 arm/allwinner/a10_codec.c               optional soc_allwinner_a64        sound
 arm/allwinner/a10_common.c              optional soc_allwinner_a64
@@ -74,8 +72,8 @@ dev/extres/clk/clk.c		standard
 dev/extres/clk/clk_gate.c	standard
 dev/extres/clk/clk_mux.c	standard
 dev/extres/clk/clk_fixed.c	standard
-dev/extres/hwreset/hwreset.c	optional soc_allwinner_a64
-dev/extres/hwreset/hwreset_if.m	optional soc_allwinner_a64
+dev/extres/hwreset/hwreset.c	standard
+dev/extres/hwreset/hwreset_if.m	standard
 dev/extres/regulator/regnode_if.m standard
 dev/extres/regulator/regdev_if.m standard
 dev/extres/regulator/regulator.c standard
@@ -202,7 +200,7 @@ dev/psci/psci_arm64.S		optional	psci
 dev/uart/uart_cpu_fdt.c		optional	uart fdt
 dev/uart/uart_dev_pl011.c	optional	uart pl011
 dev/usb/controller/dwc_otg_hisi.c optional	dwcotg soc_hisi_hi6220
-dev/usb/controller/dwc_otg.c	standard
+dev/usb/controller/dwc_otg.c	optional	dwcotg
 dev/vnic/mrml_bridge.c		optional	vnic fdt
 dev/vnic/nic_main.c		optional	vnic pci
 dev/vnic/nicvf_main.c		optional	vnic pci pci_iov
