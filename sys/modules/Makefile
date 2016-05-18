@@ -313,7 +313,6 @@ SUBDIR=	\
 	${_rdma} \
 	${_rdrand_rng} \
 	re \
-	reiserfs \
 	rl \
 	rtwn \
 	${_rtwnfw} \

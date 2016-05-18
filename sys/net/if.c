@@ -2375,6 +2375,11 @@ ifhwioctl(u_long cmd, struct ifnet *ifp, caddr_t data, struct thread *td)
 			return (error);
 		if (new_name[0] == '\0')
 			return (EINVAL);
+		if (new_name[IFNAMSIZ-1] != '\0') {
+			new_name[IFNAMSIZ-1] = '\0';
+			if (strlen(new_name) == IFNAMSIZ-1)
+				return (EINVAL);
+		}
 		if (ifunit(new_name) != NULL)
 			return (EEXIST);
 
@@ -3893,6 +3898,19 @@ if_multiaddr_count(if_t ifp, int max)
 	}
 	if_maddr_runlock(ifp);
 	return (count);
+}
+
+int
+if_multi_apply(struct ifnet *ifp, int (*filter)(void *, struct ifmultiaddr *, int), void *arg)
+{
+	struct ifmultiaddr *ifma;
+	int cnt = 0;
+
+	if_maddr_rlock(ifp);
+	TAILQ_FOREACH(ifma, &ifp->if_multiaddrs, ifma_link)
+		cnt += filter(arg, ifma, cnt);
+	if_maddr_runlock(ifp);
+	return (cnt);
 }
 
 struct mbuf *
