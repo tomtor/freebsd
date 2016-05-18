@@ -53,6 +53,7 @@ __FBSDID("$FreeBSD$");
 
 #define	CCU_BASE	0x01c20000
 #define	CCU_SIZE	0x400
+#define	PLL_LOCK_CTRL	(CCU_BASE + 0x320)
 
 #define	PRCM_BASE	0x01f01400
 #define	PRCM_SIZE	0x200
@@ -81,6 +82,7 @@ static struct ofw_compat_data compat_data[] = {
 	{ "allwinner,sun6i-a31s",	CLOCK_CCU },
 	{ "allwinner,sun8i-a83t",	CLOCK_CCU|CLOCK_PRCM|CLOCK_SYSCTRL },
 	{ "allwinner,sun8i-h3",		CLOCK_CCU },
+	{ "allwinner,sun50i-a64",	CLOCK_CCU },
 	{ NULL, 0 }
 };
 
@@ -263,6 +265,16 @@ aw_ccu_attach(device_t dev)
 	}
 
 	mtx_init(&sc->mtx, device_get_nameunit(dev), NULL, MTX_DEF);
+
+#ifdef __aarch64__
+	/* Use OLD mode without PLL_LOCK CTRL */
+	device_printf(dev, "Disable PLL Lock Ctrl\n");
+	aw_ccu_device_lock(dev);
+	aw_ccu_write_4(dev, PLL_LOCK_CTRL, 0);
+	/* open main gates */
+	aw_ccu_write_4(dev, 0x01c20060, ~0);
+	aw_ccu_device_unlock(dev);
+#endif
 
 	/* Attach child devices */
 	for (child = OF_child(node); child > 0; child = OF_peer(child)) {

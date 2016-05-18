@@ -37,7 +37,7 @@
 
 /dts-v1/;
 
-/memreserve/ 0x10000000 0x020000;			/* secmon */
+/memreserve/ 0x10000000 0x02000000;			/* secmon */
 
 // /memreserve/ 0x07900000 0x00600000;			/* 6MB frame buffer */
 

@@ -72,8 +72,6 @@
 			//next-level-cache = <&L2>;
 			clock-frequency = <1536000000>;
 		};
-/*
-*/
 	};
 
 	psci {

@@ -87,7 +87,7 @@ __FBSDID("$FreeBSD$");
 static device_attach_t a10_ehci_attach;
 static device_detach_t a10_ehci_detach;
 
-#if 0
+#ifndef __aarch64__
 bs_r_1_proto(reversed);
 bs_w_1_proto(reversed);
 #endif

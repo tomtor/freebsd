@@ -108,7 +108,7 @@ cpu_fork(struct thread *td1, struct proc *p2, struct thread *td2, int flags)
 	td2->td_md.md_saved_daif = 0;
 }
 
-#ifndef SOC_S905
+#if !defined(SOC_S905) && !defined(SOC_ALLWINNER_A64)
 void
 cpu_reset(void)
 {

@@ -37,7 +37,11 @@ __FBSDID("$FreeBSD$");
 #include <sys/kernel.h>
 
 #ifndef	A10_UART_BASE
+#ifdef SOC_ALLWINNER_A64
+#define	A10_UART_BASE	0x01c28000 	/* UART0 */
+#else
 #define	A10_UART_BASE	0xe1c28000 	/* UART0 */
+#endif
 #endif
 
 #define	REG_SHIFT	2

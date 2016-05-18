@@ -258,7 +258,12 @@ void
 do_el1h_sync(struct trapframe *frame)
 {
 	uint32_t exception;
+#define NORMTRAP	1
+#if NORMTRAP
 	uint64_t esr, far;
+#else
+	uint64_t esr;
+#endif
 
 	/* Read the esr register to get the exception details */
 	esr = READ_SPECIALREG(esr_el1);
@@ -280,10 +285,12 @@ do_el1h_sync(struct trapframe *frame)
 		printf(" esr:         %.8lx\n", esr);
 		panic("VFP exception in the kernel");
 	case EXCP_DATA_ABORT:
+#if NORMTRAP
 		far = READ_SPECIALREG(far_el1);
 		intr_enable();
 		data_abort(frame, esr, far, 0);
 		break;
+#endif
 	case EXCP_BRK:
 #ifdef KDTRACE_HOOKS
 		if ((esr & ESR_ELx_ISS_MASK) == 0x40d && \

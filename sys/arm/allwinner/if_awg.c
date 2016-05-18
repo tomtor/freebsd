@@ -1028,7 +1028,11 @@ awg_setup_extres(device_t dev)
 	}
 
 	if (bootverbose)
+#ifdef __aarch64__
+		device_printf(dev, "AHB frequency %lu Hz, MDC div: 0x%x\n",
+#else
 		device_printf(dev, "AHB frequency %llu Hz, MDC div: 0x%x\n",
+#endif
 		    freq, sc->mdc_div_ratio_m);
 
 	return (0);
