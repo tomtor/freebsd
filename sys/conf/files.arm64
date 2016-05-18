@@ -28,6 +28,8 @@ arm/allwinner/if_awg.c                  optional soc_allwinner_a64        awg
 arm/allwinner/if_emac.c                 optional soc_allwinner_a64        emac
 arm/allwinner/sunxi_dma_if.m            optional soc_allwinner_a64
 dev/iicbus/twsi/a10_twsi.c              optional soc_allwinner_a64        twsi
+dev/usb/controller/generic_ohci.c	optional soc_allwinner_a64	ohci
+dev/usb/controller/generic_usb_if.m	optional soc_allwinner_a64	ohci
 arm/allwinner/aw_sid.c                  optional soc_allwinner_a64
 arm/allwinner/aw_thermal.c              optional soc_allwinner_a64
 #arm/allwinner/console.c                optional soc_allwinner_a64
@@ -78,10 +80,10 @@ dev/extres/regulator/regnode_if.m standard
 dev/extres/regulator/regdev_if.m standard
 dev/extres/regulator/regulator.c standard
 
-#arm/arm/platform_if.m		optional	soc_allwinner_a64
-#arm/arm/platform.c		optional        soc_allwinner_a64
-#dev/fdt/fdt_clock_if.m		optional	soc_allwinner_a64
-#dev/fdt/fdt_arm_platform.c	optional	soc_allwinner_a64
+arm/arm/platform_if.m		optional	soc_allwinner_a64
+arm/arm/platform.c		optional        soc_allwinner_a64
+dev/fdt/fdt_clock_if.m		optional	soc_allwinner_a64
+dev/fdt/fdt_arm_platform.c	optional	soc_allwinner_a64
 
 dev/fdt/fdt_pinctrl.c		standard
 dev/fdt/fdt_pinctrl_if.m	standard

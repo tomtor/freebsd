@@ -34,6 +34,7 @@ options 	SOCDEV_VA=0x01c20000
 #options	VERBOSE_SYSINIT
 #options	BOOTVERBOSE
 
+options		EXT_RESOURCES
 #options	INTRNG
 
 options 	SCHED_ULE		# ULE scheduler
@@ -136,6 +137,7 @@ device		sdhci
 
 # A64
 device		ehci
+device		ohci
 device		fdt_pinctrl
 
 # Serial (COM) ports
@@ -171,7 +173,8 @@ device		bpf		# Berkeley packet filter
 options 	FDT
 options		FDT_DTB_STATIC
 #makeoptions	FDT_DTS_FILE=pine64.dts
-makeoptions	FDT_DTS_FILE=pine.dts
+#makeoptions	FDT_DTS_FILE=pine.dts
+makeoptions	FDT_DTS_FILE=sun8i-h3-orangepi-one.dts
 
 #device		acpi
 

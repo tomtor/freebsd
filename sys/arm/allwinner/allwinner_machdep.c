@@ -56,8 +56,13 @@ __FBSDID("$FreeBSD$");
 
 #include "platform_if.h"
 
+#ifdef __aarch64__
+static u_int soc_type = ALLWINNERSOC_A64;
+static u_int soc_family = ALLWINNERSOC_SUN50I;
+#else
 static u_int soc_type;
 static u_int soc_family;
+#endif
 
 static int
 a10_attach(platform_t plat)
@@ -251,6 +256,16 @@ static platform_method_t h3_methods[] = {
 	PLATFORMMETHOD_END,
 };
 FDT_PLATFORM_DEF(h3, "h3", 0, "allwinner,sun8i-h3", 200);
+#endif
+
+#if defined(SOC_ALLWINNER_A64)
+static platform_method_t a64_methods[] = {
+	PLATFORMMETHOD(platform_attach,         a64_attach),
+	PLATFORMMETHOD(platform_lastaddr,       allwinner_lastaddr),
+	PLATFORMMETHOD(platform_devmap_init,    allwinner_devmap_init),
+	PLATFORMMETHOD_END,
+};
+FDT_PLATFORM_DEF(a64, "a64", 0, "allwinner,sun50i-a64");
 #endif
 
 u_int
