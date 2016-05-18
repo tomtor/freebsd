@@ -1,6 +1,5 @@
-/*-
- * Copyright (c) 2000 Doug Rabson
- * All rights reserved.
+/*
+ * Copyright (c) 2015 Netflix, Inc. All Rights Reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -22,44 +21,35 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- * $FreeBSD$
  */
 
-#ifndef _SYS__TASK_H_
-#define _SYS__TASK_H_
+#include <sys/cdefs.h>
+__FBSDID("$FreeBSD$");
 
-#include <sys/queue.h>
+#include <efi.h>
+#include <efilib.h>
 
 /*
- * Each task includes a function which is called from
- * taskqueue_run().  The first argument is taken from the 'ta_context'
- * field of struct task and the second argument is a count of how many
- * times the task was enqueued before the call to taskqueue_run().
- *
- * List of locks	 
- * (c)	const after init	 
- * (q)	taskqueue lock
+ * Simple wrappers to the underlying UEFI functions.
+ * See http://wiki.phoenix.com/wiki/index.php/EFI_RUNTIME_SERVICES
+ * for details.
  */
-typedef void task_fn_t(void *context, int pending);
+EFI_STATUS
+efi_get_next_variable_name(UINTN *variable_name_size, CHAR16 *variable_name, EFI_GUID *vendor_guid)
+{
+	return RS->GetNextVariableName(variable_name_size, variable_name, vendor_guid);
+}
 
-struct task {
-	STAILQ_ENTRY(task) ta_link;	/* (q) link for queue */
-	uint8_t	ta_pending;		/* (q) count times queued */
-	uint8_t	ta_flags;		/* (q) flags */
-	u_short	ta_priority;		/* (c) Priority */
-	task_fn_t *ta_func;		/* (c) task handler */
-	void	*ta_context;		/* (c) argument for handler */
-};
+EFI_STATUS
+efi_get_variable(CHAR16 *variable_name, EFI_GUID *vendor_guid, UINT32 *attributes, UINTN *data_size,
+    void *data)
+{
+	return RS->GetVariable(variable_name, vendor_guid, attributes, data_size, data);
+}
 
-struct grouptask {
-	struct	task		gt_task;
-	void			*gt_taskqueue;
-	LIST_ENTRY(grouptask)	gt_list;
-	void			*gt_uniq;
-	char			*gt_name;
-	int16_t			gt_irq;
-	int16_t			gt_cpu;
-};
-
-#endif /* !_SYS__TASK_H_ */
+EFI_STATUS
+efi_set_variable(CHAR16 *variable_name, EFI_GUID *vendor_guid, UINT32 attributes, UINTN data_size,
+    void *data)
+{
+	return RS->SetVariable(variable_name, vendor_guid, attributes, data_size, data);
+}
