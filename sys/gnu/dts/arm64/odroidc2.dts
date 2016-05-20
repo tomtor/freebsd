@@ -231,9 +231,12 @@
 			//reg = <0xc1108054 4>,	/* oen cbus 0x2015 */
 			      //<0xc1108058 4>,	/* out */
 			      //<0xc110805c 4>;	/* in */
-			reg = <0xc8834454 4>,	/* oen cbus 0x2015 */
-			      <0xc8834458 4>,	/* out */
-			      <0xc883445c 4>;	/* in */
+			//reg = <0xc8834454 4>,	/* oen cbus 0x2015 */
+			      //<0xc8834458 4>,	/* out */
+			      //<0xc883445c 4>;	/* in */
+			reg = <0xc8834484 4>,	/* oen cbus 0x2015 */
+			      <0xc883448c 4>,	/* out */
+			      <0xc8834488 4>;	/* in */
 
 			gpio-controller;
 			#gpio-cells = <1>;

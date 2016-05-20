@@ -322,4 +322,76 @@ struct aml8726_ccm_function aml8726_m8b_ccm[] = {
 	{ NULL }
 };
 
+
+/*
+ * aml8726-s905
+ */
+
+static struct aml8726_ccm_gate aml8726_m9_ethernet[] = {
+	{ 4, 0x00000008 },
+	{ 0, 0x00000000 }
+};
+
+static struct aml8726_ccm_gate aml8726_m9_i2c[] = {
+	{ 0, 0x00000200 },
+	{ 0, 0x00000000 }
+};
+
+static struct aml8726_ccm_gate aml8726_m9_rng[] = {
+	{  0, 0x00001000 },
+	{ 16, 0x00200000 },
+	{  0, 0x00000000 }
+};
+
+static struct aml8726_ccm_gate aml8726_m9_sdio[] = {
+	{ 0, 0x00020000 },
+	{ 0, 0x00000000 }
+};
+
+static struct aml8726_ccm_gate aml8726_m9_sdxc[] = {
+	{ 0, 0x00004000 },
+	{ 0, 0x00000000 }
+};
+
+static struct aml8726_ccm_gate aml8726_m9_uart_a[] = {
+	{ 0, 0x00002000 },
+	{ 0, 0x00000000 }
+};
+
+static struct aml8726_ccm_gate aml8726_m9_uart_b[] = {
+	{ 4, 0x00010000 },
+	{ 0, 0x00000000 }
+};
+
+static struct aml8726_ccm_gate aml8726_m9_uart_c[] = {
+	{ 8, 0x00008000 },
+	{ 0, 0x00000000 }
+};
+
+static struct aml8726_ccm_gate aml8726_m9_usb_a[] = {
+	{ 4, 0x00200000 },
+	{ 4, 0x04000000 },
+	{ 0, 0x00000000 }
+};
+
+static struct aml8726_ccm_gate aml8726_m9_usb_b[] = {
+	{ 4, 0x00400000 },
+	{ 4, 0x04000000 },
+	{ 0, 0x00000000 }
+};
+
+struct aml8726_ccm_function aml8726_m9_ccm[] = {
+	{ "ethernet", aml8726_m9_ethernet },
+	{ "i2c", aml8726_m9_i2c },
+	{ "rng", aml8726_m9_rng },
+	{ "sdio", aml8726_m9_sdio },
+	{ "sdxc", aml8726_m9_sdxc },
+	{ "uart-a", aml8726_m9_uart_a },
+	{ "uart-b", aml8726_m9_uart_b },
+	{ "uart-c", aml8726_m9_uart_c },
+	{ "usb-a", aml8726_m9_usb_a },
+	{ "usb-b", aml8726_m9_usb_b },
+	{ NULL }
+};
+
 #endif /* _ARM_AMLOGIC_AML8726_CCM_H */

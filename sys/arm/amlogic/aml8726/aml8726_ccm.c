@@ -179,8 +179,10 @@ aml8726_ccm_attach(device_t dev)
 		sc->soc = aml8726_m8_ccm;
 		break;
 	case AML_SOC_HW_REV_M8B:
-	case AML_SOC_HW_REV_S905:
 		sc->soc = aml8726_m8b_ccm;
+		break;
+	case AML_SOC_HW_REV_S905:
+		sc->soc = aml8726_m9_ccm;
 		break;
 	default:
 		device_printf(dev, "unsupported SoC\n");

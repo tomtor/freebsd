@@ -172,7 +172,8 @@
 		ethmac: ethernet@c9410000 {
 			compatible = "amlogic,meson6-dwmac", "snps,dwmac";
 			reg = <0xc9410000 0x10000
-			       0xc1108108 0x4>;
+			       //0xc1108108 0x4>;
+			       0xc883c100 0xc>;
 			interrupts = <0 8 1>;
 			interrupt-names = "macirq";
 			clocks = <&clk81>;
