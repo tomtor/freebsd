@@ -234,13 +234,8 @@ aml8726_pinctrl_configure_pins(device_t dev, phandle_t cfgxref)
 		else {
 			device_printf(dev,
 			    "unknown pull attribute %.*s in FDT\n",
-<<<<<<< HEAD
-			    (int)len, pull);
-			free(pull, M_OFWPROP);
-=======
 			    len, pull);
 			OF_prop_free(pull);
->>>>>>> 4e1ba42e3dd20b6d2041570f6fa86db235291db2
 			return (ENXIO);
 		}
 	}
