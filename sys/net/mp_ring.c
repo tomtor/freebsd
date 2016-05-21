@@ -37,14 +37,16 @@ __FBSDID("$FreeBSD$");
 #include <sys/malloc.h>
 #include <machine/cpu.h>
 
-
-
-#include <net/mp_ring.h>
+#if defined(__powerpc__) || defined(__mips__)
+#define NO_64BIT_ATOMICS
+#endif
 
 #if defined(__i386__)
 #define atomic_cmpset_acq_64 atomic_cmpset_64
 #define atomic_cmpset_rel_64 atomic_cmpset_64
 #endif
+
+#include <net/mp_ring.h>
 
 union ring_state {
 	struct {
@@ -356,7 +358,7 @@ ifmp_ring_enqueue(struct ifmp_ring *r, void **items, int n, int budget)
 	/*
 	 * Wait for other producers who got in ahead of us to enqueue their
 	 * items, one producer at a time.  It is our turn when the ring's
-	 * pidx_tail reaches the begining of our reservation (pidx_start).
+	 * pidx_tail reaches the beginning of our reservation (pidx_start).
 	 */
 	while (ns.pidx_tail != pidx_start) {
 		cpu_spinwait();
@@ -430,7 +432,7 @@ ifmp_ring_enqueue(struct ifmp_ring *r, void **items, int n, int budget)
 	/*
 	 * Wait for other producers who got in ahead of us to enqueue their
 	 * items, one producer at a time.  It is our turn when the ring's
-	 * pidx_tail reaches the begining of our reservation (pidx_start).
+	 * pidx_tail reaches the beginning of our reservation (pidx_start).
 	 */
 	while (ns.pidx_tail != pidx_start) {
 		cpu_spinwait();

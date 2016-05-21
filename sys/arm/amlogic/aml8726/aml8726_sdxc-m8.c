@@ -821,8 +821,8 @@ aml8726_sdxc_attach(device_t dev)
 		else {
 			device_printf(dev,
 			    "unknown voltage attribute %.*s in FDT\n",
-			    (int)len, voltage);
-			free(voltages, M_OFWPROP);
+			    len, voltage);
+			OF_prop_free(voltages);
 			return (ENXIO);
 		}
 
@@ -839,7 +839,7 @@ aml8726_sdxc_attach(device_t dev)
 		}
 	}
 
-	free(voltages, M_OFWPROP);
+	OF_prop_free(voltages);
 
 	sc->vselect.dev = NULL;
 
