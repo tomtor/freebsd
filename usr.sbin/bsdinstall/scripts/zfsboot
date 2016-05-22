@@ -55,7 +55,7 @@ f_include $BSDCFG_SHARE/variable.subr
 : ${ZFSBOOT_BEROOT_NAME:=ROOT}
 
 #
-# Default name for the primany boot environment
+# Default name for the primary boot environment
 #
 : ${ZFSBOOT_BOOTFS_NAME:=default}
 
@@ -143,7 +143,7 @@ f_isset ZFSBOOT_DATASETS || ZFSBOOT_DATASETS="
 
 	# Boot Environment [BE] root and default boot dataset
 	/$ZFSBOOT_BEROOT_NAME				mountpoint=none
-	/$ZFSBOOT_BEROOT_NAME/$ZFSBOOT_BOOTFS_NAME	mountpoint=/
+	/$ZFSBOOT_BEROOT_NAME/$ZFSBOOT_BOOTFS_NAME	mountpoint=/,canmount=noauto
 
 	# Compress /tmp, allow exec but not setuid
 	/tmp		mountpoint=/tmp,exec=on,setuid=off
