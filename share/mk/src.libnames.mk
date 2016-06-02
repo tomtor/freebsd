@@ -16,6 +16,7 @@ _PRIVATELIBS=	\
 		atf_c \
 		atf_cxx \
 		bsdstat \
+		devdctl \
 		event \
 		heimipcc \
 		heimipcs \
@@ -82,6 +83,7 @@ _LIBRARIES=	\
 		cuse \
 		cxxrt \
 		devctl \
+		devdctl \
 		devinfo \
 		devstat \
 		dialog \
@@ -502,7 +504,7 @@ LIBATF_CXXDIR=	${OBJTOP}/lib/atf/libatf-c++
 LIBALIASDIR=	${OBJTOP}/lib/libalias/libalias
 LIBBLOCKSRUNTIMEDIR=	${OBJTOP}/lib/libblocksruntime
 LIBBSNMPDIR=	${OBJTOP}/lib/libbsnmp/libbsnmp
-LIBCAP_CASPERDIR=	${OBJTOP}/lib/libcasper/libcasper
+LIBCASPERDIR=	${OBJTOP}/lib/libcasper/libcasper
 LIBCAP_DNSDIR=	${OBJTOP}/lib/libcasper/services/cap_dns
 LIBCAP_GRPDIR=	${OBJTOP}/lib/libcasper/services/cap_grp
 LIBCAP_PWDDIR=	${OBJTOP}/lib/libcasper/services/cap_pwd

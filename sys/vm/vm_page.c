@@ -759,6 +759,22 @@ vm_page_trysbusy(vm_page_t m)
 	}
 }
 
+static void
+vm_page_xunbusy_maybelocked(vm_page_t m)
+{
+	bool lockacq;
+
+	vm_page_assert_xbusied(m);
+
+	lockacq = !mtx_owned(vm_page_lockptr(m));
+	if (lockacq)
+		vm_page_lock(m);
+	vm_page_flash(m);
+	atomic_store_rel_int(&m->busy_lock, VPB_UNBUSIED);
+	if (lockacq)
+		vm_page_unlock(m);
+}
+
 /*
  *	vm_page_xunbusy_hard:
  *
@@ -1197,25 +1213,14 @@ void
 vm_page_remove(vm_page_t m)
 {
 	vm_object_t object;
-	boolean_t lockacq;
 
 	if ((m->oflags & VPO_UNMANAGED) == 0)
-		vm_page_lock_assert(m, MA_OWNED);
+		vm_page_assert_locked(m);
 	if ((object = m->object) == NULL)
 		return;
 	VM_OBJECT_ASSERT_WLOCKED(object);
-	if (vm_page_xbusied(m)) {
-		lockacq = FALSE;
-		if ((m->oflags & VPO_UNMANAGED) != 0 &&
-		    !mtx_owned(vm_page_lockptr(m))) {
-			lockacq = TRUE;
-			vm_page_lock(m);
-		}
-		vm_page_flash(m);
-		atomic_store_rel_int(&m->busy_lock, VPB_UNBUSIED);
-		if (lockacq)
-			vm_page_unlock(m);
-	}
+	if (vm_page_xbusied(m))
+		vm_page_xunbusy_maybelocked(m);
 
 	/*
 	 * Now remove from the object's list of backed pages.
@@ -1340,7 +1345,7 @@ vm_page_replace(vm_page_t mnew, vm_object_t object, vm_pindex_t pindex)
 	TAILQ_REMOVE(&object->memq, mold, listq);
 
 	mold->object = NULL;
-	vm_page_xunbusy(mold);
+	vm_page_xunbusy_maybelocked(mold);
 
 	/*
 	 * The object's resident_page_count does not change because we have
@@ -2700,10 +2705,11 @@ vm_wait(void)
 		msleep(&vm_pageout_pages_needed, &vm_page_queue_free_mtx,
 		    PDROP | PSWP, "VMWait", 0);
 	} else {
-		if (!vm_pages_needed) {
-			vm_pages_needed = 1;
-			wakeup(&vm_pages_needed);
+		if (!vm_pageout_wanted) {
+			vm_pageout_wanted = true;
+			wakeup(&vm_pageout_wanted);
 		}
+		vm_pages_needed = true;
 		msleep(&vm_cnt.v_free_count, &vm_page_queue_free_mtx, PDROP | PVM,
 		    "vmwait", 0);
 	}
@@ -2724,10 +2730,11 @@ vm_waitpfault(void)
 {
 
 	mtx_lock(&vm_page_queue_free_mtx);
-	if (!vm_pages_needed) {
-		vm_pages_needed = 1;
-		wakeup(&vm_pages_needed);
+	if (!vm_pageout_wanted) {
+		vm_pageout_wanted = true;
+		wakeup(&vm_pageout_wanted);
 	}
+	vm_pages_needed = true;
 	msleep(&vm_cnt.v_free_count, &vm_page_queue_free_mtx, PDROP | PUSER,
 	    "pfault", 0);
 }
@@ -2908,7 +2915,7 @@ vm_page_free_wakeup(void)
 	 * lots of memory. this process will swapin processes.
 	 */
 	if (vm_pages_needed && !vm_page_count_min()) {
-		vm_pages_needed = 0;
+		vm_pages_needed = false;
 		wakeup(&vm_cnt.v_free_count);
 	}
 }
@@ -3290,7 +3297,8 @@ vm_page_cache(vm_page_t m)
 	cache_was_empty = vm_radix_is_empty(&object->cache);
 	if (vm_radix_insert(&object->cache, m)) {
 		mtx_unlock(&vm_page_queue_free_mtx);
-		if (object->resident_page_count == 0)
+		if (object->type == OBJT_VNODE &&
+		    object->resident_page_count == 0)
 			vdrop(object->handle);
 		m->object = NULL;
 		vm_page_free(m);
